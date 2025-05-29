@@ -18,12 +18,16 @@ public class UserController {
 
     @GetMapping
     public Page<UserDTO> getAllUsers(@ModelAttribute UserSearchRequest userSearchRequest, @ModelAttribute UserSortRequest userSortRequest, Pageable pageable) {
-        Page<UserDTO> pageUserDTOS = userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
-        return pageUserDTOS;
+        return userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
     }
 
     @PutMapping("/{userId}")
     public void setStatus(@PathVariable("userId") Long userId) {
         userService.setStatus(userId);
+    }
+
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable("userId") Long userId) {
+        userService.removeUser(userId);
     }
 }

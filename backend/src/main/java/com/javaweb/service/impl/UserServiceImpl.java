@@ -23,24 +23,19 @@ public class UserServiceImpl implements UserService {
     @Transactional(readOnly = true)
     @Override
     public Page<UserDTO> getAllUsers(UserSearchRequest userSearchRequest, UserSortRequest userSortRequest, Pageable pageable) {
-        // Xử lý filter trạng thái như hiện tại
+        // trong DB không có trường status, lấy theo trường isActive để truy vấn
         if (userSearchRequest != null && userSearchRequest.getStatus() != null && !userSearchRequest.getStatus().equals("")) {
-            if (userSearchRequest.getStatus().equals("Active")) {
-                userSearchRequest.setIsActive(true);
-            } else {
-                userSearchRequest.setIsActive(false);
-            }
+            userSearchRequest.setIsActive(userSearchRequest.getStatus().equals("Active"));
         }
 
-        Page<User> pageUser = userRepository.getAllUsers(userSearchRequest, userSortRequest, pageable);
+        Page<User> pageUsers = userRepository.getAllUsers(userSearchRequest, userSortRequest, pageable);
 
         // Chuyển đổi User sang UserDTO
-        Page<UserDTO> pageUserDTOs = pageUser.map(user -> userDTOConverter.toUserDTO(user));
-
-        return pageUserDTOs;
+        return pageUsers.map(userDTOConverter::toUserDTO);
     }
 
 
+    @Transactional
     @Override
     public void setStatus(Long userId) {
         User user = userRepository.findById(userId).orElse(null);
@@ -50,16 +45,25 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Transactional
     @Override
     public void updateReportCount(Long userId) {
         Integer reportCount = userRepository.getReportCount(userId);
-        System.out.println("aaa");
         if (reportCount != null) {
             User user = userRepository.findById(userId).orElse(null);
             if (user != null) {
                 user.setReportCount(reportCount);
                 userRepository.save(user);
             }
+        }
+    }
+
+    @Transactional
+    @Override
+    public void removeUser(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        if (user != null) {
+            userRepository.delete(user);
         }
     }
 

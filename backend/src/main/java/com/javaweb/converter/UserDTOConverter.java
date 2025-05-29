@@ -13,9 +13,8 @@ public class UserDTOConverter {
     private final ModelMapper modelMapper;
 
     public UserDTO toUserDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO = modelMapper.map(user, UserDTO.class);
-        userDTO.setStatus((user.getIsActive() ? "Active" : "Inactive"));
+        UserDTO userDTO = modelMapper.map(user, UserDTO.class);
+        userDTO.setStatus((user.getIsActive() != null && user.getIsActive()) ? "Active" : "Inactive");
         return userDTO;
     }
 }

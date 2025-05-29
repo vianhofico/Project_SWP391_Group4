@@ -13,9 +13,7 @@ public class ReportDTOConverter {
     private final ModelMapper modelMapper;
 
     public ReportDTO toReportDTO(Report report) {
-        ReportDTO reportDTO = new ReportDTO();
-        reportDTO = modelMapper.map(report, ReportDTO.class);
-        return reportDTO;
+        return modelMapper.map(report, ReportDTO.class);
     }
 
 }
