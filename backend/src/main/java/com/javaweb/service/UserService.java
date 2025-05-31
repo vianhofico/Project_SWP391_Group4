@@ -15,4 +15,6 @@ public interface UserService {
     public void updateReportCount(Long userId);
 
     public void removeUser(Long userId);
+
+
 }

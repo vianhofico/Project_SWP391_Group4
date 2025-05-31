@@ -47,7 +47,7 @@ public class Course {
     @Column(name = "status")
     Boolean status;
 
-    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "course", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private List<Enrollment> enrollments = new ArrayList<>();
 
 }

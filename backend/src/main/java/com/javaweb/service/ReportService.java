@@ -11,5 +11,8 @@ public interface ReportService {
 
     public void setStatus(Long reportId, String status);
 
+    public Page<ReportDTO> getAllReportsMade(Long userId, Pageable pageable);
+
+    public Page<ReportDTO> getAllReportsReceived(Long userId, Pageable pageable);
 
 }

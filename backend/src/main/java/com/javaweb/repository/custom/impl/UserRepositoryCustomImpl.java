@@ -33,7 +33,7 @@ public class UserRepositoryCustomImpl implements UserRepositoryCustom {
             parameters.put("role", "%" + searchRequest.getRole() + "%");
         }
 
-        if (searchRequest.getIsActive() != null && !searchRequest.getIsActive().equals("")) {
+        if (searchRequest.getIsActive() != null) {
             sql.append(" AND isActive = :isActive");
             parameters.put("isActive", searchRequest.getIsActive());
         }

@@ -1,6 +1,6 @@
 package com.javaweb.service.impl;
 
-import com.javaweb.converter.ReportDTOConverter;
+import com.javaweb.converter.DTOConverter;
 import com.javaweb.dto.ReportDTO;
 import com.javaweb.dto.request.ReportRequest;
 import com.javaweb.entity.Report;
@@ -18,14 +18,14 @@ import org.springframework.transaction.annotation.Transactional;
 public class ReportServiceImpl implements ReportService {
 
     private final ReportRepository reportRepository;
-    private final ReportDTOConverter reportDTOConverter;
+    private final DTOConverter dtoConverter;
     private final UserService userService;
 
     @Transactional(readOnly = true)
     @Override
     public Page<ReportDTO> getAllReports(ReportRequest reportRequest, Pageable pageable) {
         Page<Report> pageReports = reportRepository.getAllReports(reportRequest, pageable);
-        return pageReports.map(reportDTOConverter::toReportDTO);
+        return pageReports.map(dtoConverter::toReportDTO);
     }
 
     @Transactional
@@ -37,6 +37,18 @@ public class ReportServiceImpl implements ReportService {
             reportRepository.save(report);
             userService.updateReportCount(report.getTarget().getUserId());
         }
+    }
+
+    @Override
+    public Page<ReportDTO> getAllReportsMade(Long userId, Pageable pageable) {
+        Page<Report> pageReports = reportRepository.findByReporterUserId(userId, pageable);
+        return pageReports.map(dtoConverter::toReportDTO);
+    }
+
+    @Override
+    public Page<ReportDTO> getAllReportsReceived(Long userId, Pageable pageable) {
+        Page<Report> pageReports = reportRepository.findByTargetUserId(userId, pageable);
+        return pageReports.map(dtoConverter::toReportDTO);
     }
 
 }

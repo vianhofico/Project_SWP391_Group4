@@ -3,11 +3,10 @@ package com.javaweb.dto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -15,16 +14,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class UserDTO {
+@ToString(exclude = {"order"})
+public class TransactionDTO {
 
-    private Long userId;
-    private String fullName;
-    private String email;
-    private LocalDate birthDate;
-    private String role;
-    private LocalDateTime createdAt;
-    private String status;
-    private Integer reportCount;
-    private String imageUrl;
-
+    private Long transactionId;
+    private Long amount;
+    private LocalDateTime paidAt;
+    private OrderDTO order;
 }

@@ -43,6 +43,6 @@ public class Post {
     @JoinColumn(name = "userId")
     private User user;
 
-    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Report> reports = new ArrayList<>();
 }

@@ -1,6 +1,6 @@
 package com.javaweb.service.impl;
 
-import com.javaweb.converter.UserDTOConverter;
+import com.javaweb.converter.DTOConverter;
 import com.javaweb.dto.UserDTO;
 import com.javaweb.dto.request.UserSearchRequest;
 import com.javaweb.dto.request.UserSortRequest;
@@ -18,7 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserDTOConverter userDTOConverter;
+    private final DTOConverter dtoConverter;
 
     @Transactional(readOnly = true)
     @Override
@@ -31,7 +31,7 @@ public class UserServiceImpl implements UserService {
         Page<User> pageUsers = userRepository.getAllUsers(userSearchRequest, userSortRequest, pageable);
 
         // Chuyển đổi User sang UserDTO
-        return pageUsers.map(userDTOConverter::toUserDTO);
+        return pageUsers.map(dtoConverter::toUserDTO);
     }
 
 
@@ -66,5 +66,7 @@ public class UserServiceImpl implements UserService {
             userRepository.delete(user);
         }
     }
+
+
 
 }
