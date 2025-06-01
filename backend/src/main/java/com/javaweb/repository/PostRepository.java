@@ -8,4 +8,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface PostRepository extends JpaRepository<Post, Long> {
 
     public Page<Post> findByUserUserId(Long userId, Pageable pageable);
+
+    public Page<Post> findAllByOrderByCreatedAtDesc(Pageable pageable);
+
+    public Page<Post> findByPostTopicPostTopicIdOrderByCreatedAtDesc(Long postTopicId, Pageable pageable);
 }

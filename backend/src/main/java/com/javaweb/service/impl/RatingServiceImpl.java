@@ -1,7 +1,7 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dto.RatingDTO;
+import com.javaweb.dto.response.admin.RatingDTO;
 import com.javaweb.entity.Rating;
 import com.javaweb.repository.RatingRepository;
 import com.javaweb.service.RatingService;

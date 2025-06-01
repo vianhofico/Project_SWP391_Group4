@@ -1,7 +1,8 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dto.PostDTO;
+import com.javaweb.dto.response.ForumPostDTO;
+import com.javaweb.dto.response.admin.PostDTO;
 import com.javaweb.entity.Post;
 import com.javaweb.repository.PostRepository;
 import com.javaweb.service.PostService;
@@ -18,8 +19,22 @@ public class PostServiceImpl implements PostService {
     private final DTOConverter dtoConverter;
 
     @Override
-    public Page<PostDTO> getAllPosts(Long userId, Pageable pageable) {
+    public Page<PostDTO> getAllPostsOfUser(Long userId, Pageable pageable) {
         Page<Post> pagePosts = postRepository.findByUserUserId(userId, pageable);
-        return pagePosts.map(dtoConverter::toPostDTO);
+        return pagePosts.map(dtoConverter::toAdminPostDTO);
     }
+
+    @Override
+    public Page<ForumPostDTO> getAllPosts(Pageable pageable) {
+        Page<Post> pagePosts = postRepository.findAllByOrderByCreatedAtDesc(pageable);
+        return pagePosts.map(dtoConverter::toForumPostDTO);
+    }
+
+    @Override
+    public Page<ForumPostDTO> getAllPostsByTopicId(Long postTopicId, Pageable pageable) {
+        Page<Post> pagePosts = postRepository.findByPostTopicPostTopicIdOrderByCreatedAtDesc(postTopicId, pageable);
+        return pagePosts.map(dtoConverter::toForumPostDTO);
+    }
+
+
 }

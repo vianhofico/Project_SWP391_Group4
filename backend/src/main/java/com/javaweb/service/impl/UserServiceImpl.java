@@ -1,7 +1,8 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dto.UserDTO;
+import com.javaweb.dto.response.admin.UserDTO;
+import com.javaweb.dto.request.LoginRequest;
 import com.javaweb.dto.request.UserSearchRequest;
 import com.javaweb.dto.request.UserSortRequest;
 import com.javaweb.entity.User;
@@ -67,6 +68,15 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public UserDTO getUser(Long userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        return dtoConverter.toUserDTO(user);
+    }
 
+    @Override
+    public void loginUser(LoginRequest loginRequest) {
 
+    }
 }
+

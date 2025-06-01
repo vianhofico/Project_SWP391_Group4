@@ -1,4 +1,4 @@
-package com.javaweb.dto;
+package com.javaweb.dto.response.admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -6,8 +6,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
@@ -20,7 +18,7 @@ public class ReportDTO {
     private Long reportId;
     private String content;
     private String status;
-    private LocalDateTime createdAt;
+    private String createdAt;
     private UserDTO reporter;
     private UserDTO target;
 

@@ -48,6 +48,7 @@ public class Comment {
     @OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Report> reports = new ArrayList<>();
 
+
     //@ManyToOne
 //    @JoinColumn(name = "lessonId")
 //    private Lesson lesson;

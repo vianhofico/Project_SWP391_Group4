@@ -1,7 +1,7 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dto.NotificationDTO;
+import com.javaweb.dto.response.admin.NotificationDTO;
 import com.javaweb.entity.Notification;
 import com.javaweb.repository.NotificationRepository;
 import com.javaweb.service.NotificationService;

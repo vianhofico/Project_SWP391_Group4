@@ -1,4 +1,4 @@
-package com.javaweb.dto;
+package com.javaweb.dto.response.admin;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -13,10 +13,10 @@ import lombok.ToString;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @ToString(exclude = {"course"})
-public class ChapterDTO {
+public class OrderItemDTO {
 
-    private Long chapterId;
-    private String title;
+    private Long orderItemId;
+    private Long price;
     private CourseDTO course;
 
 }

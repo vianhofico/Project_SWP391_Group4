@@ -1,6 +1,6 @@
 package com.javaweb.service;
 
-import com.javaweb.dto.ReportDTO;
+import com.javaweb.dto.response.admin.ReportDTO;
 import com.javaweb.dto.request.ReportRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

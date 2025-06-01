@@ -1,7 +1,7 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dto.TransactionDTO;
+import com.javaweb.dto.response.admin.TransactionDTO;
 import com.javaweb.entity.Transaction;
 import com.javaweb.repository.TransactionRepository;
 import com.javaweb.service.TransactionService;

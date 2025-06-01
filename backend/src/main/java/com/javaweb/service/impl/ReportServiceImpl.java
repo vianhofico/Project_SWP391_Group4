@@ -1,7 +1,7 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dto.ReportDTO;
+import com.javaweb.dto.response.admin.ReportDTO;
 import com.javaweb.dto.request.ReportRequest;
 import com.javaweb.entity.Report;
 import com.javaweb.repository.ReportRepository;

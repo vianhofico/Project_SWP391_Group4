@@ -1,6 +1,6 @@
 package com.javaweb.service;
 
-import com.javaweb.dto.RatingDTO;
+import com.javaweb.dto.response.admin.RatingDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

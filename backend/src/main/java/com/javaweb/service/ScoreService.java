@@ -1,6 +1,6 @@
 package com.javaweb.service;
 
-import com.javaweb.dto.ScoreDTO;
+import com.javaweb.dto.response.admin.ScoreDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

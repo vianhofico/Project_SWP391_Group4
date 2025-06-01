@@ -22,7 +22,7 @@ public class OrderItem {
     @Column(name = "price")
     private Long price;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "courseId")
     private Course course;
 

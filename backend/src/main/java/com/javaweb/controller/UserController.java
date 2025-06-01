@@ -1,8 +1,8 @@
 package com.javaweb.controller;
 
-import com.javaweb.dto.*;
 import com.javaweb.dto.request.UserSearchRequest;
 import com.javaweb.dto.request.UserSortRequest;
+import com.javaweb.dto.response.admin.*;
 import com.javaweb.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,6 +30,11 @@ public class UserController {
         return userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
     }
 
+    @GetMapping("/{userId}")
+    public UserDTO getUser(@PathVariable("userId") Long userId) {
+        return userService.getUser(userId);
+    }
+
     @GetMapping("/{userId}/reportsMade")
     public Page<ReportDTO> getAllReportsMade(@PathVariable("userId") Long userId, Pageable pageable) {
         return reportService.getAllReportsMade(userId, pageable);
@@ -42,7 +47,7 @@ public class UserController {
 
     @GetMapping("/{userId}/posts")
     public Page<PostDTO> getAllPosts(@PathVariable("userId") Long userId, Pageable pageable) {
-        return postService.getAllPosts(userId, pageable);
+        return postService.getAllPostsOfUser(userId, pageable);
     }
 
     @GetMapping("/{userId}/enrollments")

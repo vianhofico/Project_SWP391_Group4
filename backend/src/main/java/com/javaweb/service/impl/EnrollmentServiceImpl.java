@@ -1,7 +1,7 @@
 package com.javaweb.service.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dto.EnrollmentDTO;
+import com.javaweb.dto.response.admin.EnrollmentDTO;
 import com.javaweb.entity.Enrollment;
 import com.javaweb.repository.EnrollmentRepository;
 import com.javaweb.service.EnrollmentService;

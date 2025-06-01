@@ -1,6 +1,6 @@
 package com.javaweb.service;
 
-import com.javaweb.dto.EnrollmentDTO;
+import com.javaweb.dto.response.admin.EnrollmentDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

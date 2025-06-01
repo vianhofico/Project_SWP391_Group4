@@ -1,6 +1,7 @@
 package com.javaweb.service;
 
-import com.javaweb.dto.UserDTO;
+import com.javaweb.dto.response.admin.UserDTO;
+import com.javaweb.dto.request.LoginRequest;
 import com.javaweb.dto.request.UserSearchRequest;
 import com.javaweb.dto.request.UserSortRequest;
 import org.springframework.data.domain.Page;
@@ -16,5 +17,7 @@ public interface UserService {
 
     public void removeUser(Long userId);
 
+    public UserDTO getUser(Long userId);
 
+    public void loginUser(LoginRequest loginRequest);
 }

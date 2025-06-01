@@ -1,6 +1,6 @@
 package com.javaweb.controller;
 
-import com.javaweb.dto.ReportDTO;
+import com.javaweb.dto.response.admin.ReportDTO;
 import com.javaweb.dto.request.ReportRequest;
 import com.javaweb.service.ReportService;
 import lombok.RequiredArgsConstructor;
