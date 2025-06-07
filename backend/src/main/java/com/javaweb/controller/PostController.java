@@ -1,31 +1,40 @@
 package com.javaweb.controller;
 
-import com.javaweb.dto.response.ForumPostDTO;
-import com.javaweb.service.PostService;
+import com.javaweb.dtos.request.PostSearchRequest;
+import com.javaweb.dtos.response.ForumPostDTO;
+import com.javaweb.dtos.response.admin.PostDTO;
+import com.javaweb.services.PostService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/forum/posts")
+@RequestMapping("/api/posts")
 @RequiredArgsConstructor
+@Validated
 public class PostController {
 
     private final PostService postService;
 
     @GetMapping
-    public Page<ForumPostDTO> getAllPosts(Pageable pageable) {
-        return postService.getAllPosts(pageable);
+    public Page<PostDTO> getAllPosts(@Valid @ModelAttribute PostSearchRequest postSearchRequest, Pageable pageable) {
+        return postService.getAllPosts(postSearchRequest, pageable);
     }
 
     @GetMapping("/topic/{postTopicId}")
-    public Page<ForumPostDTO> getAllPostsByTopicId(@PathVariable Long postTopicId, Pageable pageable) {
-        return postService.getAllPostsByTopicId(postTopicId, pageable);
+    public Page<ForumPostDTO> getAllPostsByTopicId(@PathVariable @Positive(message = "postTopicId must positive") Long postTopicId, Pageable pageable, @ModelAttribute PostSearchRequest postSearchRequest) {
+        return postService.getAllPostsByTopicId(postTopicId, pageable, postSearchRequest);
     }
 
+    @PutMapping("/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable @Positive(message = "postId must positive") Long postId) {
+        postService.deletePost(postId);
+        return ResponseEntity.noContent().build();
+    }
 
 }

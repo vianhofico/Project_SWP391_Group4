@@ -1,14 +1,12 @@
 package com.javaweb.converter;
 
-import com.javaweb.dto.response.ForumCommentDTO;
-import com.javaweb.dto.response.ForumPostDTO;
-import com.javaweb.dto.response.admin.*;
-import com.javaweb.entity.*;
+import com.javaweb.dtos.response.ForumCommentDTO;
+import com.javaweb.dtos.response.ForumPostDTO;
+import com.javaweb.dtos.response.admin.*;
+import com.javaweb.entities.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
-
-import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -42,6 +40,8 @@ public class DTOConverter {
         if (report == null) return null;
         ReportDTO reportDTO = modelMapper.map(report, ReportDTO.class);
         reportDTO.setCreatedAt(dateTimeConverter.toString(report.getCreatedAt()));
+        reportDTO.setComment(toCommentDTO(report.getComment()));
+        reportDTO.setPost(toPostDTO(report.getPost()));
         return reportDTO;
     }
 
@@ -87,7 +87,19 @@ public class DTOConverter {
     }
 
     public PostTopicDTO toPostTopicDTO(PostTopic postTopic) {
-        return (postTopic != null) ? modelMapper.map(postTopic, PostTopicDTO.class) : null;
+        if(postTopic == null) return null;
+        PostTopicDTO postTopicDTO = modelMapper.map(postTopic, PostTopicDTO.class);
+        postTopicDTO.setCreatedAt(dateTimeConverter.toString(postTopic.getCreatedAt()));
+        return postTopicDTO;
+    }
+
+    public PostDTO toPostDTO(Post post) {
+        if (post == null) return null;
+        PostDTO postDTO = modelMapper.map(post, PostDTO.class);
+        postDTO.setCreatedAt(dateTimeConverter.toString(post.getCreatedAt()));
+        postDTO.setUser(toUserDTO(post.getUser()));
+        postDTO.setPostTopic(toPostTopicDTO(post.getPostTopic()));
+        return postDTO;
     }
 
     public ForumCommentDTO toForumCommentDTO(Comment comment) {
@@ -101,7 +113,7 @@ public class DTOConverter {
 
     public ForumPostDTO toForumPostDTO(Post post) {
         if (post == null) return null;
-        ForumPostDTO forumPostDTO = ForumPostDTO.builder()
+        return ForumPostDTO.builder()
                 .postId(post.getPostId())
                 .title(post.getTitle())
                 .content(post.getContent())
@@ -110,8 +122,7 @@ public class DTOConverter {
                 .postTopic(toPostTopicDTO(post.getPostTopic()))
                 .comments(post.getComments().stream()
                         .map(this::toForumCommentDTO)
-                        .collect(Collectors.toList()))
+                        .toList())
                 .build();
-        return forumPostDTO;
     }
 }

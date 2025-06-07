@@ -1,18 +1,26 @@
 package com.javaweb.controller;
 
-import com.javaweb.dto.request.UserSearchRequest;
-import com.javaweb.dto.request.UserSortRequest;
-import com.javaweb.dto.response.admin.*;
-import com.javaweb.service.*;
+import com.javaweb.dtos.request.CreateAdminRequest;
+import com.javaweb.dtos.request.UserSearchRequest;
+import com.javaweb.dtos.request.UserSortRequest;
+import com.javaweb.dtos.response.admin.*;
+import com.javaweb.services.*;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/admin/users")
+@RequestMapping("/api/users")
+@Validated
 public class UserController {
+
+    private final String POSITIVE_USERID = "userId must positve number";
 
     private final UserService userService;
     private final ReportService reportService;
@@ -25,73 +33,86 @@ public class UserController {
     private final TransactionService transactionService;
     private final CartService cartService;
 
-    @GetMapping
-    public Page<UserDTO> getAllUsers(@ModelAttribute UserSearchRequest userSearchRequest, @ModelAttribute UserSortRequest userSortRequest, Pageable pageable) {
+    @GetMapping("/learners")
+    public Page<UserDTO> getAllLearners(@ModelAttribute @Valid UserSearchRequest userSearchRequest, @ModelAttribute @Valid UserSortRequest userSortRequest, Pageable pageable) {
+        return userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
+    }
+
+    @GetMapping("/admins")
+    public Page<UserDTO> getAllAdmins(@ModelAttribute @Valid UserSearchRequest userSearchRequest, @ModelAttribute @Valid UserSortRequest userSortRequest, Pageable pageable) {
         return userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
     }
 
     @GetMapping("/{userId}")
-    public UserDTO getUser(@PathVariable("userId") Long userId) {
-        return userService.getUser(userId);
+    public ResponseEntity<UserDTO> getUser(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId) {
+        return ResponseEntity.ok(userService.getUser(userId));
     }
 
     @GetMapping("/{userId}/reportsMade")
-    public Page<ReportDTO> getAllReportsMade(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<ReportDTO> getAllReportsMade(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return reportService.getAllReportsMade(userId, pageable);
     }
 
     @GetMapping("/{userId}/reportsReceived")
-    public Page<ReportDTO> getAllReportsReceived(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<ReportDTO> getAllReportsReceived(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return reportService.getAllReportsReceived(userId, pageable);
     }
 
     @GetMapping("/{userId}/posts")
-    public Page<PostDTO> getAllPosts(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<PostDTO> getAllPosts(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return postService.getAllPostsOfUser(userId, pageable);
     }
 
     @GetMapping("/{userId}/enrollments")
-    public Page<EnrollmentDTO> getAllEnrollments(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<EnrollmentDTO> getAllEnrollments(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return enrollmentService.getAllEnrollments(userId, pageable);
     }
 
     @GetMapping("/{userId}/comments")
-    public Page<CommentDTO> getAllComments(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<CommentDTO> getAllComments(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return commentService.getAllComments(userId, pageable);
     }
 
     @GetMapping("/{userId}/scores")
-    public Page<ScoreDTO> getAllScores(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<ScoreDTO> getAllScores(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return scoreService.getAllScores(userId, pageable);
     }
 
     @GetMapping("/{userId}/notifications")
-    public Page<NotificationDTO> getAllNotifications(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<NotificationDTO> getAllNotifications(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return notificationService.getAllNotifications(userId, pageable);
     }
 
     @GetMapping("/{userId}/ratings")
-    public Page<RatingDTO> getAllRatings(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<RatingDTO> getAllRatings(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return ratingService.getAllRatings(userId, pageable);
     }
 
     @GetMapping("/{userId}/transactions")
-    public Page<TransactionDTO> getAllTransactions(@PathVariable("userId") Long userId, Pageable pageable) {
+    public Page<TransactionDTO> getAllTransactions(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId, Pageable pageable) {
         return transactionService.getAllTransactions(userId, pageable);
     }
 
     @GetMapping("/{userId}/cart")
-    public CartDTO getCart(@PathVariable("userId") Long userId) {
-        return cartService.getCart(userId);
+    public ResponseEntity<CartDTO> getCart(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId) {
+        return ResponseEntity.ok(cartService.getCart(userId));
     }
 
-    @PutMapping("/{userId}")
-    public void setStatus(@PathVariable("userId") Long userId) {
-        userService.setStatus(userId);
+    @PutMapping("/{userId}/reset-password")
+    public ResponseEntity<Void> resetPassword(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId) {
+        userService.resetPassword(userId);
+        return ResponseEntity.noContent().build();
     }
 
     @DeleteMapping("/{userId}")
-    public void deleteUser(@PathVariable("userId") Long userId) {
+    public ResponseEntity<Void> deleteUser(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId) {
         userService.removeUser(userId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping()
+    public ResponseEntity<Void> createAdmin(@RequestBody @Valid CreateAdminRequest createAdminRequest) {
+        userService.createAdmin(createAdminRequest);
+        return ResponseEntity.noContent().build();
     }
 }
