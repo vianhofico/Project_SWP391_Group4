@@ -70,10 +70,13 @@
                 </ol>
             </nav>
         </div>
+<%--        <form action="/confirm-checkout" method="get">--%>
+
         <div class="table-responsive">
             <table class="table">
                 <thead>
                 <tr>
+                    <th scope="col"></th>
                     <th scope="col">Sản phẩm</th>
                     <th scope="col">Tên</th>
                     <th scope="col">Giá cả</th>
@@ -86,6 +89,11 @@
                     <c:forEach var="cartItem" items="${cartItems}"
                                varStatus = "status">
                         <tr>
+                            <td>
+                                <input class="form-check-input cart-checkbox" style="margin-top: 40px"
+                                       name="cartItemIds"
+                                       type="checkbox" value="${cartItem.id}">
+                            </td>
                             <th scope="row">
                                 <div class="d-flex align-items-center">
                                     <img src="images/product/${cartItem.courseDTO.image}"
@@ -151,18 +159,18 @@
                 <div class="bg-light rounded">
                     <div class="p-4">
                         <h1 class="display-6 mb-4">Thông Tin <span class="fw-normal">Đơn Hàng</span></h1>
-                        <div class="d-flex justify-content-between mb-4">
-                            <h5 class="mb-0 me-4">Tạm tính:</h5>
-                            <p class="mb-0" data-cart-total-price="${totalPrice}">
-                                <fmt:formatNumber type="number" value="${totalPrice}" /> đ
-                            </p>
-                        </div>
-                        <div class="d-flex justify-content-between">
-                            <h5 class="mb-0 me-4">Phí vận chuyển</h5>
-                            <div class="">
-                                <p class="mb-0">0 đ</p>
-                            </div>
-                        </div>
+<%--                        <div class="d-flex justify-content-between mb-4">--%>
+<%--                            <h5 class="mb-0 me-4">Tạm tính:</h5>--%>
+<%--                            <p class="mb-0" data-cart-total-price="${totalPrice}">--%>
+<%--                                <fmt:formatNumber type="number" value="${totalPrice}" /> đ--%>
+<%--                            </p>--%>
+<%--                        </div>--%>
+<%--                        <div class="d-flex justify-content-between">--%>
+<%--                            <h5 class="mb-0 me-4">Phí vận chuyển</h5>--%>
+<%--                            <div class="">--%>
+<%--                                <p class="mb-0">0 đ</p>--%>
+<%--                            </div>--%>
+<%--                        </div>--%>
                     </div>
                     <div class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
                         <h5 class="mb-0 ps-4 me-4">Tổng số tiền</h5>
@@ -170,37 +178,38 @@
                             <fmt:formatNumber type="number" value="${totalPrice}" /> đ
                         </p>
                     </div>
-                    <form:form action="/confirm-checkout" method="post" modelAttribute="cart">
-                        <input type="hidden" name="${_csrf.parameterName}"
-                               value="${_csrf.token}" />
-                        <div style="display: none;">
-                            <c:forEach var="cartDetail" items="${cart.cartItems}"
-                                       varStatus="status">
-                                <div class="mb-3">
-                                    <div class="form-group">
-                                        <label>Id:</label>
-                                        <form:input class="form-control" type="text"
-                                                    value="${cartItem.id}"
-                                                    path="cartItems[${status.index}].id" />
-                                    </div>
+<%--                    <form:form action="/confirm-checkout" method="post" modelAttribute="cart">--%>
+<%--                        <input type="hidden" name="${_csrf.parameterName}"--%>
+<%--                               value="${_csrf.token}" />--%>
+<%--                        <div style="display: none;">--%>
+<%--                            <c:forEach var="cartDetail" items="${cart.cartItems}"--%>
+<%--                                       varStatus="status">--%>
+<%--                                <div class="mb-3">--%>
 <%--                                    <div class="form-group">--%>
-<%--                                        <label>Quantity:</label>--%>
+<%--                                        <label>Id:</label>--%>
 <%--                                        <form:input class="form-control" type="text"--%>
-<%--                                                    value="${cartItem.quantity}"--%>
-<%--                                                    path="cartDetails[${status.index}].quantity" />--%>
+<%--                                                    value="${cartItem.id}"--%>
+<%--                                                    path="cartItems[${status.index}].id" />--%>
 <%--                                    </div>--%>
-                                </div>
-                            </c:forEach>
-                        </div>
-                        <button
-                                class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Xác
+<%--&lt;%&ndash;                                    <div class="form-group">&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <label>Quantity:</label>&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                        <form:input class="form-control" type="text"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    value="${cartItem.quantity}"&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                                    path="cartDetails[${status.index}].quantity" />&ndash;%&gt;--%>
+<%--&lt;%&ndash;                                    </div>&ndash;%&gt;--%>
+<%--                                </div>--%>
+<%--                            </c:forEach>--%>
+<%--                        </div>--%>
+                        <button id="btnCheckout"
+                                class="btn btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">Xác
                             nhận thanh toán
                         </button>
-                    </form:form>
+<%--                    </form:form>--%>
                 </div>
             </div>
         </div>
         </c:if>
+<%--        </form>--%>
     </div>
 </div>
 <!-- Cart Page End -->

@@ -26,17 +26,17 @@
             } else {
                 $('.fixed-top').removeClass('shadow').css('top', 0);
             }
-        } 
+        }
     });
-    
-    
-   // Back to top button
-   $(window).scroll(function () {
-    if ($(this).scrollTop() > 300) {
-        $('.back-to-top').fadeIn('slow');
-    } else {
-        $('.back-to-top').fadeOut('slow');
-    }
+
+
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 300) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
     });
     $('.back-to-top').click(function () {
         $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
@@ -52,27 +52,27 @@
         dots: true,
         loop: true,
         margin: 25,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:1
+            576: {
+                items: 1
             },
-            768:{
-                items:1
+            768: {
+                items: 1
             },
-            992:{
-                items:2
+            992: {
+                items: 2
             },
-            1200:{
-                items:2
+            1200: {
+                items: 2
             }
         }
     });
@@ -86,27 +86,27 @@
         dots: true,
         loop: true,
         margin: 25,
-        nav : true,
-        navText : [
+        nav: true,
+        navText: [
             '<i class="bi bi-arrow-left"></i>',
             '<i class="bi bi-arrow-right"></i>'
         ],
         responsiveClass: true,
         responsive: {
-            0:{
-                items:1
+            0: {
+                items: 1
             },
-            576:{
-                items:1
+            576: {
+                items: 1
             },
-            768:{
-                items:2
+            768: {
+                items: 2
             },
-            992:{
-                items:3
+            992: {
+                items: 3
             },
-            1200:{
-                items:4
+            1200: {
+                items: 4
             }
         }
     });
@@ -131,20 +131,17 @@
         //add active class to header
         const navElement = $('#navbarCollapse');
         const currentUrl = window.location.pathname;
-        navElement.find('a.nav-link').each(function() {
+        navElement.find('a.nav-link').each(function () {
             const link = $(this);
             const href = link.attr('href');
 
-            if(href == currentUrl){
+            if (href == currentUrl) {
                 link.addClass('active');
-            }
-            else{
+            } else {
                 link.removeClass('active');
             }
         });
     });
-
-
 
 
     // Product Quantity
@@ -163,21 +160,19 @@
     //     button.parent().parent().find('input').val(newVal);
     // });
 
-    $('.quantity button').on('click', function() {
+    $('.quantity button').on('click', function () {
         let change = 0;
 
         var button = $(this);
         var oldValue = button.parent().parent().find('input').val();
-        if(button.hasClass('btn-plus')) {
+        if (button.hasClass('btn-plus')) {
             var newVal = parseFloat(oldValue) + 1;
             change = 1;
-        }
-        else{
-            if(oldValue > 1){
+        } else {
+            if (oldValue > 1) {
                 var newVal = parseFloat(oldValue) - 1;
                 change = -1;
-            }
-            else{
+            } else {
                 newVal = 1;
             }
         }
@@ -194,7 +189,7 @@
         const id = input.attr("data-cart-detail-id");
 
         const priceElement = $(`p[data-cart-detail-id='${id}']`);
-        if(priceElement){
+        if (priceElement) {
             const newPrice = +price * newVal;
             priceElement.text(formatCurrency(newPrice.toFixed(2)) + " đ");
         }
@@ -202,13 +197,12 @@
         // update total cart price
         const totalPriceElement = $(`p[data-cart-total-price]`);
 
-        if(totalPriceElement && totalPriceElement.length){
+        if (totalPriceElement && totalPriceElement.length) {
             const currentTotal = totalPriceElement.first().attr("data-cart-total-price");
             let newTotal = +currentTotal;
-            if(change === 0){
+            if (change === 0) {
                 newTotal = +currentTotal;
-            }
-            else{
+            } else {
                 newTotal = change * (+price) + (+currentTotal);
             }
 
@@ -217,19 +211,19 @@
 
             // update
             totalPriceElement?.each(function (index, element) {
-               // update text
-               $(totalPriceElement[index]).text(formatCurrency(newTotal.toFixed(2)) + " đ");
+                // update text
+                $(totalPriceElement[index]).text(formatCurrency(newTotal.toFixed(2)) + " đ");
 
-               //update data-attribute
+                //update data-attribute
                 $(totalPriceElement[index]).attr("data-cart-total-price", newTotal);
             });
         }
     });
 
     function formatCurrency(value) {
-        const formatter = new Intl.NumberFormat('vi-VN',{
-           style: 'decimal',
-           minimumFractionDigits: 0,
+        const formatter = new Intl.NumberFormat('vi-VN', {
+            style: 'decimal',
+            minimumFractionDigits: 0,
         });
 
         let formatted = formatter.format(value);
@@ -272,7 +266,6 @@
         searchParams.delete('target')
         searchParams.delete('factory')
         searchParams.delete('price')
-
 
 
         if (factoryArr.length > 0) {
@@ -425,6 +418,80 @@
     //     }
     //     return true;
     // }
+
+    document.getElementById("btnCheckout").addEventListener("click", function () {
+        const checkedBoxes = document.querySelectorAll('.cart-checkbox:checked');
+        const selectedIds = [];
+
+        checkedBoxes.forEach(function (checkbox) {
+            selectedIds.push(checkbox.value);
+        });
+
+        if (selectedIds.length === 0) {
+            alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+            return;
+        }
+
+        // Tạo URL với danh sách ID
+        const url = new URL(window.location.origin + "/confirm-checkout");
+        selectedIds.forEach(id => {
+            url.searchParams.append("cartItemIds", id);
+        });
+
+        window.location.href = url.toString();
+    });
+
+    // $(document).ready(function () {
+    //     $('#submitOrderBtn').click(function (e) {
+    //         e.preventDefault(); // chặn form submit mặc định
+    //
+    //         // Lấy danh sách ID sản phẩm
+    //         let cartItemIds = [];
+    //         $('.cart-item-id').each(function () {
+    //             cartItemIds.push($(this).val());
+    //         });
+    //
+    //         // Lấy thông tin người nhận
+    //         const receiverName = $('input[name="receiverName"]').val();
+    //         const receiverAddress = $('input[name="receiverAddress"]').val();
+    //         const receiverPhone = $('input[name="receiverPhone"]').val();
+    //         const csrfToken = $('input[name="_csrf"]').val();
+    //
+    //
+    //         const url = new URL(window.location.origin + "/place-order");
+    //         cartItemIds.forEach(id => {
+    //             url.searchParams.append("cartItemIds", id);
+    //         });
+    //
+    //         window.location.href = url.toString();
+    //
+    //         // window.location.href = '/order-success';
+    //
+    //         // Gửi AJAX
+    //         // $.ajax({
+    //         //     url: '/place-order',
+    //         //     type: 'POST',
+    //         //     contentType: 'application/json',
+    //         //     headers: {
+    //         //         'X-CSRF-TOKEN': csrfToken
+    //         //     },
+    //         //     data: JSON.stringify({
+    //         //         cartItemIds: cartItemIds,
+    //         //         receiverName: receiverName,
+    //         //         receiverAddress: receiverAddress,
+    //         //         receiverPhone: receiverPhone
+    //         //     }),
+    //         //     success: function (response) {
+    //         //         // Chuyển hướng hoặc hiển thị thông báo
+    //         //         window.location.href = '/order-success';
+    //         //     },
+    //             // error: function (xhr) {
+    //             //     alert('Lỗi khi đặt hàng: ' + xhr.responseText);
+    //             // }
+    //         // });
+    //     });
+    // });
+
 
 })(jQuery);
 

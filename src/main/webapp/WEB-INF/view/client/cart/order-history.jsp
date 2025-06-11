@@ -77,9 +77,9 @@
                     <th scope="col">Sản phẩm</th>
                     <th scope="col">Tên</th>
                     <th scope="col">Giá cả</th>
-                    <th scope="col">Số lượng</th>
+<%--                    <th scope="col">Số lượng</th>--%>
                     <th scope="col">Thành tiền</th>
-                    <th scope="col">Trạng thái</th>
+<%--                    <th scope="col">Trạng thái</th>--%>
                 </tr>
                 </thead>
                 <tbody>
@@ -92,63 +92,63 @@
                 </c:if>
                 <c:forEach var="order" items="${orders}">
                     <tr>
-                        <td colspan="2">Order Id = ${order.id}</td>
+                        <td colspan="2">Order Id = ${order.orderId}</td>
                         <td colspan="1">
                             <fmt:formatNumber type="number" value="${order.totalPrice}" /> đ
                         </td>
                         <td colspan="2"></td>
-                        <td colspan="1">
-                            ${order.status}
-                        </td>
+<%--                        <td colspan="1">--%>
+<%--                            ${order.status}--%>
+<%--                        </td>--%>
                     </tr>
-                    <c:forEach var="orderDetail" items="${order.orderDetails}"
+                    <c:forEach var="orderItem" items="${order.orderItems}"
                                varStatus = "status">
                         <tr>
                             <th scope="row">
                                 <div class="d-flex align-items-center">
-                                    <img src="/images/product/${orderDetail.product.image}"
+                                    <img src="/images/product/${orderItem.courseDTO.image}"
                                          class="img-fluid me-5 rounded-circle"
                                          style="width: 80px; height: 80px;" alt="">
                                 </div>
                             </th>
                             <td>
                                 <p class="mb-0 mt-4">
-                                    <a href="/product/${orderDetail.product.id}" target="_blank">
-                                            ${orderDetail.product.name}
+                                    <a href="/product/${orderItem.courseDTO.courseId}" target="_blank">
+                                            ${orderItem.courseDTO.title}
                                     </a>
                                 </p>
                             </td>
                             <td>
                                 <p class="mb-0 mt-4">
                                     <fmt:formatNumber type="number"
-                                                      value="${orderDetail.price}" /> đ
+                                                      value="${orderItem.price}" /> đ
                                 </p>
                             </td>
                             <td>
                                 <div class="input-group quantity mt-4" style="width: 100px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
+<%--                                    <div class="input-group-btn">--%>
+<%--                                        <button class="btn btn-sm btn-minus rounded-circle bg-light border" >--%>
+<%--                                            <i class="fa fa-minus"></i>--%>
+<%--                                        </button>--%>
+<%--                                    </div>--%>
                                     <input type="text" class="form-control form-control-sm text-center border-0"
                                            value="${orderDetail.quantity}"
-                                           data-order-detail-id="${orderDetail.id}"
-                                           data-order-detail-price="${orderDetail.price}"
+                                           data-order-detail-id="${orderItem.orderItemId}"
+                                           data-order-detail-price="${orderItem.price}"
                                            data-order-detail-index="${status.index}">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
+<%--                                    <div class="input-group-btn">--%>
+<%--                                        <button class="btn btn-sm btn-plus rounded-circle bg-light border">--%>
+<%--                                            <i class="fa fa-plus"></i>--%>
+<%--                                        </button>--%>
+<%--                                    </div>--%>
                                 </div>
                             </td>
-                            <td>
-                                <p class="mb-0 mt-4" data-order-detail-id="${orderDetail.id}">
-                                    <fmt:formatNumber type="number"
-                                                      value="${orderDetail.price * orderDetail.quantity}"/> đ
-                                </p>
-                            </td>
+<%--                            <td>--%>
+<%--                                <p class="mb-0 mt-4" data-order-detail-id="${orderItem.orderItemId}">--%>
+<%--                                    <fmt:formatNumber type="number"--%>
+<%--                                                      value="${orderItem.price * orderDetail.quantity}"/> đ--%>
+<%--                                </p>--%>
+<%--                            </td>--%>
 
                         </tr>
                     </c:forEach>

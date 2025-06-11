@@ -59,12 +59,13 @@ public class CourseDTOService {
                 CartItem oldDetail = this.cartItemRepository.findByCartAndCourse(cart, courseDTO);
                 //
                 if (oldDetail == null) {
-                    CartItem ct = new CartItem();
-                    ct.setCart(cart);
-                    ct.setCourseDTO(courseDTO);
-                    ct.setPrice(ct.getPrice());
-//                    ct.setQuantity(quantity);
-                    this.cartItemRepository.save(ct);
+                    CartItem ci = new CartItem();
+                    ci.setCart(cart);
+                    ci.setCourseDTO(courseDTO);
+                    ci.setPrice(courseDTO.getPrice());
+//                    ci.setPrice(ct.getPrice());
+//                    ci.setQuantity(quantity);
+                    this.cartItemRepository.save(ci);
 
                     // update ct(sum)
                     int s = cart.getSum() + 1;
@@ -79,6 +80,7 @@ public class CourseDTOService {
         }
     }
 
+    @Transactional
     public void handleRemoveCartItem(long id, HttpSession session) {
         Optional<CartItem> cartItemOptional = this.cartItemRepository.findById(id);
         if (cartItemOptional.isPresent()) {
@@ -96,7 +98,7 @@ public class CourseDTOService {
                 this.cartRepository.save(cart);
             } else {
 //                this.cartRepository.deleteById(cart.getId());
-                this.cartRepository.deleteById(1l);
+                cartRepository.deleteCartItemsByCartId(cart.getId());
                 session.setAttribute("sum", 0);
             }
         }
@@ -116,9 +118,9 @@ public class CourseDTOService {
 
     @Transactional
     public void handlePlaceOrder(
-            User user, HttpSession session
-            ,String receiverName, String receiverAddress, String receiverPhone
-            ) {
+            User user, HttpSession session,
+//            ,String receiverName, String receiverAddress, String receiverPhone,
+            List<Long> cartItemIds) {
 
         Cart cart = this.cartRepository.findByUser(user);
         if (cart != null) {
@@ -141,24 +143,42 @@ public class CourseDTOService {
                 order = this.orderRepository.save(order);
 
                 // create orderItem
-                for (CartItem ct : cartItems) {
+
+
+//                for (CartItem ct : cartItems) {
+//                    OrderItem orderItem = new OrderItem();
+//                    orderItem.setOrder(order);
+//                    orderItem.setCourse(cd.getCourse());
+//                    orderItem.setCourse(ct.getCourseDTO());
+//                    orderItem.setPrice(ct.getPrice());
+//
+//                    this.orderItemRepository.save(orderItem);
+//                }
+
+                for(long c : cartItemIds){
+                    CartItem cartItem = cartItemRepository.findById(c).get();
                     OrderItem orderItem = new OrderItem();
                     orderItem.setOrder(order);
-//                    orderItem.setCourse(cd.getCourse());
-                    orderItem.setCourse(ct.getCourseDTO());
-                    orderItem.setPrice(ct.getPrice());
-
+                    orderItem.setCourse(cartItem.getCourseDTO());
+                    orderItem.setPrice(cartItem.getPrice());
                     this.orderItemRepository.save(orderItem);
                 }
 
-                for (CartItem ct : cartItems) {
-                    this.cartItemRepository.deleteById(ct.getId());
+//                for (CartItem ct : cartItems) {
+//                    this.cartItemRepository.deleteById(ct.getId());
+//                }
+
+                for (long c : cartItemIds) {
+                    this.cartItemRepository.deleteById(c);
+                    cart.setSum(cart.getSum() - 1);
                 }
 
-                cartRepository.deleteCartItemsByCartId(cart.getId());
+                if(cart.getSum() == 0) {
+                    cartRepository.deleteCartItemsByCartId(cart.getId());
+                }
 
 
-                session.setAttribute("sum", 0);
+                session.setAttribute("sum", cart.getSum());
             }
         }
 

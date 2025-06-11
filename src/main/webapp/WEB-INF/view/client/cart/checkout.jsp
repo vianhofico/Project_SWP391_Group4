@@ -100,19 +100,8 @@
                                 <fmt:formatNumber type="number" value="${cartItem.courseDTO.price}" /> đ
                             </p>
                         </td>
-<%--                        <td>--%>
-<%--                            <div class="input-group quantity mt-4" style="width: 100px;">--%>
-<%--                                <input type="text"--%>
-<%--                                       class="form-control form-control-sm text-center border-0"--%>
-<%--                                       value="${cartDetail.quantity}">--%>
-<%--                            </div>--%>
-<%--                        </td>--%>
-<%--                        <td>--%>
-<%--                            <p class="mb-0 mt-4" data-cart-detail-id="${cartItem.id}">--%>
-<%--                                <fmt:formatNumber type="number"--%>
-<%--                                                  value="${cartItem.courseDTO.price}" /> đ--%>
-<%--                            </p>--%>
-<%--                        </td>--%>
+                        <input type="hidden" class="cart-item-id"
+                               name="cartItemIds" value="${cartItem.id}" />
                     </tr>
                 </c:forEach>
 
@@ -120,26 +109,26 @@
             </table>
         </div>
         <c:if test="${not empty cartItems}">
-            <form:form action="/place-order" method="post" modelAttribute="cart">
+            <form:form id="checkoutForm" action="/place-order" method="post" modelAttribute="cart">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <div class="mt-5 row g-4 justify-content-start">
                     <div class="col-12 col-md-6">
                         <div class="p-4 ">
-                            <h5>Thông Tin Người Nhận
-                            </h5>
+<%--                            <h5>Thông Tin Người Nhận--%>
+<%--                            </h5>--%>
                             <div class="row">
-                                <div class="col-12 form-group mb-3">
-                                    <label>Tên người nhận</label>
-                                    <input class="form-control" name="receiverName" required />
-                                </div>
-                                <div class="col-12 form-group mb-3">
-                                    <label>Địa chỉ người nhận</label>
-                                    <input class="form-control" name="receiverAddress" required />
-                                </div>
-                                <div class="col-12 form-group mb-3">
-                                    <label>Số điện thoại</label>
-                                    <input class="form-control" name="receiverPhone" required />
-                                </div>
+<%--                                <div class="col-12 form-group mb-3">--%>
+<%--                                    <label>Tên người nhận</label>--%>
+<%--                                    <input class="form-control" name="receiverName" required />--%>
+<%--                                </div>--%>
+<%--                                <div class="col-12 form-group mb-3">--%>
+<%--                                    <label>Địa chỉ người nhận</label>--%>
+<%--                                    <input class="form-control" name="receiverAddress" required />--%>
+<%--                                </div>--%>
+<%--                                <div class="col-12 form-group mb-3">--%>
+<%--                                    <label>Số điện thoại</label>--%>
+<%--                                    <input class="form-control" name="receiverPhone" required />--%>
+<%--                                </div>--%>
                                 <div class="mt-4">
                                     <i class="fas fa-arrow-left"></i>
                                     <a href="/cart">Quay lại giỏ hàng</a>
@@ -154,18 +143,18 @@
                                                             Toán</span>
                                 </h1>
 
-                                <div class="d-flex justify-content-between">
-                                    <h5 class="mb-0 me-4">Phí vận chuyển</h5>
-                                    <div class="">
-                                        <p class="mb-0">0 đ</p>
-                                    </div>
-                                </div>
-                                <div class="mt-3 d-flex justify-content-between">
-                                    <h5 class="mb-0 me-4">Hình thức</h5>
-                                    <div class="">
-                                        <p class="mb-0">Thanh toán khi nhận hàng (COD)</p>
-                                    </div>
-                                </div>
+<%--                                <div class="d-flex justify-content-between">--%>
+<%--                                    <h5 class="mb-0 me-4">Phí vận chuyển</h5>--%>
+<%--                                    <div class="">--%>
+<%--                                        <p class="mb-0">0 đ</p>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                                <div class="mt-3 d-flex justify-content-between">--%>
+<%--                                    <h5 class="mb-0 me-4">Hình thức</h5>--%>
+<%--                                    <div class="">--%>
+<%--                                        <p class="mb-0">Thanh toán khi nhận hàng (COD)</p>--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
                             </div>
                             <div
                                     class="py-4 mb-4 border-top border-bottom d-flex justify-content-between">
@@ -175,7 +164,7 @@
                                 </p>
                             </div>
 
-                            <button
+                            <button id="submitOrderBtn"
                                     class="btn border-secondary rounded-pill px-4 py-3 text-primary text-uppercase mb-4 ms-4">
                                 Xác nhận thanh toán
                             </button>
@@ -209,6 +198,29 @@
 
 <!-- Template Javascript -->
 <script src="/client/js/main.js"></script>
+<script>
+    $(document).ready(function () {
+        // Lấy params từ URL
+        const params = new URLSearchParams(window.location.search);
+        const cartItemIds = params.getAll("cartItemIds");
+
+        // Kiểm tra có dữ liệu không
+        if (cartItemIds.length === 0) {
+            alert("Không tìm thấy sản phẩm nào để thanh toán.");
+            return;
+        }
+
+        // Tạo input hidden cho mỗi ID
+        cartItemIds.forEach(id => {
+            $('<input>').attr({
+                type: 'hidden',
+                name: 'cartItemIds',
+                value: id
+            }).appendTo('#checkoutForm');
+        });
+    });
+</script>
+
 </body>
 
 </html>
