@@ -1,7 +1,7 @@
 package com.javaweb.controller;
 
 import com.javaweb.dtos.response.admin.ReportDTO;
-import com.javaweb.dtos.request.ReportRequest;
+import com.javaweb.dtos.request.ReportSearchRequest;
 import com.javaweb.services.ReportService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -23,8 +23,8 @@ public class ReportController {
     private final ReportService reportService;
 
     @GetMapping
-    public Page<ReportDTO> getAllReports(@ModelAttribute @Valid ReportRequest reportRequest, Pageable pageable) {
-        return reportService.getAllReports(reportRequest, pageable);
+    public Page<ReportDTO> getAllReports(@ModelAttribute @Valid ReportSearchRequest reportSearchRequest, Pageable pageable) {
+        return reportService.getAllReports(reportSearchRequest, pageable);
     }
 
     @PutMapping("/{reportId}")

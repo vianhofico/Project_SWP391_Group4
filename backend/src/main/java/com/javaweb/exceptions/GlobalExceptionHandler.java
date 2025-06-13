@@ -70,8 +70,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(error);
     }
 
-    @ExceptionHandler(EmailExistException.class)
-    public ResponseEntity<ErrorResponse> handleEmailExistException(EmailExistException ex, HttpServletRequest request) {
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleEmailExistException(ResourceAlreadyExistsException ex, HttpServletRequest request) {
         List<String> messages = List.of(
                 ex.getMessage() != null ? ex.getMessage() : ErrorCode.RESOURCE_ALREADY_EXISTS.getMessage()
         );

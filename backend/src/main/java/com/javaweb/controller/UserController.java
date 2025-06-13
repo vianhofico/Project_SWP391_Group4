@@ -2,7 +2,6 @@ package com.javaweb.controller;
 
 import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.UserSearchRequest;
-import com.javaweb.dtos.request.UserSortRequest;
 import com.javaweb.dtos.response.admin.*;
 import com.javaweb.services.*;
 import jakarta.validation.Valid;
@@ -34,13 +33,13 @@ public class UserController {
     private final CartService cartService;
 
     @GetMapping("/learners")
-    public Page<UserDTO> getAllLearners(@ModelAttribute @Valid UserSearchRequest userSearchRequest, @ModelAttribute @Valid UserSortRequest userSortRequest, Pageable pageable) {
-        return userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
+    public Page<UserDTO> getAllLearners(@ModelAttribute @Valid UserSearchRequest userSearchRequest, Pageable pageable) {
+        return userService.getAllUsers(userSearchRequest, pageable);
     }
 
     @GetMapping("/admins")
-    public Page<UserDTO> getAllAdmins(@ModelAttribute @Valid UserSearchRequest userSearchRequest, @ModelAttribute @Valid UserSortRequest userSortRequest, Pageable pageable) {
-        return userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
+    public Page<UserDTO> getAllAdmins(@ModelAttribute @Valid UserSearchRequest userSearchRequest, Pageable pageable) {
+        return userService.getAllUsers(userSearchRequest, pageable);
     }
 
     @GetMapping("/{userId}")

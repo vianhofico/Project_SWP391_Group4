@@ -14,6 +14,9 @@ public interface PostService {
 
     Page<ForumPostDTO> getAllPostsByTopicId(Long postTopicId, Pageable pageable, PostSearchRequest postSearchRequest);
 
-    void deletePost(Long postId);
+    void changeStatus(Long postId);//deleted or active
+
+    PostDTO getPostById(Long postId);
+
 
 }
