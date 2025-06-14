@@ -1,16 +1,17 @@
 package com.javaweb.entities;
 
+
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name = "Chapters")
-public class Chapter {
+@Table(name = "Lessons")
+public class Lesson {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer chapterId;
+    private Integer lessonId;
 
     @Column(name = "title", nullable = false, length = 255,columnDefinition = "NVARCHAR(255)")
     private String title;
@@ -18,41 +19,54 @@ public class Chapter {
     @Column(name = "description", length = Integer.MAX_VALUE,columnDefinition = "NVARCHAR(250)")
     private String description;
 
-    @Column(name = "created_at", updatable = false)
+    @Column(name = "videoUrl", length = Integer.MAX_VALUE)
+    private String videoUrl;
+
+    @Column(name = "duration")
+    private Integer duration;
+
+    @Column(name = "createdAt", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "updated_at")
+    @Column(name = "updatedAt")
     private LocalDateTime updatedAt;
 
-    @Column(name = "chapter_order", nullable = false)
-    private Integer chapterOrder;
+    @Column(name = "lesson_order")
+    private Integer lessonOrder;
 
-
-
-    @Column(name = "is_published")
+    @Column(name = "isPublished")
     private Boolean isPublished = true;
 
     @ManyToOne
-    @JoinColumn(name = "course_id", nullable = false)
+    @JoinColumn(name = "courseId", nullable = false)
     private Course course;
 
-    @OneToMany(mappedBy = "chapter", fetch = FetchType.LAZY)
-    private List<Lesson> lessons;
+    @ManyToOne
+    @JoinColumn(name = "chapterId", nullable = false)
+    private Chapter chapter;
 
-    public List<Lesson> getLessons() {
-        return lessons;
+    @OneToMany(mappedBy = "lesson", fetch = FetchType.LAZY)
+    private List<Exam> exams;
+
+    public List<Exam> getExams() {
+        return exams;
     }
 
-    public void setLessons(List<Lesson> lessons) {
-        this.lessons = lessons;
+    public void setExams(List<Exam> exams) {
+        this.exams = exams;
     }
 
-    public Integer getChapterId() {
-        return chapterId;
+    // Getters and setters
+    // Constructors
+    // toString()
+
+
+    public Integer getLessonId() {
+        return lessonId;
     }
 
-    public void setChapterId(Integer chapterId) {
-        this.chapterId = chapterId;
+    public void setLessonId(Integer lessonId) {
+        this.lessonId = lessonId;
     }
 
     public String getTitle() {
@@ -69,6 +83,30 @@ public class Chapter {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getVideoUrl() {
+        return videoUrl;
+    }
+
+    public void setVideoUrl(String videoUrl) {
+        this.videoUrl = videoUrl;
+    }
+
+    public Integer getDuration() {
+        return duration;
+    }
+
+    public Integer getLessonOrder() {
+        return lessonOrder;
+    }
+
+    public void setLessonOrder(Integer lessonOrder) {
+        this.lessonOrder = lessonOrder;
+    }
+
+    public void setDuration(Integer duration) {
+        this.duration = duration;
     }
 
     public LocalDateTime getCreatedAt() {
@@ -88,14 +126,6 @@ public class Chapter {
     }
 
 
-    public Integer getChapterOrder() {
-        return chapterOrder;
-    }
-
-    public void setChapterOrder(Integer chapterOrder) {
-        this.chapterOrder = chapterOrder;
-    }
-
     public Boolean getPublished() {
         return isPublished;
     }
@@ -110,6 +140,14 @@ public class Chapter {
 
     public void setCourse(Course course) {
         this.course = course;
+    }
+
+    public Chapter getChapter() {
+        return chapter;
+    }
+
+    public void setChapter(Chapter chapter) {
+        this.chapter = chapter;
     }
 
     @PrePersist

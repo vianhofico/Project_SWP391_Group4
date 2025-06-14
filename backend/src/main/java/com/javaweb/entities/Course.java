@@ -1,60 +1,133 @@
 package com.javaweb.entities;
 
+
 import jakarta.persistence.*;
-import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Getter
-@Setter
-@Builder
 @Entity
 @Table(name = "Courses")
 public class Course {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "courseId")
-    private Long courseId;
+    private Integer courseId;
 
-    @Column(name = "title", length = 255)
+    @Column(name = "title", nullable = false, length = 255,columnDefinition = "NVARCHAR(255)")
     private String title;
 
-    @Column(name = "description")
+    @Column(name = "description", length = Integer.MAX_VALUE,columnDefinition = "NVARCHAR(50)")
     private String description;
 
-    @Column(name = "price")
-    private Long price;
+    @Column(name = "price", precision = 10, scale = 2)
+    private BigDecimal price;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at", updatable = false)
     private LocalDateTime createdAt;
 
-    @Column(name = "rating")
-    private Float rating;
+    @Column(name = "updated_at")
+    private LocalDateTime updatedAt;
 
-    @Column(name = "imageUrl")
+    @Column(name = "rating", precision = 3, scale = 2)
+    private BigDecimal rating;
+
+    @Column(name = "image_url", length = Integer.MAX_VALUE)
     private String imageUrl;
 
-    @Column(name = "videoTrailerUrl")
-    private String videoTrailerUrl;
+    @Column(name = "video_trial_url", length = Integer.MAX_VALUE)
+    private String videoTrialUrl;
 
-    @Column(name = "status")
-    Boolean status;
+    @Column(name = "status",columnDefinition = "NVARCHAR(50)")
+    private Boolean status = true;
 
-    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<Enrollment> enrollments = new ArrayList<>();
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
 
-    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<Chapter> chapters = new ArrayList<>();
+    @PreUpdate
+    protected void onUpdate() {
+        updatedAt = LocalDateTime.now();
+    }
 
-    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<OrderItem> orderItems = new ArrayList<>();
+    public Integer getCourseId() {
+        return courseId;
+    }
 
-    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private List<Rating> ratings = new ArrayList<>();
+    public void setCourseId(Integer courseId) {
+        this.courseId = courseId;
+    }
 
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
+    }
+
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setRating(BigDecimal rating) {
+        this.rating = rating;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(LocalDateTime updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
+    public BigDecimal getRating() {
+        return rating;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getVideoTrialUrl() {
+        return videoTrialUrl;
+    }
+
+    public void setVideoTrialUrl(String videoTrialUrl) {
+        this.videoTrialUrl = videoTrialUrl;
+    }
+
+    public Boolean getStatus() {
+        return status;
+    }
+
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }
+
