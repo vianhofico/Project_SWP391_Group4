@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,7 +37,10 @@ public class CourseDTOService {
         return this.cartRepository.findByUser(user);
     }
 
-    public void handleAddCourseToCart(String email, long courseId, HttpSession session) {
+    public void handleAddCourseToCart(String email,
+                                      long courseId
+                                      ,HttpSession session
+    ) {
         User user = this.userService.getUserByEmail(email);
 
         if (user != null) {
@@ -57,24 +61,19 @@ public class CourseDTOService {
                 CourseDTO courseDTO = courseDTOOptional.get();
                 //Check san pham da tung duoc them vao gio hang truoc day chua
                 CartItem oldDetail = this.cartItemRepository.findByCartAndCourse(cart, courseDTO);
-                //
+
                 if (oldDetail == null) {
                     CartItem ci = new CartItem();
                     ci.setCart(cart);
                     ci.setCourseDTO(courseDTO);
                     ci.setPrice(courseDTO.getPrice());
-//                    ci.setPrice(ct.getPrice());
-//                    ci.setQuantity(quantity);
                     this.cartItemRepository.save(ci);
 
                     // update ct(sum)
                     int s = cart.getSum() + 1;
                     cart.setSum(s);
                     this.cartRepository.save(cart);
-                    session.setAttribute("sum", s);
-                } else {
-//                    oldDetail.setQuantity(oldDetail.getQuantity() + quantity);
-                    this.cartItemRepository.save(oldDetail);
+//                    session.setAttribute("sum", s);
                 }
             }
         }
@@ -118,13 +117,17 @@ public class CourseDTOService {
 
     @Transactional
     public void handlePlaceOrder(
-            User user, HttpSession session,
+            User user,
+            HttpSession session,
 //            ,String receiverName, String receiverAddress, String receiverPhone,
             List<Long> cartItemIds) {
 
         Cart cart = this.cartRepository.findByUser(user);
         if (cart != null) {
-            List<CartItem> cartItems = cart.getCartItems();
+            List<CartItem> cartItems = new ArrayList<>();
+            for(long cartId : cartItemIds) {
+                cartItems.add(this.cartItemRepository.findById(cartId).get());
+            }
 
             if (cartItems != null) {
                 //create order
@@ -133,7 +136,7 @@ public class CourseDTOService {
 //                order.setReceiverName(receiverName);
 //                order.setReceiverAddress(receiverAddress);
 //                order.setReceiverPhone(receiverPhone);
-                order.setStatus("PENDING");
+                order.setStatus("COMPLETED");
 
                 double sum = 0;
                 for (CartItem ct : cartItems) {
@@ -143,17 +146,6 @@ public class CourseDTOService {
                 order = this.orderRepository.save(order);
 
                 // create orderItem
-
-
-//                for (CartItem ct : cartItems) {
-//                    OrderItem orderItem = new OrderItem();
-//                    orderItem.setOrder(order);
-//                    orderItem.setCourse(cd.getCourse());
-//                    orderItem.setCourse(ct.getCourseDTO());
-//                    orderItem.setPrice(ct.getPrice());
-//
-//                    this.orderItemRepository.save(orderItem);
-//                }
 
                 for(long c : cartItemIds){
                     CartItem cartItem = cartItemRepository.findById(c).get();
@@ -178,7 +170,7 @@ public class CourseDTOService {
                 }
 
 
-                session.setAttribute("sum", cart.getSum());
+//                session.setAttribute("sum", cart.getSum());
             }
         }
 
