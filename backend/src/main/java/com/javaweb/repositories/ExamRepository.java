@@ -1,6 +1,6 @@
 package com.javaweb.repositories;
 
-import he.swp391_trial.entity.Exam;
+import com.javaweb.entities.Exam;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

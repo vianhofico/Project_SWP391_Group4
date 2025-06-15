@@ -1,6 +1,6 @@
 package com.javaweb.repositories;
 
-import he.swp391_trial.entity.Course;
+import com.javaweb.entities.Course;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

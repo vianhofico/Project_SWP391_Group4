@@ -1,6 +1,6 @@
 package com.javaweb.dtos;
 
-import he.swp391_trial.entity.Question;
+import com.javaweb.entities.Question;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
