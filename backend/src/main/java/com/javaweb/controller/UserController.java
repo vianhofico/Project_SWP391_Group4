@@ -2,13 +2,17 @@ package com.javaweb.controller;
 
 import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.UserSearchRequest;
+import com.javaweb.dtos.request.UserSortRequest;
 import com.javaweb.dtos.response.admin.*;
+import com.javaweb.entities.User;
 import com.javaweb.services.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -33,13 +37,23 @@ public class UserController {
     private final CartService cartService;
 
     @GetMapping("/learners")
-    public Page<UserDTO> getAllLearners(@ModelAttribute @Valid UserSearchRequest userSearchRequest, Pageable pageable) {
-        return userService.getAllUsers(userSearchRequest, pageable);
+    public Page<UserDTO> getAllLearners(@ModelAttribute @Valid UserSearchRequest userSearchRequest, @ModelAttribute @Valid UserSortRequest userSortRequest, Pageable pageable) {
+        return userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
     }
-
+    @GetMapping("/search")
+    public ResponseEntity<Page<User>> searchUsers(
+            @RequestParam(required = false) String keyword,
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false) Boolean isActive,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
+        return ResponseEntity.ok(userService.searchUsers(keyword, role, isActive, pageable));
+    }
     @GetMapping("/admins")
-    public Page<UserDTO> getAllAdmins(@ModelAttribute @Valid UserSearchRequest userSearchRequest, Pageable pageable) {
-        return userService.getAllUsers(userSearchRequest, pageable);
+    public Page<UserDTO> getAllAdmins(@ModelAttribute @Valid UserSearchRequest userSearchRequest, @ModelAttribute @Valid UserSortRequest userSortRequest, Pageable pageable) {
+        return userService.getAllUsers(userSearchRequest, userSortRequest, pageable);
     }
 
     @GetMapping("/{userId}")

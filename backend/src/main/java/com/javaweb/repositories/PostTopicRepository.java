@@ -12,5 +12,4 @@ public interface PostTopicRepository extends JpaRepository<PostTopic, Long> {
     @Query("SELECT pt FROM PostTopic pt WHERE pt.name LIKE %:name% ")
     List<PostTopic> findAllPostTopics(String name, Sort sort);
 
-    PostTopic findByName(String name);
 }

@@ -74,22 +74,9 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    public void changeStatus(Long postId) {
+    public void deletePost(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Cannot find Post with id: " + postId));
-        if (post.getStatus().equalsIgnoreCase("ACTIVE")) {
-            post.setStatus("DELETED");
-        } else if (post.getStatus().equalsIgnoreCase("DELETED")) {
-            post.setStatus("ACTIVE");
-        }
+        post.setStatus("DELETED");
         postRepository.save(post);
-
     }
-
-    @Override
-    public PostDTO getPostById(Long postId) {
-        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Cannot find Post with id: " + postId));
-        return dtoConverter.toAdminPostDTO(post);
-    }
-
-
 }

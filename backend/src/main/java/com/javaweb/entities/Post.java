@@ -31,7 +31,7 @@ public class Post {
     private LocalDateTime createdAt;
 
     // DELETED / ACTIVE
-    @Column(name = "status") // lưu trạng thái bài viết (vì còn ràng buộc với reports nên không thể xóa, tại cần truy vết lại những bài viết bị báo cáo đã xóa)
+    @Column(name = "status") // lưu trạng thái bài viết (vì còn ràng buộc với reports nên không thể xóa, tại cần truy vấn lại những bài viết bị báo cáo đã xóa)
     private String status;
 
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

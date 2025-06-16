@@ -19,7 +19,6 @@ public class DTOConverter {
         if (comment == null) return null;
         CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
         commentDTO.setCreatedAt(dateTimeConverter.toString(comment.getCreatedAt()));
-        commentDTO.setUser(toUserDTO(comment.getUser()));
         return commentDTO;
     }
 
