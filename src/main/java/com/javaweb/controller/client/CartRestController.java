@@ -3,12 +3,14 @@ package com.javaweb.controller.client;
 import com.javaweb.entity.Cart;
 import com.javaweb.entity.CartItem;
 import com.javaweb.entity.User;
+import com.javaweb.entity.dto.CourseDTO;
 import com.javaweb.repository.CartItemRepository;
 import com.javaweb.service.CourseDTOService;
 import com.javaweb.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,13 @@ public class CartRestController {
 
     @Autowired
     private CourseDTOService courseDTOService;
+
+
+    @GetMapping("/home")
+    public ResponseEntity<List<CourseDTO>> getAllCourses() {
+        List<CourseDTO> courseDTOList = this.courseDTOService.getAllCourses();
+        return ResponseEntity.ok(courseDTOList);
+    }
 
     @GetMapping("/cart")
     public ResponseEntity<List<CartItem>> getCart(HttpServletRequest request) {
@@ -45,29 +54,25 @@ public class CartRestController {
         return ResponseEntity.ok(totalPrice);
     }
 
+    @PostMapping("/add-course-to-cart/{id}")
+    public ResponseEntity<Void> addCourseToCart(@PathVariable long id, HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+//        String email = (String) session.getAttribute("email");
+        long courseId = id;
+        this.courseDTOService.handleAddCourseToCart("user@gmail.com",
+                id
+                ,session
+        ); // fake command
+//        this.courseDTOService.handleAddCourseToCart(email, courseId, session); real command
+        return ResponseEntity.ok().build();
+    }
+
     // API xoá sản phẩm khỏi giỏ hàng
     @DeleteMapping("/delete-cart-course/{id}")
     public ResponseEntity<Void> deleteCartItem(@PathVariable("id") long id, HttpSession session) {
         courseDTOService.handleRemoveCartItem(id, session);
         return ResponseEntity.noContent().build();
     }
-
-
-//    @PostMapping("/confirm-checkout")
-//    public ResponseEntity<List<CartItem>> confirmCheckout(@RequestBody List<Long> cartItemIds) {
-//
-//        // Lấy danh sách cart detail từ DB dựa theo id
-//        List<CartItem> selectedCartItems = new ArrayList<>();
-//        double totalPrice = 0;
-//        for(Long cartItemId : cartItemIds){
-//            Optional<CartItem> cd = cartItemRepository.findById(cartItemId);
-//            selectedCartItems.add(cd.get());
-//            totalPrice += cd.get().getPrice();
-//        }
-//
-//        return ResponseEntity.ok(selectedCartItems);
-//    }
-//
 
     @PostMapping("/confirm-checkout")
     public ResponseEntity<List<CartItem>> confirmCheckout(@RequestBody List<Long> cartItemIds) {
@@ -95,19 +100,17 @@ public class CartRestController {
             @RequestBody List<Long> cartItemIds
     ) {
         HttpSession session = request.getSession(false);
-//        User currentUser = new User();// null
-        User currentUser = this.userService.getUserByEmail("user@gmail.com");// null
-//        long id = (long) session.getAttribute("id");
+        User currentUser = this.userService.getUserByEmail("user@gmail.com");
         currentUser.setUserId(1l);
 
         this.courseDTOService.handlePlaceOrder(currentUser,
-//                session,
+                session,
                 cartItemIds);
-//        this.courseDTOService.handlePlaceOrder(currentUser, session);
-        System.out.println(cartItemIds.toString());
 
-        return ResponseEntity.noContent().build();
+        return ResponseEntity.ok().build(); // status 200 (safe hơn cho frontend)
+
     }
+
 
 
 

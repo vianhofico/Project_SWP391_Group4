@@ -1,5 +1,6 @@
 package com.javaweb.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.javaweb.entity.dto.CourseDTO;
 import jakarta.persistence.*;
@@ -13,7 +14,8 @@ public class CartItem {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
-    @JsonIgnore
+//    @JsonIgnore
+    @JsonBackReference
     private Cart cart;
 
     @ManyToOne
