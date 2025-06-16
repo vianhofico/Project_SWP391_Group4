@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -38,7 +39,11 @@ public class CourseDTOService {
 
     public void handleAddCourseToCart(String email,
                                       long courseId
+<<<<<<< HEAD:backend/src/main/java/com/javaweb/service/CourseDTOService.java
 //                                      ,HttpSession session
+=======
+                                      ,HttpSession session
+>>>>>>> 4a8d9ff32eb9520727c8f06de377ebfbc1d08484:src/main/java/com/javaweb/service/CourseDTOService.java
     ) {
         User user = this.userService.getUserByEmail(email);
 
@@ -60,14 +65,12 @@ public class CourseDTOService {
                 CourseDTO courseDTO = courseDTOOptional.get();
                 //Check san pham da tung duoc them vao gio hang truoc day chua
                 CartItem oldDetail = this.cartItemRepository.findByCartAndCourse(cart, courseDTO);
-                //
+
                 if (oldDetail == null) {
                     CartItem ci = new CartItem();
                     ci.setCart(cart);
                     ci.setCourseDTO(courseDTO);
                     ci.setPrice(courseDTO.getPrice());
-//                    ci.setPrice(ct.getPrice());
-//                    ci.setQuantity(quantity);
                     this.cartItemRepository.save(ci);
 
                     // update ct(sum)
@@ -75,9 +78,12 @@ public class CourseDTOService {
                     cart.setSum(s);
                     this.cartRepository.save(cart);
 //                    session.setAttribute("sum", s);
+<<<<<<< HEAD:backend/src/main/java/com/javaweb/service/CourseDTOService.java
                 } else {
 //                    oldDetail.setQuantity(oldDetail.getQuantity() + quantity);
                     this.cartItemRepository.save(oldDetail);
+=======
+>>>>>>> 4a8d9ff32eb9520727c8f06de377ebfbc1d08484:src/main/java/com/javaweb/service/CourseDTOService.java
                 }
             }
         }
@@ -128,7 +134,10 @@ public class CourseDTOService {
 
         Cart cart = this.cartRepository.findByUser(user);
         if (cart != null) {
-            List<CartItem> cartItems = cart.getCartItems();
+            List<CartItem> cartItems = new ArrayList<>();
+            for(long cartId : cartItemIds) {
+                cartItems.add(this.cartItemRepository.findById(cartId).get());
+            }
 
             if (cartItems != null) {
                 //create order

@@ -1,6 +1,8 @@
 package com.javaweb.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.javaweb.entity.dto.CourseDTO;
 import jakarta.persistence.*;
 import org.hibernate.mapping.ToOne;
@@ -23,6 +25,8 @@ public class OrderItem {
 
     @ManyToOne
     @JoinColumn(name = "orderId")
+//    @JsonIgnore
+    @JsonBackReference
     private Order order;
 
 

@@ -1,6 +1,7 @@
 package com.javaweb.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -20,6 +21,7 @@ public class Cart {
     private User user;
 
     @OneToMany(mappedBy = "cart")
+    @JsonManagedReference
     List<CartItem> cartItems;
 
     public long getId() {
