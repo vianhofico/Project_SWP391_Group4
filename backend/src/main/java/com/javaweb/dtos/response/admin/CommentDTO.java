@@ -10,6 +10,7 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
+@ToString(exclude = {"parentComment", "post", "childComments"})
 public class CommentDTO {
 
     private Long commentId;
@@ -17,5 +18,4 @@ public class CommentDTO {
     private String createdAt;
     private CommentDTO parentComment;
     private PostDTO post;
-    private UserDTO user;
 }

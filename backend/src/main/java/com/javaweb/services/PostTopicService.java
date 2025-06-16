@@ -9,7 +9,4 @@ public interface PostTopicService {
 
     List<PostTopicDTO> getAllPostTopics(PostTopicSearchRequest postTopicSearchRequest);
 
-    void createPostTopic(PostTopicDTO postTopicDTO);
-
-    void editPostTopic(PostTopicDTO postTopicDTO, Long postTopicId);
 }
