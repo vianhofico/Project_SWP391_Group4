@@ -20,7 +20,7 @@ public class CourseDTO {
     @Column(name = "courseId")
     private Long courseId;
 
-    @Column(name = "title", length = 255)
+    @Column(name = "title", length = 255, columnDefinition="NVARCHAR(255)")
     private String title;
 
     @Column(name = "description")

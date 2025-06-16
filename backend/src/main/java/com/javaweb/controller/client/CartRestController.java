@@ -61,7 +61,11 @@ public class CartRestController {
         long courseId = id;
         this.courseDTOService.handleAddCourseToCart("user@gmail.com",
                 id
+<<<<<<< HEAD:backend/src/main/java/com/javaweb/controller/client/CartRestController.java
 //                ,session
+=======
+                ,session
+>>>>>>> 4a8d9ff32eb9520727c8f06de377ebfbc1d08484:src/main/java/com/javaweb/controller/client/CartRestController.java
         ); // fake command
 //        this.courseDTOService.handleAddCourseToCart(email, courseId, session); real command
         return ResponseEntity.ok().build();
@@ -100,19 +104,21 @@ public class CartRestController {
             @RequestBody List<Long> cartItemIds
     ) {
         HttpSession session = request.getSession(false);
-//        User currentUser = new User();// null
-        User currentUser = this.userService.getUserByEmail("user@gmail.com");// null
-//        long id = (long) session.getAttribute("id");
+        User currentUser = this.userService.getUserByEmail("user@gmail.com");
         currentUser.setUserId(1l);
 
         this.courseDTOService.handlePlaceOrder(currentUser,
                 session,
                 cartItemIds);
+<<<<<<< HEAD:backend/src/main/java/com/javaweb/controller/client/CartRestController.java
 //        this.courseDTOService.handlePlaceOrder(currentUser, session);
+=======
+>>>>>>> 4a8d9ff32eb9520727c8f06de377ebfbc1d08484:src/main/java/com/javaweb/controller/client/CartRestController.java
 
         return ResponseEntity.ok().build(); // status 200 (safe hơn cho frontend)
 
     }
+
 
 
 
