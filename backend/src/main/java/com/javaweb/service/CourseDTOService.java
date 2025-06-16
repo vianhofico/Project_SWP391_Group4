@@ -36,7 +36,10 @@ public class CourseDTOService {
         return this.cartRepository.findByUser(user);
     }
 
-    public void handleAddCourseToCart(String email, long courseId, HttpSession session) {
+    public void handleAddCourseToCart(String email,
+                                      long courseId
+//                                      ,HttpSession session
+    ) {
         User user = this.userService.getUserByEmail(email);
 
         if (user != null) {
@@ -71,7 +74,7 @@ public class CourseDTOService {
                     int s = cart.getSum() + 1;
                     cart.setSum(s);
                     this.cartRepository.save(cart);
-                    session.setAttribute("sum", s);
+//                    session.setAttribute("sum", s);
                 } else {
 //                    oldDetail.setQuantity(oldDetail.getQuantity() + quantity);
                     this.cartItemRepository.save(oldDetail);
@@ -118,7 +121,8 @@ public class CourseDTOService {
 
     @Transactional
     public void handlePlaceOrder(
-            User user, HttpSession session,
+            User user,
+            HttpSession session,
 //            ,String receiverName, String receiverAddress, String receiverPhone,
             List<Long> cartItemIds) {
 
@@ -133,7 +137,7 @@ public class CourseDTOService {
 //                order.setReceiverName(receiverName);
 //                order.setReceiverAddress(receiverAddress);
 //                order.setReceiverPhone(receiverPhone);
-                order.setStatus("PENDING");
+                order.setStatus("COMPLETED");
 
                 double sum = 0;
                 for (CartItem ct : cartItems) {
@@ -143,17 +147,6 @@ public class CourseDTOService {
                 order = this.orderRepository.save(order);
 
                 // create orderItem
-
-
-//                for (CartItem ct : cartItems) {
-//                    OrderItem orderItem = new OrderItem();
-//                    orderItem.setOrder(order);
-//                    orderItem.setCourse(cd.getCourse());
-//                    orderItem.setCourse(ct.getCourseDTO());
-//                    orderItem.setPrice(ct.getPrice());
-//
-//                    this.orderItemRepository.save(orderItem);
-//                }
 
                 for(long c : cartItemIds){
                     CartItem cartItem = cartItemRepository.findById(c).get();
@@ -178,7 +171,7 @@ public class CourseDTOService {
                 }
 
 
-                session.setAttribute("sum", cart.getSum());
+//                session.setAttribute("sum", cart.getSum());
             }
         }
 
