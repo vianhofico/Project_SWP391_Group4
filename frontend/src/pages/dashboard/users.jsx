@@ -5,7 +5,7 @@ import {
     Avatar,
     Chip,
     Tooltip,
-    Progress,    CardHeader,
+    Progress, CardHeader,
 
 } from "@material-tailwind/react";
 import {EllipsisVerticalIcon} from "@heroicons/react/24/outline";
@@ -13,14 +13,15 @@ import {authorsTableData, projectsTableData} from "@/data";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {Link, useLocation, useSearchParams} from "react-router-dom";
+import {getAllUsers} from "@/api/userApi.js";
 
 export function Users() {
 
     const [userList, setUserList] = useState([]);
     const [sortField, setSortField] = useState("");
     const [sortOrder, setSortOrder] = useState("");
-    const [searchQuery, setSearchQuery] = useState("");
-    const [statusFilter, setStatusFilter] = useState("");
+    const [fullName, setFullName] = useState("");
+    const [status, setStatus] = useState("");
     const [checkChange, setCheckChange] = useState(true);
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(10);
@@ -40,17 +41,16 @@ export function Users() {
     useEffect(() => {
         const fetchUsers = async () => {
             try {
-                const res = await axios.get(`http://localhost:8081/api/users/${userRole}s`, {
-                    params: {
+                const res = await getAllUsers(
+                    {
                         role: userRole,
-                        status: statusFilter,
-                        fullName: searchQuery,
-                        sortField: sortField,
-                        sortOrder: sortOrder,
-                        page: page,
-                        size: size
-                    },
-                });
+                        status,
+                        fullName,
+                        sortField,
+                        sortOrder,
+                        page,
+                        size
+                    });
                 setUserList(res.data.content);
                 setTotalPages(res.data.totalPages);
             } catch (err) {
@@ -60,7 +60,7 @@ export function Users() {
             }
         };
         fetchUsers();
-    }, [page, statusFilter, searchQuery, sortField, sortOrder, checkChange, userRole]);
+    }, [page, status, fullName, sortField, sortOrder, checkChange, userRole]);
 
     useEffect(() => {
         console.log("UserList mới:", userList);
@@ -73,7 +73,7 @@ export function Users() {
         if (!window.confirm(confirmText)) return;
 
         try {
-            await axios.put(`http://localhost:8081/api/users/${userId}/reset-password`);
+            await resetPassword(userId)
             setCheckChange(!checkChange);
             alert("Reset successfully!");
         } catch (error) {
@@ -81,18 +81,6 @@ export function Users() {
             alert("Error when reset password!");
         }
     };
-
-    const removeUser = async (user) => {
-        if (!window.confirm(`Do you confirm remove user ${user.fullName}?`)) return;
-
-        try {
-            await axios.delete(`http://localhost:8081/api/users/${user.userId}`)
-            setCheckChange(!checkChange);
-            alert("Remove successfully!");
-        } catch (error) {
-            console.error(error);
-        }
-    }
 
 
     return (
@@ -105,8 +93,8 @@ export function Users() {
                     <input
                         type="text"
                         placeholder="Search by name"
-                        value={searchQuery}
-                        onChange={(e) => setSearchQuery(e.target.value)}
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
                         className="border border-gray-300 rounded-md px-2 py-1 text-sm"
                     />
                 </div>
@@ -115,8 +103,8 @@ export function Users() {
                 <div className="flex flex-col">
                     <label className="text-xs text-gray-600 mb-1">Status</label>
                     <select
-                        value={statusFilter}
-                        onChange={(e) => setStatusFilter(e.target.value)}
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
                         className="border border-gray-300 rounded-md px-2 py-1 text-sm">
                         <option value="">All</option>
                         <option value="Active">Active</option>
@@ -162,7 +150,7 @@ export function Users() {
                     <table className="w-full min-w-[640px] table-auto">
                         <thead>
                         <tr>
-                            {["FULLNAME", "PASSWORD", "ROLE", "STATUS", "BIRTHDATE", "ACTION"].map((el) => (
+                            {["FULLNAME", "ROLE", "STATUS", "BIRTHDATE", "ACTION"].map((el) => (
                                 <th key={el} className="border-b border-blue-gray-50 py-3 px-5 text-left">
                                     <Typography
                                         variant="small"
@@ -203,11 +191,6 @@ export function Users() {
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {user.password}
-                                        </Typography>
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
                                             {user.role}
                                         </Typography>
                                         <Typography className="text-xs font-normal text-blue-gray-500">
@@ -235,9 +218,9 @@ export function Users() {
                                             >
                                                 Reset password
                                             </button>
-                                            <Link to={`/dashboard/users/${user.userId}/posts`}
-                                                    className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-red-50">
-                                                    View details
+                                            <Link to={`/dashboard/${userRole}s/${user.userId}/posts`}
+                                                  className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-red-50">
+                                                View details
                                             </Link>
                                         </div>
                                     </td>

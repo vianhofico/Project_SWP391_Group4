@@ -1,6 +1,27 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
+import {useParams} from "react-router-dom";
+import axios from "axios";
+import {getPostById} from "@/api/postApi.js";
 
 const DetailPost = () => {
+
+    const {postId} = useParams();
+    const [post, setPost] = useState({});
+    const [checkChanges, setCheckChanges] = useState(true);
+
+
+    useEffect(() => {
+        const fetchPostById = async () => {
+            try {
+                const res = await getPostById(postId);
+                setPost(res.data);
+            } catch (err) {
+                console.error("Failed to load post:", err);
+            }
+        }
+        fetchPostById();
+    }, [postId, checkChanges])
+
     return (
         <>
             <body className="bg-gray-100">
@@ -68,48 +89,22 @@ const DetailPost = () => {
                                       clip-rule="evenodd"/>
                             </svg>
                         </div>
-                        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">What is the best nocode
-                            platform?</h1>
-                        <p className="text-sm text-gray-500 mb-4">15/01/2025 01:56</p>
+                        <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">{post.title}</h1>
+                        <p className="text-sm text-gray-500 mb-4">{post.createdAt}</p>
                         <span
                             className="inline-block bg-orange-100 text-orange-700 text-xs font-semibold px-2.5 py-0.5 rounded-full mb-6">Feedback</span>
 
                         <div className="space-y-5 text-gray-700">
                             <div className="grid grid-cols-4 md:grid-cols-6 gap-x-4 gap-y-2">
-                                <div className="col-span-1 font-medium text-gray-600">Post</div>
+                                <div className="col-span-1 font-medium text-gray-600">Content</div>
                                 <div className="col-span-3 md:col-span-5">
-                                    What do you think is the best? I know there are many good platforms today. But is
-                                    Softr really the best? I'm starting to think so. Let me know below.
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-4 md:grid-cols-6 gap-x-4 gap-y-2">
-                                <div className="col-span-1 font-medium text-gray-600">Related Link</div>
-                                <div className="col-span-3 md:col-span-5">
-                                    <a href="http://www.softr.io" target="_blank"
-                                       className="text-blue-600 hover:text-blue-800 hover:underline flex items-center">
-                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                             stroke-width="1.5" stroke="currentColor" className="w-4 h-4 mr-1">
-                                            <path stroke-linecap="round" stroke-linejoin="round"
-                                                  d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m13.35-.622l1.757-1.757a4.5 4.5 0 00-6.364-6.364l-4.5 4.5a4.5 4.5 0 001.242 7.244"/>
-                                        </svg>
-                                        www.softr.io
-                                    </a>
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-4 md:grid-cols-6 gap-x-4 gap-y-2">
-                                <div className="col-span-1 font-medium text-gray-600 align-top pt-1">Related Image</div>
-                                <div className="col-span-3 md:col-span-5">
-                                    <img src="https://via.placeholder.com/600x300.png?text=Related+Image+Preview"
-                                         alt="Related Image"
-                                         className="rounded-md border border-gray-200 max-w-md w-full"/>
+                                    {post.content}
                                 </div>
                             </div>
 
                             <div className="grid grid-cols-4 md:grid-cols-6 gap-x-4 gap-y-2">
                                 <div className="col-span-1 font-medium text-gray-600">Author</div>
-                                <div className="col-span-3 md:col-span-5">Moderator</div>
+                                <div className="col-span-3 md:col-span-5">{post.user?.fullName}</div>
                             </div>
                         </div>
 

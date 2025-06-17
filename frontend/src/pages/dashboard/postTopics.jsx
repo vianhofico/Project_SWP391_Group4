@@ -7,27 +7,26 @@ import {
 } from "@material-tailwind/react";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import PostTopicForm from "./PostTopicForm.jsx";
+import {getAllPostTopics} from "@/api/postTopicApi.js";
 
 export function PostTopics() {
 
+    const [initialValue, setInitialValue] = useState("");
+    const [showForm, setShowForm] = useState(false);
     const [postTopicList, setPostTopicList] = useState([]);
     const [name, setName] = useState("");
     const [sortOrder, setSortOrder] = useState("DESC");
 
-    useEffect(() => {
-        const fetchPostTopics = async () => {
-            try {
-                const res = await axios.get(`http://localhost:8081/api/posttopics`, {
-                    params: {
-                        name: name,
-                        sortOrder: sortOrder
-                    }
-                });
-                setPostTopicList(res.data);
-            } catch (err) {
-                console.log("Lỗi khi fetch reports:", err);
-            }
+    const fetchPostTopics = async () => {
+        try {
+            const res = await getAllPostTopics({name, sortOrder});
+            setPostTopicList(res.data);
+        } catch (err) {
+            console.log("Lỗi khi fetch reports:", err);
         }
+    }
+    useEffect(() => {
         fetchPostTopics();
     }, [name, sortOrder]);
 
@@ -56,16 +55,13 @@ export function PostTopics() {
                     </div>
                 </div>
 
-                <div>
-                    <button
-                        className="bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded hover:bg-green-700 transition"
-                        onClick={() => {
-                            alert("Chức năng tạo mới topic");
-                        }}
-                    >
-                        Add topic
-                    </button>
-                </div>
+                <button
+                    className="bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded hover:bg-green-700 transition"
+                    onClick={() => setShowForm(true)}
+                >
+                    Add topic
+                </button>
+
             </div>
 
 
@@ -127,6 +123,11 @@ export function PostTopics() {
                                         <td className={className}>
                                             <div className="flex space-x-2">
                                                 <button
+                                                    onClick={() => {
+                                                        setShowForm(true);
+                                                        setInitialValue({ id: topic.postTopicId, name: topic.name });
+                                                    }}
+
                                                     className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"
                                                 >
                                                     Edit
@@ -146,6 +147,11 @@ export function PostTopics() {
                     </table>
                 </CardBody>
             </Card>
+            {showForm && <PostTopicForm
+                onClose={() => setShowForm(false)}
+                onSuccess={() => fetchPostTopics()}
+                initialValue={initialValue}
+            />}
         </div>
     );
 }

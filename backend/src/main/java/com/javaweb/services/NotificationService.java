@@ -1,6 +1,6 @@
 package com.javaweb.services;
 
-import com.javaweb.dtos.response.admin.NotificationDTO;
+import com.javaweb.dtos.response.NotificationDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

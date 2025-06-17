@@ -1,6 +1,6 @@
 package com.javaweb.services;
 
-import com.javaweb.dtos.response.admin.CartDTO;
+import com.javaweb.dtos.response.CartDTO;
 
 public interface CartService {
 

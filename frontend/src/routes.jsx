@@ -6,7 +6,7 @@ import {
     ServerStackIcon,
     RectangleStackIcon,
 } from "@heroicons/react/24/solid";
-import {Home, Profile, Users, Notifications, Posts} from "@/pages/dashboard";
+import {Profile, Users, Notifications, Posts} from "@/pages/dashboard";
 import {SignIn, SignUp} from "@/pages/auth";
 import Forum from "/src/pages/user/forum.jsx"
 import Reports from "/src/pages/dashboard/reports.jsx"
@@ -15,6 +15,7 @@ import {ChartPieIcon} from "@heroicons/react/24/solid/index.js";
 import UserDetail from "@/pages/dashboard/userDetail.jsx";
 import UserTabs from "@/pages/dashboard/userTab.jsx";
 import PostTopics from "@/pages/dashboard/postTopics.jsx";
+import PostDetail from "@/pages/dashboard/postDetail.jsx";
 
 const icon = {
     className: "w-5 h-5 text-inherit",
@@ -25,18 +26,6 @@ export const routes = [
     {
         layout: "dashboard",
         pages: [
-            {
-                icon: <HomeIcon {...icon} />,
-                name: "Post",
-                path: "/posts",
-                element: <Posts/>,
-            },
-            {
-                icon: <HomeIcon {...icon} />,
-                name: "Topic of post",
-                path: "/postTopics",
-                element: <PostTopics/>,
-            },
             {
                 icon: <UserCircleIcon {...icon} />,
                 name: "profile",
@@ -56,10 +45,16 @@ export const routes = [
                 element: <Users/>,
             },
             {
-                icon: <InformationCircleIcon {...icon} />,
-                name: "notification",
-                path: "/notifications",
-                element: <Notifications/>,
+                icon: <HomeIcon {...icon} />,
+                name: "Post",
+                path: "/posts",
+                element: <Posts/>,
+            },
+            {
+                icon: <HomeIcon {...icon} />,
+                name: "Topic of post",
+                path: "/postTopics",
+                element: <PostTopics/>,
             },
             {
                 icon: <InformationCircleIcon {...icon} />,
@@ -67,14 +62,26 @@ export const routes = [
                 path: "/reports",
                 element: <Reports/>,
             },
+
             {
-                path: "/users/:userId/:tab",
+                icon: <InformationCircleIcon {...icon} />,
+                name: "notification",
+                path: "/notifications",
+                element: <Notifications/>,
+            },
+            {
+                path: "/:role/:userId/:tab",
                 element: <UserDetail/>,
                 hidden: true,
             },
             {
                 path: "/users/:userId/:tab",
                 element: <UserTabs/>,
+                hidden: true,
+            },
+            {
+                path: "/posts/:postId",
+                element: <PostDetail/>,
                 hidden: true,
             },
         ],
@@ -108,13 +115,8 @@ export const routes = [
                 element: <Forum/>,
             },
             {
-                hidden:true,
-
-
-
-                icon: <ChartPieIcon {...icon} />,
-                name: "detailPost",
-                path: "/detailPost",
+                hidden: true,
+                path: "/forum/:postId",
                 element: <DetailPost/>,
             },
         ],

@@ -1,8 +1,7 @@
 package com.javaweb.services;
 
 import com.javaweb.dtos.request.PostSearchRequest;
-import com.javaweb.dtos.response.ForumPostDTO;
-import com.javaweb.dtos.response.admin.PostDTO;
+import com.javaweb.dtos.response.PostDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -12,8 +11,11 @@ public interface PostService {
 
     Page<PostDTO> getAllPosts(PostSearchRequest postSearchRequest, Pageable pageable);
 
-    Page<ForumPostDTO> getAllPostsByTopicId(Long postTopicId, Pageable pageable, PostSearchRequest postSearchRequest);
+    Page<PostDTO> getAllPostsByTopicId(Long postTopicId, Pageable pageable, PostSearchRequest postSearchRequest);
 
-    void deletePost(Long postId);
+    void changeStatus(Long postId);//deleted or active
+
+    PostDTO getPostById(Long postId);
+
 
 }

@@ -1,7 +1,7 @@
 package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dtos.response.admin.ScoreDTO;
+import com.javaweb.dtos.response.ScoreDTO;
 import com.javaweb.entities.Score;
 import com.javaweb.repositories.ScoreRepository;
 import com.javaweb.services.ScoreService;

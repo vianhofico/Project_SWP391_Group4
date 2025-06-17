@@ -6,8 +6,9 @@ import {
     Chip,
 } from "@material-tailwind/react";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {Link} from "react-router-dom";
+import {getAllPosts} from "@/api/postApi.js";
+import {getAllPostTopics} from "@/api/postTopicApi.js";
 
 export function Posts() {
 
@@ -25,29 +26,27 @@ export function Posts() {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const res = await axios.get(`http://localhost:8081/api/posts`, {
-                    params: {
-                        title: title,
-                        postTopicId: postTopicId,
-                        sortOrder: sortOrder,
-                        status: status,
-                        page: page,
-                        size: size
-                    }
+                const res = await getAllPosts({
+                    title,
+                    postTopicId,
+                    sortOrder,
+                    status,
+                    page,
+                    size
                 });
                 setPostList(res.data.content);
                 setTotalPages(res.data.totalPages);
             } catch (err) {
                 console.log("Lỗi khi fetch reports:", err);
             }
-        }
+        };
         fetchPosts();
     }, [page, checkChangeStatus, sortOrder, title, postTopicId, status]);
 
     useEffect(() => {
         const fetchPostTopics = async () => {
             try {
-                const res = await axios.get(`http://localhost:8081/api/posttopics`);
+                const res = await getAllPostTopics();
                 setPostTopicList(res.data);
             } catch (err) {
                 console.log("Lỗi khi fetch reports:", err);
@@ -55,18 +54,6 @@ export function Posts() {
         }
         fetchPostTopics();
     }, []);
-
-    const deletePost = async (postId, title) => {
-        const confirmText = `Are you sure you want to delete post with title: "${title}"?`;
-        if (!window.confirm(confirmText)) return;
-        try {
-            await axios.put(`http://localhost:8081/api/posts/${postId}`);
-            setCheckChangeStatus(!checkChangeStatus);
-            alert("Delete successfully!");
-        } catch (err) {
-            console.log("Lỗi khi set delete:", err);
-        }
-    }
 
 
     return (
@@ -198,16 +185,11 @@ export function Posts() {
                                         </td>
                                         <td className={className}>
                                             <div className="flex space-x-2">
-                                                <button
-                                                    className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"
-                                                >
+                                                <Link to={`/dashboard/posts/${post.postId}`}
+                                                      className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50">
                                                     View details
-                                                </button>
-                                                <button
-                                                    onClick={() => deletePost(post.postId, post.title)}
-                                                    className="text-xs font-semibold text-red-600 border border-red-600 px-2 py-1 rounded hover:bg-red-50">
-                                                    Delete
-                                                </button>
+                                                </Link>
+
                                             </div>
                                         </td>
                                     </tr>

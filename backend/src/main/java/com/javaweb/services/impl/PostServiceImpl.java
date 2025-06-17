@@ -2,11 +2,13 @@ package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
 import com.javaweb.dtos.request.PostSearchRequest;
-import com.javaweb.dtos.response.ForumPostDTO;
-import com.javaweb.dtos.response.admin.PostDTO;
+import com.javaweb.dtos.response.PostDTO;
 import com.javaweb.entities.Post;
+import com.javaweb.enums.PostStatus;
+import com.javaweb.exceptions.AccessDeniedException;
 import com.javaweb.exceptions.ResourceNotFoundException;
 import com.javaweb.repositories.PostRepository;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.services.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -54,7 +56,7 @@ public class PostServiceImpl implements PostService {
 
 
     @Override
-    public Page<ForumPostDTO> getAllPostsByTopicId(Long postTopicId, Pageable pageable, PostSearchRequest postSearchRequest) {
+    public Page<PostDTO> getAllPostsByTopicId(Long postTopicId, Pageable pageable, PostSearchRequest postSearchRequest) {
         String sortOrderRaw = postSearchRequest.sortOrder();
         String titleRaw = postSearchRequest.title();
 
@@ -70,13 +72,31 @@ public class PostServiceImpl implements PostService {
         );
 
         Page<Post> pagePosts = postRepository.findAllPostByPostTopicId(title, postTopicId, pageable);
-        return pagePosts.map(dtoConverter::toForumPostDTO);
+        return pagePosts.map(dtoConverter::toPostDTO);
     }
 
     @Override
-    public void deletePost(Long postId) {
+    public void changeStatus(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Cannot find Post with id: " + postId));
-        post.setStatus("DELETED");
+
+        String currentUserEmail = SecurityUtils.getCurrentUserEmail();
+
+        if (currentUserEmail == null || !currentUserEmail.equals(post.getUser().getEmail()) || !SecurityUtils.hasRole("ROLE_ADMIN")) {
+            throw new AccessDeniedException("No access");
+        }
+
+        if (post.getStatus().equalsIgnoreCase("ACTIVE")) {
+            post.setStatus(PostStatus.DELETED.getValue());
+        } else if (post.getStatus().equalsIgnoreCase("DELETED")) {
+            post.setStatus(PostStatus.ACTIVE.getValue());
+        }
         postRepository.save(post);
     }
+
+    @Override
+    public PostDTO getPostById(Long postId) {
+        Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Cannot find Post with id: " + postId));
+        return dtoConverter.toAdminPostDTO(post);
+    }
+
 }

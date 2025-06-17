@@ -1,6 +1,9 @@
 import React from 'react';
 import {useState, useEffect} from 'react'
-import axios from "axios"
+import {Link} from "react-router-dom";
+import {getAllPostTopics} from "@/api/postTopicApi.js";
+import {getPostsByTopicId, getAllPosts} from "@/api/postApi.js";
+
 
 const Forum = () => {
 
@@ -14,12 +17,10 @@ const Forum = () => {
     useEffect(() => {
         const fetchPosts = async () => {
             try {
-                const url = postTopicId === 0
-                    ? `http://localhost:8081/api/forum/posts`
-                    : `http://localhost:8081/api/forum/posts/topic/${postTopicId}`;
-                const res = await axios.get(url, {
-                    params: { page, size },
-                });
+                const res = (postTopicId === 0)
+                    ? await getAllPosts({page, size})
+                    : await getPostsByTopicId(postTopicId, {page, size})
+
                 setPosts(res.data.content);
                 setTotalPages(res.data.totalPages);
             } catch (err) {
@@ -32,7 +33,7 @@ const Forum = () => {
     useEffect(() => {
         const fetchTopics = async () => {
             try {
-                const res = await axios.get(`http://localhost:8081/api/forum/topics`);
+                const res = await getAllPostTopics();
                 setTopics(res.data);
             } catch
                 (err) {
@@ -125,57 +126,68 @@ const Forum = () => {
                         <h3 className="text-sm font-semibold text-blue-600 mb-3">Topic</h3>
                         <div className="flex flex-wrap gap-3">
                             <button
-                                onClick={()=>{setPostTopicId(0)}}
-                                className="bg-blue-100 text-blue-700 hover:bg-blue-200 px-4 py-1 rounded-full text-sm font-medium transition-colors duration-200"
+                                onClick={() => setPostTopicId(0)}
+                                className={`px-4 py-1 rounded-full text-sm font-medium transition-colors duration-200
+                                    ${postTopicId === 0
+                                    ? "bg-blue-600 text-white"
+                                    : "bg-white text-blue-700 border border-blue-300 hover:bg-blue-100"}
+                            `}
                             >
                                 Newest
                             </button>
-                            {topics.map((topic) => (
-                                <button
-                                    onClick={()=>{setPostTopicId(topic.postTopicId)}}
-                                    key={topic.postTopicId}
-                                    className="bg-blue-100 text-blue-700 hover:bg-blue-200 px-4 py-1 rounded-full text-sm font-medium transition-colors duration-200"
-                                >
-                                    {topic.name}
-                                </button>
-                            ))}
+
+                            {topics.map((topic) => {
+                                const isActive = postTopicId === topic.postTopicId;
+                                return (
+                                    <button
+                                        onClick={() => setPostTopicId(topic.postTopicId)}
+                                        key={topic.postTopicId}
+                                        className={`px-4 py-1 rounded-full text-sm font-medium transition-colors duration-200
+                                ${isActive
+                                            ? "bg-blue-600 text-white"
+                                            : "bg-white text-blue-700 border border-blue-300 hover:bg-blue-100"}
+                                        `}
+                                    >
+                                        {topic.name}
+                                    </button>
+                                );
+                            })}
+
 
                         </div>
                     </div>
                 </div>
 
                 <div className="space-y-8">
-                    {/* Post 1 */}
                     {posts.map((post) => (
-                        <article
-                            key={post.postId}
-                            className="bg-white p-8 rounded-xl shadow-lg border border-blue-100 hover:shadow-xl transition-shadow duration-300"
-                        >
-                            <h3 className="text-2xl font-bold text-blue-800 mb-3">{post.title}</h3>
+                        <Link to={`/user/forum/${post.postId}`} key={post.postId}>
+                            <article
+                                className="bg-white p-8 rounded-xl shadow-lg border border-blue-100 hover:shadow-xl transition-shadow duration-300 hover:bg-blue-50 mb-10"
+                            >
+                                <h3 className="text-2xl font-bold text-blue-800 mb-3">{post.title}</h3>
 
-                            <span
-                                className="inline-block bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full mb-5">
-      {post.postTopic?.name || 'Unknown'}
-    </span>
+                                <span
+                                    className="inline-block bg-orange-100 text-orange-800 text-xs font-semibold px-3 py-1 rounded-full mb-5">
+                {post.postTopic?.name || 'Unknown'}
+            </span>
 
-                            <div className="grid grid-cols-6 gap-6 text-sm text-blue-700">
-                                <div className="col-span-1 font-semibold">Content</div>
-                                <div className="col-span-5">{post.content}</div>
+                                <div className="grid grid-cols-6 gap-6 text-sm text-blue-700">
+                                    <div className="col-span-1 font-semibold">Content</div>
+                                    <div className="col-span-5 truncate">{post.content}</div>
 
-                                <div className="col-span-1 font-semibold">Author</div>
-                                <div className="col-span-5">{post.user.fullName || 'Anonymous'}</div>
+                                    <div className="col-span-1 font-semibold">Author</div>
+                                    <div className="col-span-5">{post.user.fullName || 'Anonymous'}</div>
 
-                                <div className="col-span-1 font-semibold">Created</div>
-                                <div className="col-span-5">
-                                    {post.createdAt
-                                        ? new Date(post.createdAt.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3')).toLocaleString()
-                                        : 'N/A'}
+                                    <div className="col-span-1 font-semibold">Created</div>
+                                    <div className="col-span-5">
+                                        {post.createdAt
+                                            ? new Date(post.createdAt.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3')).toLocaleString()
+                                            : 'N/A'}
+                                    </div>
                                 </div>
-
-                            </div>
-                        </article>
+                            </article>
+                        </Link>
                     ))}
-
                 </div>
             </main>
         </>

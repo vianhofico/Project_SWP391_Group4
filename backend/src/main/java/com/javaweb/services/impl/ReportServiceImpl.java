@@ -1,11 +1,13 @@
 package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dtos.response.admin.ReportDTO;
-import com.javaweb.dtos.request.ReportRequest;
+import com.javaweb.dtos.response.ReportDTO;
+import com.javaweb.dtos.request.ReportSearchRequest;
 import com.javaweb.entities.Report;
+import com.javaweb.exceptions.AccessDeniedException;
 import com.javaweb.exceptions.ResourceNotFoundException;
 import com.javaweb.repositories.ReportRepository;
+import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.services.ReportService;
 import com.javaweb.services.UserService;
 import lombok.RequiredArgsConstructor;
@@ -26,13 +28,13 @@ public class ReportServiceImpl implements ReportService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<ReportDTO> getAllReports(ReportRequest reportRequest, Pageable pageable) {
-        String status = reportRequest.status();
-        String reporterName = reportRequest.reporterName();
-        String targetName = reportRequest.targetName();
-        String sortOrder = reportRequest.sortOrder();
+    public Page<ReportDTO> getAllReports(ReportSearchRequest reportSearchRequest, Pageable pageable) {
+        String status = reportSearchRequest.status();
+        String reporterName = reportSearchRequest.reporterName();
+        String targetName = reportSearchRequest.targetName();
+        String sortOrder = reportSearchRequest.sortOrder();
 
-        if(sortOrder == null) {
+        if (sortOrder == null) {
             sortOrder = "DESC";
         }
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
@@ -49,6 +51,13 @@ public class ReportServiceImpl implements ReportService {
     @Override
     public void setStatus(Long reportId, String status) {
         Report report = reportRepository.findById(reportId).orElseThrow(() -> new ResourceNotFoundException("Không tìm thấy report với id: " + reportId));
+
+        String currentUserEmail = SecurityUtils.getCurrentUserEmail();
+
+        if (currentUserEmail == null || !currentUserEmail.equals(report.getReporter().getEmail()) && SecurityUtils.hasRole("ROLE_LEARNER") || !SecurityUtils.hasRole("ROLE_ADMIN")) {
+            throw new AccessDeniedException("No access");
+        }
+
         report.setStatus(status);
         reportRepository.save(report);
         userService.updateReportCount(report.getTarget().getUserId());

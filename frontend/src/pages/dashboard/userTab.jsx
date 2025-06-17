@@ -1,5 +1,6 @@
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import axios from "axios";
+import {getTabFromUser} from "@/api/userApi.js";
 
 function formatKey(key) {
     if (!key) return "";
@@ -9,7 +10,7 @@ function formatKey(key) {
         .trim();
 }
 
-export default function UserTabs({ userId, tab }) {
+export default function UserTabs({userId, tab}) {
 
     const [data, setData] = useState(null);
     const [loading, setLoading] = useState(true);
@@ -18,7 +19,7 @@ export default function UserTabs({ userId, tab }) {
         const fetchData = async () => {
             try {
                 setLoading(true);
-                const res = await axios.get(`http://localhost:8081/api/users/${userId}/${tab}`);
+                const res = await getTabFromUser(userId, tab);
                 setData(res.data.content || res.data);
             } catch (err) {
                 console.error(err);
@@ -30,12 +31,6 @@ export default function UserTabs({ userId, tab }) {
 
         fetchData();
     }, [userId, tab]);
-
-    const handleEdit = (item) => {
-        alert(`Edit item with ID: ${item.id || "unknown"}`);
-        // TODO: custom xử lý edit ở đây
-    };
-
 
     const renderValue = (value) => {
         if (value === null || value === undefined) {
@@ -92,7 +87,6 @@ export default function UserTabs({ userId, tab }) {
                                 ))}
                                 <td className="px-4 py-2 border text-center space-y-2 whitespace-nowrap">
                                     <button
-                                        onClick={() => handleEdit(item)}
                                         className="block w-full border border-blue-600 rounded-md px-3 py-1 text-blue-600 font-semibold hover:bg-blue-100"
                                         aria-label="Edit"
                                     >

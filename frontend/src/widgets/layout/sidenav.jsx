@@ -65,8 +65,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
                   const fullPath = `/${layout}${path}`;
                   const isActive =
                       location.pathname === fullPath ||
-                      (name.toLowerCase() === "users" &&
-                          location.pathname.startsWith("/dashboard/users/"));
+                      location.pathname.startsWith(fullPath);
 
                   return (
                       <li key={name}>

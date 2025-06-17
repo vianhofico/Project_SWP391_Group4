@@ -1,7 +1,7 @@
 package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dtos.response.admin.CartDTO;
+import com.javaweb.dtos.response.CartDTO;
 import com.javaweb.entities.Cart;
 import com.javaweb.exceptions.ResourceNotFoundException;
 import com.javaweb.repositories.CartRepository;

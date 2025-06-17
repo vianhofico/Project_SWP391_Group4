@@ -7,6 +7,7 @@ import {
 } from "@material-tailwind/react";
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {getAllReports} from "@/api/reportApi.js";
 
 export function Reports() {
 
@@ -23,15 +24,13 @@ export function Reports() {
     useEffect(() => {
         const fetchReports = async () => {
             try {
-                const res = await axios.get(`http://localhost:8081/api/reports`, {
-                    params: {
-                        reporterName: reporterName,
-                        targetName: targetName,
-                        sortOrder: sortOrder,
-                        status: status,
-                        page: page,
-                        size: size
-                    }
+                const res = await getAllReports({
+                    reporterName,
+                    targetName,
+                    sortOrder,
+                    status,
+                    page,
+                    size
                 });
                 setReportList(res.data.content);
                 setTotalPages(res.data.totalPages);
@@ -103,8 +102,10 @@ export function Reports() {
                     <label className="text-xs text-gray-600 mb-1">Select list</label>
                     <select
                         value={status}
-                        onChange={(e) => {setStatus(e.target.value);
-                                                                            setPage(0)}}
+                        onChange={(e) => {
+                            setStatus(e.target.value);
+                            setPage(0)
+                        }}
                         className="border border-gray-300 rounded-md px-2 py-1 text-sm">
                         <option value="pending">Pending report list</option>
                         <option value="approved">Approved report list</option>
@@ -200,23 +201,28 @@ export function Reports() {
 
                                         <td className={className}>
                                             <div className="flex space-x-2">
-                                                {(status === "pending" || status === "rejected") && (
-                                                    <button
-                                                        onClick={() => changeStatus(report.reportId, "approved")}
-                                                        className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"
-                                                    >
-                                                        {status === "pending" ? "Approve" : "Change to Approved"}
-                                                    </button>
-                                                )}
+                                                {/*{(status === "pending" || status === "rejected") && (*/}
+                                                {/*    <button*/}
+                                                {/*        onClick={() => changeStatus(report.reportId, "approved")}*/}
+                                                {/*        className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"*/}
+                                                {/*    >*/}
+                                                {/*        {status === "pending" ? "Approve" : "Change to Approved"}*/}
+                                                {/*    </button>*/}
+                                                {/*)}*/}
 
-                                                {(status === "pending" || status === "approved") && (
-                                                    <button
-                                                        onClick={() => changeStatus(report.reportId, "rejected")}
-                                                        className="text-xs font-semibold text-red-600 border border-red-600 px-2 py-1 rounded hover:bg-red-50"
-                                                    >
-                                                        {status === "pending" ? "Reject" : "Change to Rejected"}
-                                                    </button>
-                                                )}
+                                                {/*{(status === "pending" || status === "approved") && (*/}
+                                                {/*    <button*/}
+                                                {/*        onClick={() => changeStatus(report.reportId, "rejected")}*/}
+                                                {/*        className="text-xs font-semibold text-red-600 border border-red-600 px-2 py-1 rounded hover:bg-red-50"*/}
+                                                {/*    >*/}
+                                                {/*        {status === "pending" ? "Reject" : "Change to Rejected"}*/}
+                                                {/*    </button>*/}
+                                                {/*)}*/}
+                                                <button
+                                                    className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"
+                                                >
+                                                    View details
+                                                </button>
                                             </div>
                                         </td>
 

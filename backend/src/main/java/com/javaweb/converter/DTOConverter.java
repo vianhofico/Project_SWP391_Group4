@@ -1,8 +1,6 @@
 package com.javaweb.converter;
 
-import com.javaweb.dtos.response.ForumCommentDTO;
-import com.javaweb.dtos.response.ForumPostDTO;
-import com.javaweb.dtos.response.admin.*;
+import com.javaweb.dtos.response.*;
 import com.javaweb.entities.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -19,6 +17,7 @@ public class DTOConverter {
         if (comment == null) return null;
         CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
         commentDTO.setCreatedAt(dateTimeConverter.toString(comment.getCreatedAt()));
+        commentDTO.setUser(toUserDTO(comment.getUser()));
         return commentDTO;
     }
 
@@ -102,27 +101,4 @@ public class DTOConverter {
         return postDTO;
     }
 
-    public ForumCommentDTO toForumCommentDTO(Comment comment) {
-        if (comment == null) return null;
-        ForumCommentDTO forumCommentDTO = modelMapper.map(comment, ForumCommentDTO.class);
-        forumCommentDTO.setCreatedAt(dateTimeConverter.toString(comment.getCreatedAt()));
-        forumCommentDTO.setUser(toUserDTO(comment.getUser()));
-        forumCommentDTO.setParentComment(toForumCommentDTO(comment.getParentComment()));
-        return forumCommentDTO;
-    }
-
-    public ForumPostDTO toForumPostDTO(Post post) {
-        if (post == null) return null;
-        return ForumPostDTO.builder()
-                .postId(post.getPostId())
-                .title(post.getTitle())
-                .content(post.getContent())
-                .createdAt(dateTimeConverter.toString(post.getCreatedAt()))
-                .user(toUserDTO(post.getUser()))
-                .postTopic(toPostTopicDTO(post.getPostTopic()))
-                .comments(post.getComments().stream()
-                        .map(this::toForumCommentDTO)
-                        .toList())
-                .build();
-    }
 }

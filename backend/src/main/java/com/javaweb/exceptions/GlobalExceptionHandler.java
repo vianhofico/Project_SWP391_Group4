@@ -7,6 +7,7 @@ import jakarta.validation.ConstraintViolationException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -70,8 +71,8 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(error);
     }
 
-    @ExceptionHandler(EmailExistException.class)
-    public ResponseEntity<ErrorResponse> handleEmailExistException(EmailExistException ex, HttpServletRequest request) {
+    @ExceptionHandler(ResourceAlreadyExistsException.class)
+    public ResponseEntity<ErrorResponse> handleEmailExistException(ResourceAlreadyExistsException ex, HttpServletRequest request) {
         List<String> messages = List.of(
                 ex.getMessage() != null ? ex.getMessage() : ErrorCode.RESOURCE_ALREADY_EXISTS.getMessage()
         );
@@ -81,6 +82,45 @@ public class GlobalExceptionHandler {
                 request.getRequestURI()
         );
         return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+    }
+
+    @ExceptionHandler(UnauthorizedException.class)
+    public ResponseEntity<ErrorResponse> handleUnauthorizedException(UnauthorizedException ex, HttpServletRequest request) {
+        List<String> messages = List.of(
+                ex.getMessage() != null ? ex.getMessage() : ErrorCode.UNAUTHORIZED.getMessage()
+        );
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCode.UNAUTHORIZED.getCode(),
+                messages,
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorResponse);
+    }
+
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleUsernameNotFoundException(UsernameNotFoundException ex, HttpServletRequest request) {
+        List<String> messages = List.of(
+                ex.getMessage() != null ? ex.getMessage() : ErrorCode.RESOURCE_NOT_FOUND.getMessage()
+        );
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCode.RESOURCE_NOT_FOUND.getCode(),
+                messages,
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(errorResponse);
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ErrorResponse> handleAccessDeniedException(AccessDeniedException ex, HttpServletRequest request) {
+        List<String> messages = List.of(
+                ex.getMessage() != null ? ex.getMessage() : ErrorCode.ACTION_NOT_PERMITTED.getMessage()
+        );
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCode.ACTION_NOT_PERMITTED.getCode(),
+                messages,
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
 }
