@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-
+import Swal from 'sweetalert2';
 
 const CartDetail = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -55,7 +55,12 @@ const CartDetail = () => {
         const validIds = selectedItems.filter((id) => id !== null && id !== undefined);
 
         if (validIds.length === 0) {
-            alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán.");
+            Swal.fire({
+                icon: 'warning',
+                title: 'Chưa chọn sản phẩm',
+                text: 'Vui lòng chọn ít nhất một sản phẩm để thanh toán.',
+                confirmButtonText: 'OK'
+            });
             return;
         }
 
