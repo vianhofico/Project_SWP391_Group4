@@ -7,7 +7,10 @@ import {
     RectangleStackIcon,
 } from "@heroicons/react/24/solid";
 import {Home, Profile, Users, Notifications, Posts} from "@/pages/dashboard";
-import {SignIn, SignUp} from "@/pages/auth";
+import {ProfileV2} from "@/pages/dashboard/profile/profilev2";
+
+import {SignIn} from "@/pages/auth";
+import {SignUp} from "@/pages/auth/sign-up component/signUp";
 import Forum from "/src/pages/user/forum.jsx"
 import Reports from "/src/pages/dashboard/reports.jsx"
 import DetailPost from "/src/pages/user/detailPost.jsx"
@@ -41,7 +44,7 @@ export const routes = [
                 icon: <UserCircleIcon {...icon} />,
                 name: "profile",
                 path: "/profile",
-                element: <Profile/>,
+                element: <ProfileV2/>,
             },
             {
                 icon: <TableCellsIcon {...icon} />,
@@ -94,7 +97,7 @@ export const routes = [
                 name: "sign up",
                 path: "/sign-up",
                 element: <SignUp/>,
-            },
+            }
         ],
     },
     {

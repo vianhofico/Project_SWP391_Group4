@@ -33,12 +33,4 @@ public class CommentServiceImpl implements CommentService {
                 .map(dtoConverter::toForumCommentDTO)
                 .toList();
     }
-
-    // ✅ Hàm mới thêm để dùng trong CommentController
-    @Override
-    public CommentDTO getCommentById(Long commentId) {
-        Comment comment = commentRepository.findById(commentId)
-                .orElseThrow(() -> new RuntimeException("Comment not found with id: " + commentId));
-        return dtoConverter.toCommentDTO(comment);
-    }
 }

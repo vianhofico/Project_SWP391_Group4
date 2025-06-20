@@ -20,6 +20,12 @@ public interface UserService {
     UserDTO getUser(Long userId);
 
     void resetPassword(Long userId);
-
+    void changePassword(Long userId, String oldPassword, String newPassword);
     void createAdmin(CreateAdminRequest createAdminRequest);
+
+    void registerUser(UserDTO userDTO);
+    void updateProfile(Long userId, UserDTO userDTO);
+
+    void forgotPassword(String email);
+    void resetPassword(String token, String newPassword);
 }

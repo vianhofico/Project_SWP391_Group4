@@ -1,0 +1,7 @@
+npx create-react-app elearning_fe
+cd learning_fe
+npm start
+
+npm install @mui/material @mui/icons-material @emotion/styled @emotion/react
+
+npm install react-router-dom

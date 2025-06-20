@@ -1,10 +1,12 @@
 package com.javaweb.controller;
 
+import com.javaweb.dtos.request.ChangePasswordRequest;
 import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.UserSearchRequest;
 import com.javaweb.dtos.request.UserSortRequest;
 import com.javaweb.dtos.response.admin.*;
 import com.javaweb.entities.User;
+import com.javaweb.exceptions.ResourceNotFoundException;
 import com.javaweb.services.*;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -13,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/api/users")
 @Validated
+@CrossOrigin("*")
 public class UserController {
 
     private final String POSITIVE_USERID = "userId must positve number";
@@ -117,6 +121,21 @@ public class UserController {
         return ResponseEntity.noContent().build();
     }
 
+    // API: POST /api/users/{id}/change-password
+    @PostMapping("/{userId}/change-password")
+    public ResponseEntity<?> changePassword(
+            @PathVariable("userId") Long userId,
+            @RequestBody ChangePasswordRequest request) {
+
+        try {
+            userService.changePassword(userId, request.getOldPassword(), request.getNewPassword());
+            return ResponseEntity.ok("Password changed successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
     @DeleteMapping("/{userId}")
     public ResponseEntity<Void> deleteUser(@PathVariable("userId") @Positive(message = POSITIVE_USERID) Long userId) {
         userService.removeUser(userId);
@@ -128,4 +147,43 @@ public class UserController {
         userService.createAdmin(createAdminRequest);
         return ResponseEntity.noContent().build();
     }
+
+
+    @PutMapping("/{id}/profile")
+    public ResponseEntity<?> updateProfile(
+            @PathVariable("id") Long userId,
+            @RequestBody UserDTO userDTO) {
+
+        try {
+            userService.updateProfile(userId, userDTO);
+            return ResponseEntity.ok("User profile updated successfully.");
+        } catch (ResourceNotFoundException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody UserDTO userDTO) {
+        try {
+            userService.registerUser(userDTO);
+            return ResponseEntity.status(HttpStatus.CREATED).body("User registered successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestParam String email) {
+        userService.forgotPassword(email);
+        return ResponseEntity.ok("Reset password link has been sent to your email.");
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestParam String token, @RequestParam String newPassword) {
+        userService.resetPassword(token, newPassword);
+        return ResponseEntity.ok("Password has been reset successfully.");
+    }
+
 }

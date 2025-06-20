@@ -12,5 +12,5 @@ public interface CommentService {
     Page<CommentDTO> getAllComments(Long userId, Pageable pageable);
 
     List<ForumCommentDTO> getAllCommentsByParentCommentId(Long parentCommentId);
-    CommentDTO getCommentById(Long commentId);
+
 }
