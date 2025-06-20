@@ -69,4 +69,14 @@ public class CourseEntity {
 
     @OneToMany(mappedBy = "course")
     private List<RatingEntity> ratings;
+    @PrePersist
+    public void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updateAt = now;
+    }
+    @PreUpdate
+    public void onUpdate() {
+        this.updateAt = LocalDateTime.now();
+    }
 }

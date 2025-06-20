@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "LessonResources")
@@ -20,9 +21,13 @@ public class LessonResourceEntity {
     @Column(name = "resourceId")
     private Long resourceId;
 
-    @ManyToOne
-    @JoinColumn(name = "lessonId")
-    private LessonEntity lesson;
+    @ManyToMany
+    @JoinTable(
+            name = "lesson_resources_mapping",
+            joinColumns = @JoinColumn(name = "resource_id"),
+            inverseJoinColumns = @JoinColumn(name = "lesson_id")
+    )
+    private List<LessonEntity> lessons;
 
     @Column(name = "title")
     private String title;
@@ -39,5 +44,6 @@ public class LessonResourceEntity {
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
+
 }
 

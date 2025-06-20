@@ -96,7 +96,7 @@ public class ChapterServiceImpl implements ChapterService {
     @Override
     public void updateChapterTitle(Long chapterId, String newTitle) {
         ChapterEntity chapter = chapterRepository.findById(chapterId)
-                .orElseThrow(() -> new RuntimeException("Chapter not found"));
+                .orElseThrow(() -> new AppException(ErrorCode.CHAPTER_NOT_FOUND));
 
         chapter.setTitle(newTitle);
         chapterRepository.save(chapter);

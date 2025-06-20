@@ -36,4 +36,14 @@ public class ChapterEntity {
 
     @OneToMany(mappedBy = "chapter")
     private List<LessonEntity> lessons;
+    @PrePersist
+    public void onCreate() {
+        LocalDateTime now = LocalDateTime.now();
+        this.createdAt = now;
+        this.updateAt = now;
+    }
+    @PreUpdate
+    public void onUpdate() {
+        this.updateAt = LocalDateTime.now();
+    }
 }

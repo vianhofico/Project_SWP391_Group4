@@ -26,9 +26,8 @@ public class TopicEntity {
     private String description;
 
     @Column(name = "status", nullable = false)
-    private Boolean status = true;  // true = ACTIVE, false = INACTIVE
+    private Boolean status = true;
 
-    // Quan hệ Nhiều - Nhiều với CourseEntity thông qua bảng trung gian TopicCourses
     @ManyToMany
     @JoinTable(
             name = "Course_Topic",

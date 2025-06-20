@@ -2,7 +2,6 @@ package dev.likeech.java.api.admin;
 
 import dev.likeech.java.model.dto.ChapterDTO;
 import dev.likeech.java.model.request.ChapterReorderRequest;
-import dev.likeech.java.repository.entity.ChapterEntity;
 import dev.likeech.java.service.ChapterService;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
