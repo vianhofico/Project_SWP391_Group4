@@ -4,20 +4,27 @@ import {
     Button,
     Typography,
 } from "@material-tailwind/react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {useState} from "react";
 import {login} from "@/api/authApi.js";
 
 export function SignIn() {
 
+    const navigate = useNavigate();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const handleSubmit = async (e) => {
         try {
             const response = await login(email, password);
-            const { token } = response.data;
+            const { token, user } = response.data;
             localStorage.setItem("accessToken", token);
+            localStorage.setItem("user", JSON.stringify(user));
+            if(user.role === "ADMIN"){
+                navigate("/dashboard/admins");
+            }else if(user.role === "LEARNER"){
+                navigate("/user/forum");
+            }
             console.log("Đăng nhập thành công!");
         } catch (error) {
             console.error("Đăng nhập thất bại:", error.response?.data || error.message);

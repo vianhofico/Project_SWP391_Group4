@@ -13,25 +13,27 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Entity
-@Table(name = "Carts")
+@Table(name = "carts")
 public class Cart {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "cartId")
+    @Column(name = "cart_id")
     private Long cartId;
 
-    @Column(name = "createdAt")
+    private int sum;
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @OneToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "CartItems",
-            joinColumns = @JoinColumn(name = "cartId"),
-            inverseJoinColumns = @JoinColumn(name = "courseId"))
+    @JoinTable(name = "xxx",
+            joinColumns = @JoinColumn(name = "cart_id"),
+            inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses = new ArrayList<>();
 
 }

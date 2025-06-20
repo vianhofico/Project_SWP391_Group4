@@ -14,21 +14,21 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-@Table(name = "Users")
+@Table(name = "users")  
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "userId")
+    @Column(name = "user_id")  
     private Long userId;
 
-    @Column(name = "fullName", length = 100)
+    @Column(name = "full_name", length = 100)  
     private String fullName;
 
     @Column(name = "email", length = 100, nullable = false, unique = true)
     private String email;
 
-    @Column(name = "birthDate")
+    @Column(name = "birth_date")  
     private LocalDate birthDate;
 
     @Column(name = "password", length = 255)
@@ -37,17 +37,20 @@ public class User {
     @Column(name = "role", length = 20)
     private String role;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
-    @Column(name = "isActive")
+    @Column(name = "is_active")  
     private Boolean isActive;
 
-    @Column(name = "reportCount")
+    @Column(name = "report_count")  
     private Integer reportCount;
 
-    @Column(name = "imageUrl")
+    @Column(name = "image_url")  
     private String imageUrl;
+
+    @Column(name = "bio")
+    private String bio;
 
     @OneToMany(mappedBy = "reporter", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Report> reportsMade = new ArrayList<>();
@@ -72,8 +75,9 @@ public class User {
 
     @OneToOne(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private Cart cart;
-//    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-//    private List<Order> orders = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<Order> orders = new ArrayList<>();
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Score> scores = new ArrayList<>();
@@ -84,5 +88,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Enrollment> enrollments = new ArrayList<>();
 
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<ExamAttempt> attempts = new ArrayList<>();
 }
-

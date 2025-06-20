@@ -11,3 +11,7 @@ export const addPostTopic = (name) => {
 export const editPostTopic = (topicId, name) => {
     return axiosInstance.put(`/posttopics/${topicId}`, {name});
 }
+
+export const deletePostTopic = (topicId) => {
+    return axiosInstance.delete(`/posttopics/${topicId}`);
+}

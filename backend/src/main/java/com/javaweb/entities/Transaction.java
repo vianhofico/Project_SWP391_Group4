@@ -11,26 +11,25 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Entity
-@Table(name = "Transactions")
+@Table(name = "transactions")  
 public class Transaction {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "transactionId")
+    @Column(name = "transaction_id")  
     private Long transactionId;
 
     @Column(name = "amount")
     private Long amount;
 
-    @Column(name = "paidAt")
+    @Column(name = "paid_at")  
     private LocalDateTime paidAt;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")  
     private User user;
 
     @OneToOne
-    @JoinColumn(name = "orderID")
+    @JoinColumn(name = "order_id")  
     private Order order;
-
 }

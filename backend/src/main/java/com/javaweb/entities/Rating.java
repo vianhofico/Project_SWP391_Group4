@@ -11,12 +11,12 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Entity
-@Table(name = "Ratings")
+@Table(name = "ratings")  
 public class Rating {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ratingId")
+    @Column(name = "rating_id")  
     private Long ratingId;
 
     @Column(name = "rating")
@@ -26,14 +26,14 @@ public class Rating {
     @Column(name = "feedback")
     private String feedback;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")  
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "courseId")
+    @JoinColumn(name = "course_id")  
     private Course course;
 }

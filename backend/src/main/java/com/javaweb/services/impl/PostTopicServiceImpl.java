@@ -1,11 +1,14 @@
 package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dtos.request.PostTopicSearchRequest;
+import com.javaweb.dtos.request.SearchPostTopicRequest;
 import com.javaweb.dtos.response.PostTopicDTO;
+import com.javaweb.entities.Post;
 import com.javaweb.entities.PostTopic;
+import com.javaweb.exceptions.BusinessException;
 import com.javaweb.exceptions.ResourceAlreadyExistsException;
 import com.javaweb.exceptions.ResourceNotFoundException;
+import com.javaweb.repositories.PostRepository;
 import com.javaweb.repositories.PostTopicRepository;
 import com.javaweb.services.PostTopicService;
 import lombok.RequiredArgsConstructor;
@@ -20,12 +23,13 @@ import java.util.List;
 public class PostTopicServiceImpl implements PostTopicService {
 
     private final PostTopicRepository postTopicRepository;
+    private final PostRepository postRepository;
     private final DTOConverter dtoConverter;
 
     @Override
-    public List<PostTopicDTO> getAllPostTopics(PostTopicSearchRequest postTopicSearchRequest) {
-        String name = postTopicSearchRequest.name();
-        String sortOrder = postTopicSearchRequest.sortOrder();
+    public List<PostTopicDTO> getAllPostTopics(SearchPostTopicRequest searchPostTopicRequest) {
+        String name = searchPostTopicRequest.name();
+        String sortOrder = searchPostTopicRequest.sortOrder();
 
         if (name == null || name.isBlank()) {
             name = "";
@@ -66,5 +70,16 @@ public class PostTopicServiceImpl implements PostTopicService {
         }
         postTopic.setName(name);
         postTopicRepository.save(postTopic);
+    }
+
+    @Override
+    public void deletePostTopic(Long postTopicId) {
+        PostTopic postTopic = postTopicRepository.findById(postTopicId).orElseThrow(()
+                -> new ResourceNotFoundException("Post topic not found"));
+        List<Post> posts = postRepository.findByPostTopicPostTopicId(postTopicId);
+        if (posts != null && !posts.isEmpty()) {
+            throw new BusinessException("Cannot remove this topic because it still contains posts");
+        }
+        postTopicRepository.delete(postTopic);
     }
 }

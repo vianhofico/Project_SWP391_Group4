@@ -13,12 +13,12 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-@Table(name = "Notifications")
+@Table(name = "notifications")  
 public class Notification {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "notificationId")
+    @Column(name = "notification_id")  
     private Long notificationId;
 
     @Column(name = "title")
@@ -27,13 +27,14 @@ public class Notification {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
     @ManyToMany
-    @JoinTable(name = "UserNotifications",
-                joinColumns = @JoinColumn(name = "notificationId"),
-                inverseJoinColumns = @JoinColumn(name = "userId"))
+    @JoinTable(
+            name = "user_notifications",
+            joinColumns = @JoinColumn(name = "notification_id"),  
+            inverseJoinColumns = @JoinColumn(name = "user_id")    
+    )
     private List<User> users = new ArrayList<>();
-
 }

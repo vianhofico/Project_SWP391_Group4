@@ -8,10 +8,7 @@ import {
     Progress, CardHeader,
 
 } from "@material-tailwind/react";
-import {EllipsisVerticalIcon} from "@heroicons/react/24/outline";
-import {authorsTableData, projectsTableData} from "@/data";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {Link, useLocation, useSearchParams} from "react-router-dom";
 import {getAllUsers} from "@/api/userApi.js";
 

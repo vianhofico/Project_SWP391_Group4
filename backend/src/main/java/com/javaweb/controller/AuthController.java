@@ -2,6 +2,7 @@ package com.javaweb.controller;
 
 import com.javaweb.dtos.request.LoginRequest;
 import com.javaweb.dtos.request.RegisterRequest;
+import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.response.LoginResponse;
 import com.javaweb.services.AuthService;
 import jakarta.validation.Valid;
@@ -27,6 +28,12 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<Void> register(@RequestBody @Valid RegisterRequest registerRequest) {
         authService.register(registerRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest){
+        authService.resetPassword(resetPasswordRequest);
         return ResponseEntity.noContent().build();
     }
 

@@ -1,7 +1,8 @@
 package com.javaweb.controller;
 
-import com.javaweb.dtos.request.CommentSearchRequest;
-import com.javaweb.dtos.request.PostSearchRequest;
+import com.javaweb.dtos.request.SearchCommentRequest;
+import com.javaweb.dtos.request.PostRequest;
+import com.javaweb.dtos.request.SearchPostRequest;
 import com.javaweb.dtos.response.CommentDTO;
 import com.javaweb.dtos.response.PostDTO;
 import com.javaweb.services.CommentService;
@@ -26,8 +27,8 @@ public class PostController {
     private final CommentService commentService;
 
     @GetMapping
-    public Page<PostDTO> getAllPosts(@Valid @ModelAttribute PostSearchRequest postSearchRequest, Pageable pageable) {
-        return postService.getAllPosts(postSearchRequest, pageable);
+    public Page<PostDTO> getAllPosts(@Valid @ModelAttribute SearchPostRequest searchPostRequest, Pageable pageable) {
+        return postService.getAllPosts(searchPostRequest, pageable);
     }
 
     @GetMapping("/{postId}")
@@ -36,24 +37,37 @@ public class PostController {
     }
 
     @GetMapping("/{postId}/comments")
-    public Page<CommentDTO> getAllCommentsByPostId(@PathVariable @Positive(message = "postId must positive") Long postId
-                                                    ,@Valid @ModelAttribute CommentSearchRequest commentSearchRequest
+    public Page<CommentDTO> getAllCommentsByPostId(@PathVariable Long postId
+                                                    ,@Valid @ModelAttribute SearchCommentRequest searchCommentRequest
                                                     , Pageable pageable) {
-        return commentService.getAllCommentsByPostId(postId, commentSearchRequest, pageable);
+        return commentService.getAllCommentsByPostId(postId, searchCommentRequest, pageable);
     }
 
-
     @GetMapping("/topic/{postTopicId}")
-    public Page<PostDTO> getAllPostsByTopicId(@PathVariable @Positive(message = "postTopicId must positive") Long postTopicId
+    public Page<PostDTO> getAllPostsByTopicId(@PathVariable Long postTopicId
                                                     , Pageable pageable
-                                                    , @ModelAttribute @Valid PostSearchRequest postSearchRequest) {
-        return postService.getAllPostsByTopicId(postTopicId, pageable, postSearchRequest);
+                                                    , @ModelAttribute @Valid SearchPostRequest searchPostRequest) {
+        return postService.getAllPostsByTopicId(postTopicId, pageable, searchPostRequest);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
-    @PutMapping("/{postId}")// de xoa bai post
-    public ResponseEntity<Void> changeStatus(@PathVariable @Positive(message = "postId must positive") Long postId) {
+    @DeleteMapping("/{postId}")// de xoa bai post
+    public ResponseEntity<Void> changeStatus(@PathVariable Long postId) {
         postService.changeStatus(postId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
+    @PostMapping()
+    public ResponseEntity<Void> createPost(@Valid @RequestBody PostRequest postRequest) {
+        postService.createPost(postRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
+    @PutMapping("/{postId}")
+    public ResponseEntity<Void> updatePost(@PathVariable Long postId, PostRequest postRequest){
+
         return ResponseEntity.noContent().build();
     }
 

@@ -13,31 +13,31 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-@Table(name = "Comments")
+@Table(name = "comments")  
 public class Comment {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "commentId")
+    @Column(name = "comment_id")  
     private Long commentId;
 
     @Lob
     @Column(name = "content")
     private String content;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")  
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "parentCommentId")
+    @JoinColumn(name = "parent_comment_id")  
     private Comment parentComment;
 
     @ManyToOne
-    @JoinColumn(name = "postId")
+    @JoinColumn(name = "post_id")  
     private Post post;
 
     @OneToMany(mappedBy = "parentComment", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
@@ -46,8 +46,8 @@ public class Comment {
     @OneToMany(mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Report> reports = new ArrayList<>();
 
-
-    //@ManyToOne
-//    @JoinColumn(name = "lessonId")
-//    private Lesson lesson;
+    // Nếu muốn thêm lại liên kết tới lesson:
+    // @ManyToOne
+    // @JoinColumn(name = "lesson_id")
+    // private Lesson lesson;
 }

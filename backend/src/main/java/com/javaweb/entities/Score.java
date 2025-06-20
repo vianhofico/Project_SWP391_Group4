@@ -11,29 +11,28 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Entity
-@Table(name = "Scores")
+@Table(name = "scores")  
 public class Score {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "scoreId")
+    @Column(name = "score_id")  
     private Long scoreId;
 
-    @Column(name = "attemptCount")
+    @Column(name = "attempt_count")  
     private Integer attemptCount;
 
     @Column(name = "score")
     private Float score;
 
-    @Column(name = "takenAt")
+    @Column(name = "taken_at")  
     private LocalDateTime takenAt;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")  
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "examId")
+    @JoinColumn(name = "exam_id")  
     private Exam exam;
-
 }

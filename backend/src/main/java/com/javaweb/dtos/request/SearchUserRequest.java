@@ -3,7 +3,7 @@ package com.javaweb.dtos.request;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record UserSearchRequest(
+public record SearchUserRequest(
         String fullName,
         @NotNull(message = "role cannot null")
         @Pattern(regexp = "ADMIN|LEARNER", flags = Pattern.Flag.CASE_INSENSITIVE, message = "role must ADMIN or LEARNER")

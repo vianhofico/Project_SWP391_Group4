@@ -9,6 +9,7 @@ import {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {getAllPosts} from "@/api/postApi.js";
 import {getAllPostTopics} from "@/api/postTopicApi.js";
+import Narbar from "@/widgets/layout/navbar.jsx"
 
 export function Posts() {
 
@@ -55,9 +56,9 @@ export function Posts() {
         fetchPostTopics();
     }, []);
 
-
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
+            <Narbar/>
             <div className="flex flex-wrap items-center gap-4 px-4">
                 <div className="flex flex-col font-semibold text-base">
                     <label className="text-sm text-gray-700 mb-1">Select Topic</label>

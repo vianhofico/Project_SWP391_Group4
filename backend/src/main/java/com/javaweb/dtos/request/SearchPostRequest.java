@@ -2,7 +2,7 @@ package com.javaweb.dtos.request;
 
 import jakarta.validation.constraints.Pattern;
 
-public record PostSearchRequest(
+public record SearchPostRequest(
         @Pattern(regexp = "^$|^[1-9]\\d*$", message = "postTopicId must be empty or a positive integer")
         String postTopicId,
         String title,

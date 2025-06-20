@@ -13,6 +13,21 @@ const Forum = () => {
     const [size, setSize] = useState(5);
     const [totalPages, setTotalPages] = useState(0);
     const [postTopicId, setPostTopicId] = useState(0);
+    const user = JSON.parse(localStorage.getItem("user"));
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (!event.target.closest("#user-dropdown")) {
+                setIsDropdownOpen(false);
+            }
+        };
+        document.addEventListener("mousedown", handleClickOutside);
+        return () => {
+            document.removeEventListener("mousedown", handleClickOutside);
+        };
+    }, []);
+
 
     useEffect(() => {
         const fetchPosts = async () => {
@@ -43,44 +58,56 @@ const Forum = () => {
         fetchTopics();
     }, []);
 
+
     return (
         <>
             <header className="bg-blue-600 shadow-md">
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-                    <div className="flex items-center">
-                        <img src="" alt="logo" className="h-8 w-auto mr-3"/>
+                    <div>
                         <h1 className="text-3xl font-extrabold text-white tracking-wide">FORUM</h1>
                     </div>
-                    <nav className="hidden md:flex space-x-6 text-white font-semibold">
-                        <a
-                            href="#"
-                            className="hover:text-blue-200 transition-colors duration-300"
-                        >
-                            Home
-                        </a>
-                        <a
-                            href="#"
-                            className="hover:text-blue-200 transition-colors duration-300"
-                        >
-                            Top Posts
-                        </a>
-                    </nav>
-                </div>
-                <div id="mobile-menu" className="md:hidden bg-blue-700 shadow-inner">
-                    <a
-                        href="#"
-                        className="block px-4 py-3 text-blue-100 hover:bg-blue-800 transition-colors duration-300"
-                    >
-                        Home
-                    </a>
-                    <a
-                        href="#"
-                        className="block px-4 py-3 text-blue-100 hover:bg-blue-800 transition-colors duration-300"
-                    >
-                        Top Posts
-                    </a>
+
+                    <div className="flex items-center space-x-6">
+                        {user ? (
+                            <div id="user-dropdown" className="relative flex items-center gap-3 text-white">
+                                <h4 className="font-medium">{user.fullName}</h4>
+                                <img
+                                    src="https://i.pravatar.cc/150?img=3"
+                                    alt="avatar"
+                                    className="w-10 h-10 rounded-full cursor-pointer border-2 border-white"
+                                    onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                                />
+                                {isDropdownOpen && (
+                                    <div
+                                        className="absolute right-0 top-12 bg-white text-blue-700 rounded-lg shadow-lg z-10 min-w-[150px]">
+                                        <Link to="/user/profile" className="block px-4 py-2 hover:bg-blue-100">
+                                            Profile
+                                        </Link>
+                                        <button
+                                            onClick={() => {
+                                                localStorage.removeItem("accessToken");
+                                                localStorage.removeItem("user");
+                                                window.location.reload();
+                                            }}
+                                            className="block w-full text-left px-4 py-2 hover:bg-blue-100"
+                                        >
+                                            Logout
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
+
+
+                        ) : (
+                            <div className="space-x-4">
+                                <Link to="/auth/sign-in" className="text-white hover:text-blue-200">Login</Link>
+                                <Link to="/auth/sign-up" className="text-white hover:text-blue-200">Register</Link>
+                            </div>
+                        )}
+                    </div>
                 </div>
             </header>
+
 
             {/* Banner */}
             <div className="w-full h-[300px] md:h-[400px] overflow-hidden relative shadow-lg">

@@ -3,12 +3,11 @@ import {
     CardHeader,
     CardBody,
     Typography,
-    Chip,
 } from "@material-tailwind/react";
 import {useEffect, useState} from "react";
 import axios from "axios";
 import PostTopicForm from "./PostTopicForm.jsx";
-import {getAllPostTopics} from "@/api/postTopicApi.js";
+import {deletePostTopic, getAllPostTopics} from "@/api/postTopicApi.js";
 
 export function PostTopics() {
 
@@ -17,6 +16,7 @@ export function PostTopics() {
     const [postTopicList, setPostTopicList] = useState([]);
     const [name, setName] = useState("");
     const [sortOrder, setSortOrder] = useState("DESC");
+    const [checkChanges, setCheckChanges] = useState(true);
 
     const fetchPostTopics = async () => {
         try {
@@ -28,7 +28,23 @@ export function PostTopics() {
     }
     useEffect(() => {
         fetchPostTopics();
-    }, [name, sortOrder]);
+    }, [name, sortOrder, checkChanges]);
+
+    const deleteTopic = async (postTopicId, name) => {
+        const confirmText = `Are you sure you want to delete topic "${name}"?`;
+        if (!window.confirm(confirmText)) return;
+        try {
+            await deletePostTopic(postTopicId);
+            setCheckChanges(!checkChanges);
+            alert("Delete successfully");
+        } catch (error) {
+            if (error.response) {
+                alert(error.response.data.message);
+            } else {
+                alert("error!!!!");
+            }
+        }
+    }
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
@@ -125,7 +141,7 @@ export function PostTopics() {
                                                 <button
                                                     onClick={() => {
                                                         setShowForm(true);
-                                                        setInitialValue({ id: topic.postTopicId, name: topic.name });
+                                                        setInitialValue({id: topic.postTopicId, name: topic.name});
                                                     }}
 
                                                     className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"
@@ -133,6 +149,7 @@ export function PostTopics() {
                                                     Edit
                                                 </button>
                                                 <button
+                                                    onClick={() => deleteTopic(topic.postTopicId, topic.name)}
                                                     className="text-xs font-semibold text-red-600 border border-red-600 px-2 py-1 rounded hover:bg-red-50"
                                                 >
                                                     Delete

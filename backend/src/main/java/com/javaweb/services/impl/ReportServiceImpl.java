@@ -2,7 +2,7 @@ package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
 import com.javaweb.dtos.response.ReportDTO;
-import com.javaweb.dtos.request.ReportSearchRequest;
+import com.javaweb.dtos.request.SearchReportRequest;
 import com.javaweb.entities.Report;
 import com.javaweb.exceptions.AccessDeniedException;
 import com.javaweb.exceptions.ResourceNotFoundException;
@@ -28,11 +28,11 @@ public class ReportServiceImpl implements ReportService {
 
     @Transactional(readOnly = true)
     @Override
-    public Page<ReportDTO> getAllReports(ReportSearchRequest reportSearchRequest, Pageable pageable) {
-        String status = reportSearchRequest.status();
-        String reporterName = reportSearchRequest.reporterName();
-        String targetName = reportSearchRequest.targetName();
-        String sortOrder = reportSearchRequest.sortOrder();
+    public Page<ReportDTO> getAllReports(SearchReportRequest searchReportRequest, Pageable pageable) {
+        String status = searchReportRequest.status();
+        String reporterName = searchReportRequest.reporterName();
+        String targetName = searchReportRequest.targetName();
+        String sortOrder = searchReportRequest.sortOrder();
 
         if (sortOrder == null) {
             sortOrder = "DESC";

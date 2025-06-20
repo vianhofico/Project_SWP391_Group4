@@ -1,10 +1,9 @@
 package com.javaweb.controller;
 
+import com.javaweb.dtos.request.SearchReportRequest;
 import com.javaweb.dtos.response.ReportDTO;
-import com.javaweb.dtos.request.ReportSearchRequest;
 import com.javaweb.services.ReportService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,13 +24,13 @@ public class ReportController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping
-    public Page<ReportDTO> getAllReports(@ModelAttribute @Valid ReportSearchRequest reportSearchRequest, Pageable pageable) {
-        return reportService.getAllReports(reportSearchRequest, pageable);
+    public Page<ReportDTO> getAllReports(@ModelAttribute @Valid SearchReportRequest searchReportRequest, Pageable pageable) {
+        return reportService.getAllReports(searchReportRequest, pageable);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'ROLE')")
     @PutMapping("/{reportId}")
-    public ResponseEntity<Void> setStatus(@PathVariable("reportId") @Positive(message = "reportId must positive") Long reportId, @RequestBody Map<String, String> status) {
+    public ResponseEntity<Void> setStatus(@PathVariable("reportId") Long reportId, @RequestBody Map<String, String> status) {
         System.out.println("status: " + status);
         reportService.setStatus(reportId, status.get("status"));
         return ResponseEntity.noContent().build();

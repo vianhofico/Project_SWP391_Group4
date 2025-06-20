@@ -123,4 +123,17 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorResponse);
     }
 
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<ErrorResponse> handleBusinessException(BusinessException ex, HttpServletRequest request) {
+        List<String> messages = List.of(
+                ex.getMessage() != null ? ex.getMessage() : ErrorCode.ACTION_NOT_PERMITTED.getMessage()
+        );
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCode.ACTION_NOT_PERMITTED.getCode(),
+                messages,
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+    }
+
 }

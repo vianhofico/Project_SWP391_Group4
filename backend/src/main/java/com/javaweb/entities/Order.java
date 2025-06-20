@@ -13,22 +13,25 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-@Table(name = "Orders")
+@Table(name = "orders")  
 public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orderId")
+    @Column(name = "order_id")  
     private Long orderId;
 
     @Column(name = "amount")
     private Long amount;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")  
     private User user;
 
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)

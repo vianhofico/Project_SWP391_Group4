@@ -3,7 +3,7 @@ package com.javaweb.dtos.request;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
-public record ReportSearchRequest(
+public record SearchReportRequest(
         String reporterName,
         String targetName,
         @NotNull(message = "report status cannot null")

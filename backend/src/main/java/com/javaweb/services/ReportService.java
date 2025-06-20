@@ -1,13 +1,13 @@
 package com.javaweb.services;
 
 import com.javaweb.dtos.response.ReportDTO;
-import com.javaweb.dtos.request.ReportSearchRequest;
+import com.javaweb.dtos.request.SearchReportRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface ReportService {
 
-    Page<ReportDTO> getAllReports(ReportSearchRequest reportSearchRequest, Pageable pageable);
+    Page<ReportDTO> getAllReports(SearchReportRequest searchReportRequest, Pageable pageable);
 
     void setStatus(Long reportId, String status);
 

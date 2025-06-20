@@ -2,7 +2,7 @@ package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
 import com.javaweb.dtos.request.CreateAdminRequest;
-import com.javaweb.dtos.request.UserSearchRequest;
+import com.javaweb.dtos.request.SearchUserRequest;
 import com.javaweb.dtos.response.UserDTO;
 import com.javaweb.entities.User;
 import com.javaweb.exceptions.ResourceAlreadyExistsException;
@@ -27,18 +27,17 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final DTOConverter dtoConverter;
 
-    private final String NEW_PASSWORD = "12345678";
     private final String USER_NOTFOUND = "Cannot find user with id: ";
 
     @Transactional(readOnly = true)
     @Override
-    public Page<UserDTO> getAllUsers(UserSearchRequest userSearchRequest, Pageable pageable) {
-        String fullName = userSearchRequest.fullName();
-        String sortField = userSearchRequest.sortField();
-        String sortOrder = userSearchRequest.sortOrder();
+    public Page<UserDTO> getAllUsers(SearchUserRequest searchUserRequest, Pageable pageable) {
+        String fullName = searchUserRequest.fullName();
+        String sortField = searchUserRequest.sortField();
+        String sortOrder = searchUserRequest.sortOrder();
         Boolean isActive = null;
-        if (userSearchRequest.status() != null && !userSearchRequest.status().isBlank()) {
-            isActive = (userSearchRequest.status().equalsIgnoreCase("ACTIVE"));
+        if (searchUserRequest.status() != null && !searchUserRequest.status().isBlank()) {
+            isActive = (searchUserRequest.status().equalsIgnoreCase("ACTIVE"));
         }
 
         if (fullName != null && fullName.isBlank()) {//xử lý trường hợp mới tạo user chưa có fullName không hiện lên admin (khi đó tên user đó là null mà lại tìm kiếm theo %% nên không ra)
@@ -55,7 +54,7 @@ public class UserServiceImpl implements UserService {
                 pageable.getPageSize(),
                 Sort.by(direction, sortField)
         );
-        Page<User> pageUsers = userRepository.findAllUsers(fullName, userSearchRequest.role().toUpperCase(), isActive, pageable);
+        Page<User> pageUsers = userRepository.findAllUsers(fullName, searchUserRequest.role().toUpperCase(), isActive, pageable);
         return pageUsers.map(dtoConverter::toUserDTO);
     }
 
@@ -85,13 +84,6 @@ public class UserServiceImpl implements UserService {
     public UserDTO getUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(USER_NOTFOUND + userId));
         return dtoConverter.toUserDTO(user);
-    }
-
-    @Override
-    public void resetPassword(Long userId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(USER_NOTFOUND + userId));
-        user.setPassword(NEW_PASSWORD);
-        userRepository.save(user);
     }
 
     @Override

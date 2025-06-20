@@ -1,6 +1,6 @@
 package com.javaweb.controller;
 
-import com.javaweb.dtos.request.PostTopicSearchRequest;
+import com.javaweb.dtos.request.SearchPostTopicRequest;
 import com.javaweb.dtos.response.PostTopicDTO;
 import com.javaweb.services.PostTopicService;
 import jakarta.validation.Valid;
@@ -19,8 +19,8 @@ public class PostTopicController {
     private final PostTopicService postTopicService;
 
     @GetMapping
-    public List<PostTopicDTO> getAllPostTopics(@ModelAttribute @Valid PostTopicSearchRequest postTopicSearchRequest) {
-        return postTopicService.getAllPostTopics(postTopicSearchRequest);
+    public List<PostTopicDTO> getAllPostTopics(@ModelAttribute @Valid SearchPostTopicRequest searchPostTopicRequest) {
+        return postTopicService.getAllPostTopics(searchPostTopicRequest);
     }
 
     @PreAuthorize("hasRole('ADMIN')")
@@ -34,6 +34,13 @@ public class PostTopicController {
     @PutMapping("/{postTopicId}")
     public ResponseEntity<Void> editPostTopic(@RequestBody PostTopicDTO postTopicDTO, @PathVariable Long postTopicId) {
         postTopicService.editPostTopic(postTopicDTO, postTopicId);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @DeleteMapping("/{postTopicId}")
+    public ResponseEntity<Void> deletePostTopic(@PathVariable Long postTopicId) {
+        postTopicService.deletePostTopic(postTopicId);
         return ResponseEntity.noContent().build();
     }
 }

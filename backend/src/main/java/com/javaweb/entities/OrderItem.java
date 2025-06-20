@@ -9,24 +9,22 @@ import lombok.*;
 @Setter
 @Builder
 @Entity
-@Table(name = "OrderItems")
+@Table(name = "order_items")
 public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orderItemId")
+    @Column(name = "order_item_id")  
     private Long orderItemId;
 
     @Column(name = "price")
     private Long price;
 
     @ManyToOne
-    @JoinColumn(name = "courseId")
+    @JoinColumn(name = "course_id")  
     private Course course;
 
     @ManyToOne
-    @JoinColumn(name = "orderId")
+    @JoinColumn(name = "order_id")  
     private Order order;
-
-
 }

@@ -13,12 +13,12 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-@Table(name = "Posts")
+@Table(name = "posts")  
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "postId")
+    @Column(name = "post_id")  
     private Long postId;
 
     @Column(name = "title")
@@ -27,22 +27,22 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "createdAt")
+    @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
     // DELETED / ACTIVE
-    @Column(name = "status") // lưu trạng thái bài viết (vì còn ràng buộc với reports nên không thể xóa, tại cần truy vết lại những bài viết bị báo cáo đã xóa)
+    @Column(name = "status")
     private String status;
 
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "postTopicId")
+    @JoinColumn(name = "post_topic_id")  
     private PostTopic postTopic;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")  
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
