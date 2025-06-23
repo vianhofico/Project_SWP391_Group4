@@ -1,0 +1,53 @@
+.table-container {
+  width: 100%;
+  max-width: 32rem; /* max-w-2xl */
+  margin: 0 auto;
+  border: 1px solid #e0e0e0; /* Viền xám nhạt */
+  border-radius: 0.5rem; /* Bo góc nhẹ */
+  overflow: hidden;
+  background-color: #ffffff; /* Nền trắng */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bóng nhẹ */
+}
+
+.profile-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.profile-table th,
+.profile-table td {
+  padding: 0.75rem 1rem; /* Khoảng cách bên trong */
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0; /* Đường viền dưới mỗi hàng */
+}
+
+.profile-table th {
+  background-color: #4e73df; /* Tông màu header giống CardHeader */
+  color: #ffffff; /* Chữ trắng */
+  font-size: 0.75rem; /* Text nhỏ như Typography small */
+  font-weight: 700; /* Đậm */
+  text-transform: uppercase;
+}
+
+.profile-table td {
+  color: #607d8b; /* Tương tự text-blue-gray-600 */
+  font-size: 0.875rem; /* Font size nhỏ */
+}
+
+.profile-table tr:last-child td {
+  border-bottom: none; /* Xóa viền dưới của hàng cuối */
+}
+
+.profile-table .chip {
+  display: inline-flex;
+  align-items: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .profile-table th,
+  .profile-table td {
+    padding: 0.5rem; /* Giảm padding trên mobile */
+    font-size: 0.75rem; /* Font nhỏ hơn */
+  }
+}

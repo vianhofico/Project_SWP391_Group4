@@ -1,0 +1,70 @@
+/* Custom styles for enhanced UX */
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* Hover effects for cards */
+.hover\:scale-105:hover {
+  transform: scale(1.05);
+}
+
+/* Smooth transitions */
+.transition-shadow {
+  transition: box-shadow 0.3s ease-in-out;
+}
+
+.transform {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Custom scrollbar for better UX */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #4e73df;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #224abe;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .max-w-lg {
+    max-width: 100%;
+  }
+}
+
+/* Sticky sidebar */
+.sticky {
+  position: sticky;
+}
+
+/* Enhanced iframe styling */
+iframe {
+  border-radius: 0.5rem;
+}
+
+/* Course detail specific styles */
+.course-meta {
+  border-top: 1px solid #e5e7eb;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
+  margin: 1rem 0;
+}
+
+/* Related courses hover effect */
+.related-course-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
