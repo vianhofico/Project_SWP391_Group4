@@ -1,4 +1,4 @@
-package dev.likeech.java.repository.entity;
+package dev.likeech.java.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -47,4 +47,8 @@ public class LessonAPI {
 
         return ResponseEntity.ok(lessonService.updateLesson(lessonId, request));
     }
+    @GetMapping("{lessonId}")
+    ResponseEntity<LessonDTO> getLesson(@PathVariable("lessonId") Long lessonId) {
+        return ResponseEntity.ok(lessonService.getLesson(lessonId));
+    }
 }

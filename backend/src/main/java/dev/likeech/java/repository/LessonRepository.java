@@ -1,6 +1,6 @@
 package dev.likeech.java.repository;
 
-import dev.likeech.java.repository.entity.LessonEntity;
+import dev.likeech.java.entity.LessonEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,4 +12,6 @@ public interface LessonRepository extends JpaRepository<LessonEntity, Long> {
     Integer findMaxOrderByCourseId(@Param("chapterId") Long chapterId);
     List<LessonEntity> findByChapter_chapterId(Long chapterId);
     List<LessonEntity> findByMainVideoUrl(String mainVideoUrl);
+    boolean existsByMainVideoUrlAndLessonIdNot(String mainVideoUrl, Long id);
+    boolean existsByMainVideoUrl(String mainVideoUrl);
 }

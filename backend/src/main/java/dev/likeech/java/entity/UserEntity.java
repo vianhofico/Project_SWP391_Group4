@@ -1,4 +1,4 @@
-package dev.likeech.java.repository.entity;
+package dev.likeech.java.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -50,11 +51,10 @@ public class UserEntity {
     @Column(name = "imageUrl")
     private String imageUrl;
 
-    @ManyToMany
-    @JoinTable(
-            name = "User_Course",
-            joinColumns = @JoinColumn(name = "userId"),
-            inverseJoinColumns = @JoinColumn(name = "courseId")
-    )
-    private List<CourseEntity> courses;
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<RatingEntity> ratings = new ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<EnrollmentEntity> enrollments = new ArrayList<>();
+    @OneToMany(mappedBy = "user",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<LessonProgressEntity> lessonProgress = new ArrayList<>();
 }

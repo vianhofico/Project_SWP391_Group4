@@ -5,10 +5,11 @@ import dev.likeech.java.model.dto.CourseDTO;
 import dev.likeech.java.model.dto.TopicDTO;
 import dev.likeech.java.model.request.SearchRequest;
 import dev.likeech.java.model.request.TopicRequest;
-import dev.likeech.java.repository.entity.TopicEntity;
+import dev.likeech.java.entity.TopicEntity;
 import dev.likeech.java.service.TopicService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -29,15 +30,31 @@ public class TopicAPI {
         this.topicDTOConverter = topicDTOConverter;
     }
 
-    @GetMapping
-    public ResponseEntity<List<TopicDTO>> getTopics(
+    @GetMapping("/inactive")
+    public ResponseEntity<Page<TopicDTO>> getInactiveTopics(
             @RequestParam(name = "sort", required = false) String sortField,
             @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "order", defaultValue = "asc", required = false) String order,
-            @RequestParam(name = "status", required = false) String statusStr
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "10") int size
     ) {
-        var request = new SearchRequest(sortField, search, order, statusStr);
+        var request = new SearchRequest(sortField, search, order, "false", page, size);
         return ResponseEntity.ok(topicService.searchByNameAndSort(request));
+    }
+    @GetMapping("/active")
+    public ResponseEntity<Page<TopicDTO>> getActiveTopics(
+            @RequestParam(name = "sort", required = false) String sortField,
+            @RequestParam(name = "search", required = false) String search,
+            @RequestParam(name = "order", defaultValue = "asc", required = false) String order,
+            @RequestParam(name = "page", defaultValue = "0") int page,
+            @RequestParam(name = "size", defaultValue = "1") int size
+    ) {
+        var request = new SearchRequest(sortField, search, order, "true", page, size);
+        return ResponseEntity.ok(topicService.searchByNameAndSort(request));
+    }
+    @GetMapping()
+    public ResponseEntity<List<TopicDTO>> getAllTopics(){
+        return ResponseEntity.ok(topicService.getAllTopics());
     }
     @GetMapping("/{id}")
     public ResponseEntity<TopicDTO> getTopic(@PathVariable @Positive Long id) {

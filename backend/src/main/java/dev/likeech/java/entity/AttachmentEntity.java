@@ -1,5 +1,6 @@
-package dev.likeech.java.repository.entity;
+package dev.likeech.java.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,7 +17,6 @@ public class AttachmentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attachmentId")
     private Long attachmentId;
-
     @Column(name = "url")
     private String url;
     @Enumerated(EnumType.STRING)
@@ -28,5 +28,9 @@ public class AttachmentEntity {
     private Boolean isDeleted;
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
+    @ManyToOne
+//    @JsonBackReference
+    @JoinColumn(name = "course_Id")
+    private CourseEntity course;
 }
 

@@ -1,9 +1,11 @@
-package dev.likeech.java.repository.entity;
+package dev.likeech.java.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -45,8 +47,6 @@ public class CourseEntity {
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
-    @ManyToMany(mappedBy = "courses")
-    private List<UserEntity> users;
 
     @ManyToMany
     @JoinTable(
@@ -59,15 +59,13 @@ public class CourseEntity {
     @OneToMany(mappedBy = "course")
     private List<ChapterEntity> chapters;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Course_Attachment",
-            joinColumns = @JoinColumn(name = "courseId"),
-            inverseJoinColumns = @JoinColumn(name = "attachmentId")
-    )
-    private List<AttachmentEntity> attachments;
+    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<AttachmentEntity> attachments = new ArrayList<>();
 
-    @OneToMany(mappedBy = "course")
+    @OneToMany(mappedBy = "course", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<EnrollmentEntity> enrollments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "course",cascade = {CascadeType.PERSIST, CascadeType.MERGE},fetch = FetchType.LAZY)
     private List<RatingEntity> ratings;
     @PrePersist
     public void onCreate() {

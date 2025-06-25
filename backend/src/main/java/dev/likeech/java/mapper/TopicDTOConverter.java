@@ -1,8 +1,8 @@
 package dev.likeech.java.mapper;
 
 import dev.likeech.java.model.dto.TopicDTO;
-import dev.likeech.java.repository.entity.CourseEntity;
-import dev.likeech.java.repository.entity.TopicEntity;
+import dev.likeech.java.entity.CourseEntity;
+import dev.likeech.java.entity.TopicEntity;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;

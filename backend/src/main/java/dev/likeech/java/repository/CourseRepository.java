@@ -1,17 +1,32 @@
 package dev.likeech.java.repository;
 
-import dev.likeech.java.repository.entity.CourseEntity;
-import dev.likeech.java.repository.entity.TopicEntity;
+import dev.likeech.java.entity.CourseEntity;
+import dev.likeech.java.entity.TopicEntity;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
 public interface CourseRepository extends JpaRepository<CourseEntity, Long> {
-    List<CourseEntity> findByTopicsNotContainingAndStatus(TopicEntity topicEntity, Boolean status);
+    List<CourseEntity> findByTopicsNotContaining(TopicEntity topicEntity);
     List<CourseEntity> findByTopics(TopicEntity topicEntity);
     CourseEntity findByCourseId(long id);
     boolean existsByImageUrlAndCourseIdNot(String imageUrl, Long id);
     boolean existsByVideoTrialUrlAndCourseIdNot(String videoTrialUrl, Long id);
     boolean existsByImageUrl(String imageUrl);
     boolean existsByVideoTrialUrl(String videoTrialUrl);
+    @Query("SELECT DISTINCT c FROM CourseEntity c " +
+            "JOIN c.topics t " +
+            "WHERE (:topicId IS NULL OR t.topicId = :topicId) " +
+            "AND (:search IS NULL OR LOWER(c.title) LIKE LOWER(CONCAT('%', :search, '%'))) " +
+            "AND (:status IS NULL OR c.status = :status)")
+    Page<CourseEntity> findByFilter(
+            @Param("topicId") Long topicId,
+            @Param("search") String search,
+            @Param("status") String status,
+            Pageable pageable
+    );
 }

@@ -19,20 +19,15 @@ import java.util.concurrent.TimeUnit;
 public class GcsRepositoryImpl implements GcsRepository {
     private final Storage storage;
     private static final String BUCKET_NAME = "mr-met";
-
-
     public String generateViewSignedUrl(String objectName, String folder) {
         String objectPath = folder + "/" + objectName;
-
         BlobInfo blobInfo = BlobInfo.newBuilder(BUCKET_NAME, objectPath).build();
-
         URL signedUrl = storage.signUrl(
                 blobInfo,
                 15, TimeUnit.MINUTES,
                 Storage.SignUrlOption.httpMethod(HttpMethod.GET),
                 Storage.SignUrlOption.withV4Signature()
         );
-
         return signedUrl.toString();
     }
     public String generateUploadSignedUrl(String objectName, String contentType, String folder) {

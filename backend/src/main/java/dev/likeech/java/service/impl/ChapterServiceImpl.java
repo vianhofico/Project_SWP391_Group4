@@ -7,10 +7,14 @@ import dev.likeech.java.model.dto.ChapterDTO;
 import dev.likeech.java.model.request.ChapterReorderRequest;
 import dev.likeech.java.repository.ChapterRepository;
 import dev.likeech.java.repository.CourseRepository;
-import dev.likeech.java.repository.entity.ChapterEntity;
-import dev.likeech.java.repository.entity.CourseEntity;
+import dev.likeech.java.entity.ChapterEntity;
+import dev.likeech.java.entity.CourseEntity;
 import dev.likeech.java.service.ChapterService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -54,15 +58,13 @@ public class ChapterServiceImpl implements ChapterService {
     }
 
     @Override
-    public List<ChapterDTO> getChapters(Long courseId) {
-        List<ChapterEntity> chapterEntities = chapterRepository.findByCourse_courseId(courseId);
-        List<ChapterDTO> dtos = new ArrayList<>();
-        for(ChapterEntity chapterEntity : chapterEntities) {
-            ChapterDTO chapterDTO = chapterDTOConverter.toChapterDTO(chapterEntity);
-            dtos.add(chapterDTO);
-        }
-        return dtos;
+    public Page<ChapterDTO> getChapters(Long courseId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("chapterId").ascending());
+        Page<ChapterEntity> chapterPage = chapterRepository.findByCourse_courseId(courseId, pageable);
+        return chapterPage.map(chapterDTOConverter::toChapterDTO);
     }
+
+
     @Override
     public List<ChapterDTO> reorderChapters(Long courseId, List<ChapterReorderRequest> request) {
         CourseEntity course = courseRepository.findById(courseId)
@@ -97,10 +99,20 @@ public class ChapterServiceImpl implements ChapterService {
     public void updateChapterTitle(Long chapterId, String newTitle) {
         ChapterEntity chapter = chapterRepository.findById(chapterId)
                 .orElseThrow(() -> new AppException(ErrorCode.CHAPTER_NOT_FOUND));
-
-        chapter.setTitle(newTitle);
+        if(!newTitle.isBlank()){
+            chapter.setTitle(newTitle);
+        }
         chapterRepository.save(chapter);
     }
 
+    @Override
+    public void updateChapterStatus(Long chapterId, String status) {
+        ChapterEntity chapter = chapterRepository.findById(chapterId)
+                .orElseThrow(() -> new AppException(ErrorCode.CHAPTER_NOT_FOUND));
+        if(!status.isBlank()){
+            chapter.setStatus(status.equalsIgnoreCase("ACTIVE") ? true : false);
+        }
+        chapterRepository.save(chapter);
+    }
 
 }

@@ -1,4 +1,4 @@
-package dev.likeech.java.repository.entity;
+package dev.likeech.java.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,14 +19,13 @@ public class LessonMainVideoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "mainVideoId")
     private Long mainVideoId;
-    @Column(name = "title")
-    private String title;
     @Column(name ="url")
     private String url;
-    @Column(name="duration")
-    private Long duration;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private ResourceType type;
     @Column(name = "isDeleted")
-    private Boolean isdelete;
+    private Boolean isDelete;
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
     @Column(name ="deletedAt")

@@ -1,4 +1,4 @@
-package dev.likeech.java.repository.entity;
+package dev.likeech.java.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -21,13 +21,9 @@ public class LessonResourceEntity {
     @Column(name = "resourceId")
     private Long resourceId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "lesson_resources_mapping",
-            joinColumns = @JoinColumn(name = "resource_id"),
-            inverseJoinColumns = @JoinColumn(name = "lesson_id")
-    )
+    @ManyToMany(mappedBy = "resources")
     private List<LessonEntity> lessons;
+
 
     @Column(name = "title")
     private String title;
@@ -44,6 +40,7 @@ public class LessonResourceEntity {
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;
-
+    @Column(name ="deletedAt")
+    private LocalDateTime deletedAt;
 }
 

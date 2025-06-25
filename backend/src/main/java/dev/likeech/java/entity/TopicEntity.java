@@ -1,4 +1,4 @@
-package dev.likeech.java.repository.entity;
+package dev.likeech.java.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -28,11 +28,6 @@ public class TopicEntity {
     @Column(name = "status", nullable = false)
     private Boolean status = true;
 
-    @ManyToMany
-    @JoinTable(
-            name = "Course_Topic",
-            joinColumns = @JoinColumn(name = "topicId"),
-            inverseJoinColumns = @JoinColumn(name = "courseId")
-    )
+    @ManyToMany(mappedBy = "topics")
     private List<CourseEntity> courses;
 }

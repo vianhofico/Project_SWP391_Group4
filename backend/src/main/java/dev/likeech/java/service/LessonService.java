@@ -11,4 +11,5 @@ public interface LessonService {
     List<LessonDTO> getLessons(Long chapterId);
     List<LessonDTO> reorderLessons(Long chapterId, List<LessonReorderRequest> request);
     LessonDTO updateLesson(Long lessonId, LessonRequest request);
+    LessonDTO getLesson(Long lessonId);
 }

@@ -1,6 +1,5 @@
-package dev.likeech.java.repository.entity;
+package dev.likeech.java.entity;
 
-import io.grpc.stub.ServerCalls;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -42,12 +41,13 @@ public class LessonEntity {
     private String mainVideoUrl;
     @OneToMany(mappedBy = "lesson")
     private List<LessonMainVideoEntity> mainVideos;
-
+    @OneToMany(mappedBy = "lesson",cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<LessonProgressEntity> lessonProgress;
     @ManyToMany
     @JoinTable(
             name = "lesson_resources_mapping",
-            joinColumns = @JoinColumn(name = "lesson_Id"),
-            inverseJoinColumns = @JoinColumn(name = "resource_Id")
+            joinColumns = @JoinColumn(name = "lesson_id"),
+            inverseJoinColumns = @JoinColumn(name = "resource_id")
     )
     private List<LessonResourceEntity> resources;
     @PrePersist

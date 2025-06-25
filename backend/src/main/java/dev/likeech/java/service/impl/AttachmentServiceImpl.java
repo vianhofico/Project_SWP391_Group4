@@ -1,9 +1,11 @@
 package dev.likeech.java.service.impl;
 
+import dev.likeech.java.mapper.AttachmentDTOConverter;
+import dev.likeech.java.model.dto.AttachmentDTO;
 import dev.likeech.java.repository.AttachmentRepository;
 import dev.likeech.java.repository.GcsRepository;
-import dev.likeech.java.repository.entity.AttachmentEntity;
-import dev.likeech.java.repository.entity.ResourceType;
+import dev.likeech.java.entity.AttachmentEntity;
+import dev.likeech.java.entity.ResourceType;
 import dev.likeech.java.service.AttachmentService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,6 +23,7 @@ import java.util.List;
 public class AttachmentServiceImpl implements AttachmentService {
     private final AttachmentRepository attachmentRepository;
     private final GcsRepository gcsRepository;
+    private final AttachmentDTOConverter attachmentDTOConverter;
     private static final Logger log = LoggerFactory.getLogger(AttachmentServiceImpl.class);
 
     @Override
@@ -72,5 +76,24 @@ public class AttachmentServiceImpl implements AttachmentService {
                 log.error("Failed to delete attachment: {}", attachment.getUrl(), e);
             }
         }
+    }
+    @Override
+    public List<AttachmentDTO> getAttachments(Long courseId, ResourceType type) {
+        List<AttachmentEntity> attachmentEntities = attachmentRepository.findByCourse_CourseIdAndIsDeletedTrueAndType(courseId, type);
+        List<AttachmentDTO> attachmentDTOs = new ArrayList<>();
+        for(AttachmentEntity attachment : attachmentEntities) {
+            AttachmentDTO attachmentDTO = attachmentDTOConverter.toDTO(attachment);
+            attachmentDTOs.add(attachmentDTO);
+        }
+        return attachmentDTOs;
+    }
+    @Override
+    @Transactional
+    public AttachmentEntity markAttachmentAsRecoverById(Long id) {
+        AttachmentEntity attachment = attachmentRepository.findByAttachmentIdAndIsDeletedTrue(id)
+                .orElseThrow(() -> new IllegalArgumentException("Attachment not found or already deleted"));
+        attachment.setIsDeleted(true);
+        attachment.setDeletedAt(LocalDateTime.now());
+        return attachmentRepository.save(attachment);
     }
 }

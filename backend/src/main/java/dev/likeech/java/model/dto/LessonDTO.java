@@ -3,6 +3,7 @@ package dev.likeech.java.model.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @NoArgsConstructor
@@ -19,4 +20,6 @@ public class LessonDTO {
     private Long chapterId;
     private String content;
     private String mainVideoUrl;
+    private List<Long> mainVideoIds;
+    private List<Long> resourceIds;
 }
