@@ -1,5 +1,6 @@
 package com.javaweb.exceptions;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.javaweb.dtos.response.ErrorResponse;
 import com.javaweb.enums.ErrorCode;
 import jakarta.servlet.http.HttpServletRequest;
@@ -136,4 +137,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
     }
 
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<ErrorResponse> handleJsonProcessingException(JsonProcessingException ex, HttpServletRequest request) {
+        List<String> messages = List.of(
+                ex.getMessage() != null ? ex.getMessage() : ErrorCode.INVALID_FORMAT.getMessage()
+        );
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCode.INVALID_FORMAT.getCode(),
+                messages,
+                request.getRequestURI()
+        );
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
 }
