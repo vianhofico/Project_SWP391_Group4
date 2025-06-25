@@ -1,5 +1,6 @@
 package com.javaweb.controller;
 
+import com.javaweb.dtos.request.CreateReportRequest;
 import com.javaweb.dtos.request.SearchReportRequest;
 import com.javaweb.dtos.response.ReportDTO;
 import com.javaweb.services.ReportService;
@@ -28,11 +29,17 @@ public class ReportController {
         return reportService.getAllReports(searchReportRequest, pageable);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'ROLE')")
+    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
     @PutMapping("/{reportId}")
     public ResponseEntity<Void> setStatus(@PathVariable("reportId") Long reportId, @RequestBody Map<String, String> status) {
-        System.out.println("status: " + status);
         reportService.setStatus(reportId, status.get("status"));
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasRole('LEARNER')")
+    @PostMapping()
+    public ResponseEntity<Void> createReport(@ModelAttribute @Valid CreateReportRequest createReportRequest) {
+        reportService.createReport(createReportRequest);
         return ResponseEntity.noContent().build();
     }
 

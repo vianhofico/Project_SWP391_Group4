@@ -15,6 +15,7 @@ public class CommentDTO {
     private Long commentId;
     private String content;
     private String createdAt;
+    private String status;
     private CommentDTO parentComment;
     private PostDTO post;
     private UserDTO user;

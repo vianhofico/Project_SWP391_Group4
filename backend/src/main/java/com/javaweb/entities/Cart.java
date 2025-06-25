@@ -21,8 +21,6 @@ public class Cart {
     @Column(name = "cart_id")
     private Long cartId;
 
-    private int sum;
-
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
@@ -31,7 +29,7 @@ public class Cart {
     private User user;
 
     @ManyToMany
-    @JoinTable(name = "xxx",
+    @JoinTable(name = "cart_items",
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "course_id"))
     private List<Course> courses = new ArrayList<>();

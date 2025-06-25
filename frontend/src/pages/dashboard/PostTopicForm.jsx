@@ -3,12 +3,13 @@ import {addPostTopic, editPostTopic} from "@/api/postTopicApi.js";
 
 const PostTopicForm = ({onClose, onSuccess, initialValue}) => {
     const [name, setName] = useState(initialValue?.name || "");
-    const topicId = initialValue?.id;
+    const [topicId, setTopicId] = useState(initialValue?.id || null);
 
     const createTopic = async (name) => {
         const confirmText = `Are you sure you want to create new topic with name: "${name}"?`;
         if (!window.confirm(confirmText)) return;
         try {
+
             await addPostTopic(name);
             alert("Add successfully!")
             onSuccess();

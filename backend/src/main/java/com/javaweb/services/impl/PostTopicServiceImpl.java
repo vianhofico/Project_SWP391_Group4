@@ -12,8 +12,12 @@ import com.javaweb.repositories.PostRepository;
 import com.javaweb.repositories.PostTopicRepository;
 import com.javaweb.services.PostTopicService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -27,7 +31,7 @@ public class PostTopicServiceImpl implements PostTopicService {
     private final DTOConverter dtoConverter;
 
     @Override
-    public List<PostTopicDTO> getAllPostTopics(SearchPostTopicRequest searchPostTopicRequest) {
+    public Page<PostTopicDTO> getAllPostTopics(SearchPostTopicRequest searchPostTopicRequest, Pageable pageable) {
         String name = searchPostTopicRequest.name();
         String sortOrder = searchPostTopicRequest.sortOrder();
 
@@ -38,13 +42,19 @@ public class PostTopicServiceImpl implements PostTopicService {
         if (sortOrder == null) {
             sortOrder = "DESC";
         }
-        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
-        Sort sort = Sort.by(direction, "createdAt");
 
-        List<PostTopic> postTopics = postTopicRepository.findAllPostTopics(name, sort);
-        return postTopics.stream().map(dtoConverter::toPostTopicDTO).toList();
+        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(direction, "createdAt")
+        );
+        Page<PostTopic> postTopics = postTopicRepository.findAllPostTopics(name, pageable);
+        return postTopics.map(dtoConverter::toPostTopicDTO);
     }
 
+    @Transactional
     @Override
     public void createPostTopic(PostTopicDTO postTopicDTO) {
         String name = postTopicDTO.getName();
@@ -59,6 +69,7 @@ public class PostTopicServiceImpl implements PostTopicService {
         postTopicRepository.save(postTopic);
     }
 
+    @Transactional
     @Override
     public void editPostTopic(PostTopicDTO postTopicDTO, Long postTopicId) {
         String name = postTopicDTO.getName();
@@ -72,6 +83,7 @@ public class PostTopicServiceImpl implements PostTopicService {
         postTopicRepository.save(postTopic);
     }
 
+    @Transactional
     @Override
     public void deletePostTopic(Long postTopicId) {
         PostTopic postTopic = postTopicRepository.findById(postTopicId).orElseThrow(()

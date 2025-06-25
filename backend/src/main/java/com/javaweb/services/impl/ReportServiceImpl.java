@@ -1,12 +1,21 @@
 package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
-import com.javaweb.dtos.response.ReportDTO;
+import com.javaweb.dtos.request.CreateReportRequest;
 import com.javaweb.dtos.request.SearchReportRequest;
+import com.javaweb.dtos.response.ReportDTO;
+import com.javaweb.entities.Comment;
+import com.javaweb.entities.Post;
 import com.javaweb.entities.Report;
+import com.javaweb.entities.User;
+import com.javaweb.enums.ReportType;
 import com.javaweb.exceptions.AccessDeniedException;
+import com.javaweb.exceptions.BusinessException;
 import com.javaweb.exceptions.ResourceNotFoundException;
+import com.javaweb.repositories.CommentRepository;
+import com.javaweb.repositories.PostRepository;
 import com.javaweb.repositories.ReportRepository;
+import com.javaweb.repositories.UserRepository;
 import com.javaweb.security.utils.SecurityUtils;
 import com.javaweb.services.ReportService;
 import com.javaweb.services.UserService;
@@ -18,32 +27,42 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
+
 @Service
 @RequiredArgsConstructor
 public class ReportServiceImpl implements ReportService {
 
     private final ReportRepository reportRepository;
+    private final UserRepository userRepository;
+    private final CommentRepository commentRepository;
+    private final PostRepository postRepository;
     private final DTOConverter dtoConverter;
     private final UserService userService;
 
-    @Transactional(readOnly = true)
     @Override
     public Page<ReportDTO> getAllReports(SearchReportRequest searchReportRequest, Pageable pageable) {
         String status = searchReportRequest.status();
         String reporterName = searchReportRequest.reporterName();
         String targetName = searchReportRequest.targetName();
         String sortOrder = searchReportRequest.sortOrder();
+        String reportTypeRaw = searchReportRequest.reportType();
+        ReportType reportType = null;
+        if (reportTypeRaw != null && !reportTypeRaw.isBlank()) {
+            reportType = ReportType.valueOf(reportTypeRaw.toUpperCase());
+        }
 
         if (sortOrder == null) {
             sortOrder = "DESC";
         }
+
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
         pageable = PageRequest.of(
                 pageable.getPageNumber(),
                 pageable.getPageSize(),
                 Sort.by(direction, "createdAt")
         );
-        Page<Report> pageReports = reportRepository.getAllReports(reporterName, targetName, status, pageable);
+        Page<Report> pageReports = reportRepository.getAllReports(reporterName, targetName, status, reportType, pageable);
         return pageReports.map(dtoConverter::toReportDTO);
     }
 
@@ -73,6 +92,45 @@ public class ReportServiceImpl implements ReportService {
     public Page<ReportDTO> getAllReportsReceived(Long userId, Pageable pageable) {
         Page<Report> pageReports = reportRepository.findByTargetUserId(userId, pageable);
         return pageReports.map(dtoConverter::toReportDTO);
+    }
+
+    @Transactional
+    @Override
+    public void createReport(CreateReportRequest createReportRequest) {
+        String currentUserEmail = SecurityUtils.getCurrentUserEmail();
+        User currentUser = userRepository.findByEmail(currentUserEmail).orElseThrow(
+                () -> new ResourceNotFoundException("User not found"));
+
+        String reportTypeRaw = createReportRequest.reportType();
+        ReportType reportType = ReportType.valueOf(reportTypeRaw);
+        String content = null;
+        Long commentId = createReportRequest.commentId();
+        Long postId = createReportRequest.postId();
+        if ((commentId == null && postId == null) || (postId != null && commentId != null)) {
+            throw new BusinessException("Report comment or post comment is null");
+        }
+
+        Post post = postRepository.findById(postId).orElse(null);
+        Comment comment = commentRepository.findById(commentId).orElse(null);
+
+        User targetUser = (post != null) ? post.getUser() : comment.getUser();
+        if (reportType == ReportType.OTHER && (content == null || content.isBlank())) {
+            content = createReportRequest.content();
+        }
+
+        Report report = Report
+                .builder()
+                .reportType(reportType)
+                .reporter(currentUser)
+                .target(targetUser)
+                .createdAt(LocalDateTime.now())
+                .content(content)
+                .comment(comment)
+                .post(post)
+                .status("PENDING")
+                .build();
+
+        reportRepository.save(report);
     }
 
 }

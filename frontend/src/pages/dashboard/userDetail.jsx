@@ -98,32 +98,36 @@ export default function UserDetail() {
                 )}
             </div>
 
-            {/* Tabs */}
-            <div className="border-b border-blue-200 mb-6">
-                <nav className="flex flex-wrap gap-2">
-                    {availableTabs.map((tab) => (
-                        <button
-                            key={tab.key}
-                            onClick={() => {
-                                setSelectedTab(tab.key);
-                                navigate(`/dashboard/${userRole}/${userId}/${tab.key}`);
-                            }}
-                            className={`px-4 py-2 rounded-t-md text-sm transition-all duration-200 ${
-                                selectedTab === tab.key
-                                    ? "bg-white border border-b-0 border-blue-500 text-blue-700 font-semibold shadow-sm"
-                                    : "bg-blue-50 text-blue-600 hover:bg-blue-100"
-                            }`}
-                        >
-                            {tab.label}
-                        </button>
-                    ))}
-                </nav>
-            </div>
+            {userRole !== "admin" && (
+                <>
+                    {/* Tabs */}
+                    <div className="border-b border-blue-200 mb-6">
+                        <nav className="flex flex-wrap gap-2">
+                            {availableTabs.map((tab) => (
+                                <button
+                                    key={tab.key}
+                                    onClick={() => {
+                                        setSelectedTab(tab.key);
+                                        navigate(`/dashboard/${userRole}/${userId}/${tab.key}`);
+                                    }}
+                                    className={`px-4 py-2 rounded-t-md text-sm transition-all duration-200 ${
+                                        selectedTab === tab.key
+                                            ? "bg-white border border-b-0 border-blue-500 text-blue-700 font-semibold shadow-sm"
+                                            : "bg-blue-50 text-blue-600 hover:bg-blue-100"
+                                    }`}
+                                >
+                                    {tab.label}
+                                </button>
+                            ))}
+                        </nav>
+                    </div>
 
-            {/* Tab Content */}
-            <div className="bg-white p-6 rounded-lg shadow-md border border-blue-100">
-                <UserTabs userId={userId} tab={selectedTab}/>
-            </div>
+                    {/* Tab Content */}
+                    <div className="bg-white p-6 rounded-lg shadow-md border border-blue-100">
+                        <UserTabs userId={userId} tab={selectedTab}/>
+                    </div>
+                </>
+            )}
         </div>
     );
 }

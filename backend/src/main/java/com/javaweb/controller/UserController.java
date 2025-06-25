@@ -73,7 +73,7 @@ public class UserController {
 
     @GetMapping("/{userId}/comments")
     public Page<CommentDTO> getAllComments(@PathVariable("userId") Long userId, Pageable pageable) {
-        return commentService.getAllComments(userId, pageable);
+        return commentService.getAllCommentsOfUser(userId, pageable);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")

@@ -48,9 +48,9 @@ export function Posts() {
         const fetchPostTopics = async () => {
             try {
                 const res = await getAllPostTopics();
-                setPostTopicList(res.data);
+                setPostTopicList(res.data.content);
             } catch (err) {
-                console.log("Lỗi khi fetch reports:", err);
+                console.log("Lỗi khi fetch post topic:", err);
             }
         }
         fetchPostTopics();

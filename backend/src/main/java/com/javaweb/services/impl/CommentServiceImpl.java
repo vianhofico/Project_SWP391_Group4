@@ -20,6 +20,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -34,7 +35,7 @@ public class CommentServiceImpl implements CommentService {
     private final DTOConverter dtoConverter;
 
     @Override
-    public Page<CommentDTO> getAllComments(Long userId, Pageable pageable) {
+    public Page<CommentDTO> getAllCommentsOfUser(Long userId, Pageable pageable) {
         Page<Comment> pageComments = commentRepository.findByUserUserId(userId, pageable);
         return pageComments.map(dtoConverter::toCommentDTO);
     }
@@ -45,6 +46,15 @@ public class CommentServiceImpl implements CommentService {
         String content = searchCommentRequest.content();
         String userFullName = searchCommentRequest.userFullName();
         String sortOrder = (searchCommentRequest.sortOrder() == null ? "DESC" : searchCommentRequest.sortOrder().toUpperCase());
+        String statusRaw = searchCommentRequest.status();
+        String status = null;
+        if (SecurityUtils.getCurrentUserEmail() == null || SecurityUtils.hasRole("ROLE_LEARNER")) {
+            status = "ACTIVE";
+        } else {
+            if (!statusRaw.isBlank()) {
+                status = statusRaw.toUpperCase();
+            }
+        }
 
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
 
@@ -53,8 +63,39 @@ public class CommentServiceImpl implements CommentService {
                 pageable.getPageSize(),
                 Sort.by(direction, "createdAt"));
 
-        Page<Comment> pageComments = commentRepository.findAllCommentsByPostId(postId, content, userFullName, pageable);
+        Page<Comment> pageComments = commentRepository.findAllCommentsByPostId(postId, content, userFullName, status, pageable);
         return pageComments.map(dtoConverter::toCommentDTO);
+    }
+
+    @Override// only for learner
+    public Page<CommentDTO> getAllTopLevelCommentsByPostId(Long postId, SearchCommentRequest searchCommentRequest, Pageable pageable) {
+        String sortOrder = (searchCommentRequest.sortOrder() == null ? "DESC" : searchCommentRequest.sortOrder().toUpperCase());
+        String status = "ACTIVE";
+        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(direction, "createdAt"));
+
+        Page<Comment> comments = commentRepository.findAllTopLevelCommentsByPostId(postId, status, pageable);
+        return comments.map(dtoConverter::toCommentDTO);
+    }
+
+    @Override// only for learner
+    public Page<CommentDTO> getAllChildCommentsByParentCommentId(Long parentCommentId, SearchCommentRequest searchCommentRequest, Pageable pageable) {
+        String sortOrder = (searchCommentRequest.sortOrder() == null ? "DESC" : searchCommentRequest.sortOrder().toUpperCase());
+        String status = "ACTIVE";
+        Sort.Direction direction = Sort.Direction.fromString(sortOrder);
+
+        pageable = PageRequest.of(
+                pageable.getPageNumber(),
+                pageable.getPageSize(),
+                Sort.by(direction, "createdAt"));
+
+        Page<Comment> comments = commentRepository.findCommentsByParentCommentId(parentCommentId, status, pageable);
+        return comments.map(dtoConverter::toCommentDTO);
+
     }
 
     @Override
@@ -65,6 +106,7 @@ public class CommentServiceImpl implements CommentService {
         return dtoConverter.toCommentDTO(comment);
     }
 
+    @Transactional
     @Override
     public void createComment(Long postId, CommentRequest commentRequest) {
         String currentUserEmail = SecurityUtils.getCurrentUserEmail();
@@ -96,10 +138,12 @@ public class CommentServiceImpl implements CommentService {
                 .parentComment(parentComment)
                 .user(currentUser)
                 .post(currentPost)
+                .status("ACTIVE")
                 .build();
         commentRepository.save(comment);
     }
 
+    @Transactional
     @Override
     public void updateComment(Long commentId, CommentRequest commentRequest) {
         Comment thisComment = commentRepository.findById(commentId).orElseThrow(
@@ -121,4 +165,33 @@ public class CommentServiceImpl implements CommentService {
         commentRepository.save(thisComment);
     }
 
+    @Transactional
+    @Override
+    public void deleteComment(Long commentId) {
+        Comment thisComment = commentRepository.findById(commentId).orElseThrow(
+                () -> new ResourceNotFoundException("Comment with id " + commentId + " not found!"));
+
+        String currentUserEmail = SecurityUtils.getCurrentUserEmail();
+        if (!thisComment.getUser().getEmail().equals(currentUserEmail) && !SecurityUtils.hasRole("ROLE_ADMIN")) {
+            throw new BusinessException("You cannot delete this comment");
+        }
+
+        thisComment.setStatus("DELETED");
+        commentRepository.save(thisComment);
+    }
+
+
+    @Transactional
+    @Override
+    public void activateComment(Long commentId) {
+        Comment thisComment = commentRepository.findById(commentId).orElseThrow(
+                () -> new ResourceNotFoundException("Comment with id " + commentId + " not found!"));
+
+        if (!SecurityUtils.hasRole("ROLE_ADMIN")) {
+            throw new BusinessException("You cannot activate this comment");
+        }
+
+        thisComment.setStatus("ACTIVE");
+        commentRepository.save(thisComment);
+    }
 }

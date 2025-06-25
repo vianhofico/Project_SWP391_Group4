@@ -1,5 +1,6 @@
 package com.javaweb.entities;
 
+import com.javaweb.enums.ReportType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -19,8 +20,12 @@ public class Report {
     @Column(name = "report_id")  
     private Long reportId;
 
-    @Column(name = "content")
+    @Column(name = "content") // sẽ không null nếu reportType = OTHER
     private String content;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "report_type")
+    private ReportType reportType;
 
     @Column(name = "created_at")  
     private LocalDateTime createdAt;

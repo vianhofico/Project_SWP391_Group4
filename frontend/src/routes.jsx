@@ -16,6 +16,7 @@ import UserDetail from "@/pages/dashboard/userDetail.jsx";
 import UserTabs from "@/pages/dashboard/userTab.jsx";
 import PostTopics from "@/pages/dashboard/postTopics.jsx";
 import PostDetail from "@/pages/dashboard/postDetail.jsx";
+import CreatePost from "@/pages/user/CreatePost.jsx";
 
 const icon = {
     className: "w-5 h-5 text-inherit",
@@ -64,6 +65,7 @@ export const routes = [
             },
 
             {
+                hidden: true,
                 icon: <InformationCircleIcon {...icon} />,
                 name: "notification",
                 path: "/notifications",
@@ -87,16 +89,17 @@ export const routes = [
         ],
     },
     {
-        title: "auth pages",
         layout: "auth",
         pages: [
             {
+                hidden: true,
                 icon: <ServerStackIcon {...icon} />,
                 name: "sign in",
                 path: "/sign-in",
                 element: <SignIn/>,
             },
             {
+                hidden: true,
                 icon: <RectangleStackIcon {...icon} />,
                 name: "sign up",
                 path: "/sign-up",
@@ -105,10 +108,10 @@ export const routes = [
         ],
     },
     {
-        title: "User",
         layout: "user",
         pages: [
             {
+                hidden: true,
                 icon: <ChartPieIcon {...icon} />,
                 name: "forum",
                 path: "/forum",
@@ -119,6 +122,16 @@ export const routes = [
                 path: "/forum/:postId",
                 element: <DetailPost/>,
             },
+            {
+                hidden: true,
+                element: <CreatePost/>,
+                path: "forum/newPost"
+            },
+            {
+                hidden: true,
+                element: <CreatePost/>,
+                path: "forum/:postId/edit"
+            }
         ],
     },
 ];

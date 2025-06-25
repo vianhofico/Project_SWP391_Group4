@@ -10,7 +10,8 @@ public record SearchReportRequest(
         @Pattern(regexp = "PENDING|APPROVED|REJECTED", flags = Pattern.Flag.CASE_INSENSITIVE, message = "report status must be PENDING or APPROVED or REJECTED")
         String status,
         @Pattern(regexp = "ASC|DESC", flags = Pattern.Flag.CASE_INSENSITIVE, message = "sortOrder must be ASC or DESC")
-        String sortOrder
+        String sortOrder,
+        @Pattern(regexp = "SPAM|INAPPROPRIATE_LANGUAGE|HARASSMENT|MISINFORMATION|CHEATING|VIOLATES_GUIDELINES|OTHER|", flags = Pattern.Flag.CASE_INSENSITIVE, message = "Invalid Report Type")
+        String reportType
 ) {
-
 }

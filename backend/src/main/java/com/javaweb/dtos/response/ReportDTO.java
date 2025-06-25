@@ -10,13 +10,13 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ToString(exclude = {"reporter", "target"})
 public class ReportDTO {
 
     private Long reportId;
     private String content;
     private String status;
     private String createdAt;
+    private String reportType;
     private PostDTO post;
     private CommentDTO comment;
     private UserDTO reporter;

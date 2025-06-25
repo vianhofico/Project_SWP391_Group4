@@ -17,11 +17,15 @@ export function PostTopics() {
     const [name, setName] = useState("");
     const [sortOrder, setSortOrder] = useState("DESC");
     const [checkChanges, setCheckChanges] = useState(true);
+    const [page, setPage] = useState(0);
+    const [size, setSize] = useState(10);
+    const [totalPages, setTotalPages] = useState(0);
 
     const fetchPostTopics = async () => {
         try {
-            const res = await getAllPostTopics({name, sortOrder});
-            setPostTopicList(res.data);
+            const res = await getAllPostTopics({name, sortOrder, page, size});
+            setPostTopicList(res.data.content);
+            setTotalPages(res.data.totalPages);
         } catch (err) {
             console.log("Lỗi khi fetch reports:", err);
         }
@@ -73,7 +77,10 @@ export function PostTopics() {
 
                 <button
                     className="bg-green-600 text-white text-sm font-semibold px-4 py-2 rounded hover:bg-green-700 transition"
-                    onClick={() => setShowForm(true)}
+                    onClick={() => {
+                        setInitialValue(null);
+                        setShowForm(true);
+                    }}
                 >
                     Add topic
                 </button>
@@ -162,15 +169,36 @@ export function PostTopics() {
                         )}
                         </tbody>
                     </table>
+                    <div className="flex justify-center items-center gap-4 mt-4">
+                        <button onClick={() => {
+                            (page + 1 > 1) ? setPage(page - 1) : setPage(page)
+                        }}
+                                className="px-3 py-1 rounded text-blue-600 bg-white text-sm font-semibold hover:bg-blue-700 hover:text-white">
+                            Prev
+                        </button>
+                        <button
+                            className="px-4 py-1 rounded bg-blue-800 text-white text-sm font-semibold cursor-default">
+                            {page + 1}/{totalPages}
+                        </button>
+                        <button onClick={() => {
+                            (page + 1 < totalPages) ? setPage(page + 1) : setPage(page)
+                        }}
+                                className="px-3 py-1 rounded text-blue-600 bg-white text-sm font-semibold hover:bg-blue-700 hover:text-white">
+                            Next
+                        </button>
+                    </div>
                 </CardBody>
             </Card>
-            {showForm && <PostTopicForm
-                onClose={() => setShowForm(false)}
-                onSuccess={() => fetchPostTopics()}
-                initialValue={initialValue}
-            />}
+            {
+                showForm && <PostTopicForm
+                    onClose={() => setShowForm(false)}
+                    onSuccess={() => fetchPostTopics()}
+                    initialValue={initialValue}
+                />
+            }
         </div>
-    );
+    )
+        ;
 }
 
 export default PostTopics;

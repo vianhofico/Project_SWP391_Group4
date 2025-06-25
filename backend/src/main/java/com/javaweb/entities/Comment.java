@@ -28,6 +28,9 @@ public class Comment {
     @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
+    @Column(name = "status")
+    private String status;
+
     @ManyToOne
     @JoinColumn(name = "user_id")  
     private User user;
@@ -46,8 +49,4 @@ public class Comment {
     @OneToMany(mappedBy = "comment", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Report> reports = new ArrayList<>();
 
-    // Nếu muốn thêm lại liên kết tới lesson:
-    // @ManyToOne
-    // @JoinColumn(name = "lesson_id")
-    // private Lesson lesson;
 }

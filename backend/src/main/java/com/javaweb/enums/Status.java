@@ -1,12 +1,12 @@
 package com.javaweb.enums;
 
-public enum PostStatus {
+public enum Status {
     ACTIVE("ACTIVE"),
     DELETED("DELETED");
 
     private final String value;
 
-    PostStatus(String value) {
+    Status(String value) {
         this.value = value;
     }
 

@@ -38,23 +38,21 @@ public class PostController {
 
     @GetMapping("/{postId}/comments")
     public Page<CommentDTO> getAllCommentsByPostId(@PathVariable Long postId
-                                                    ,@Valid @ModelAttribute SearchCommentRequest searchCommentRequest
-                                                    , Pageable pageable) {
+            , @Valid @ModelAttribute SearchCommentRequest searchCommentRequest
+            , Pageable pageable) {
         return commentService.getAllCommentsByPostId(postId, searchCommentRequest, pageable);
     }
 
     @GetMapping("/topic/{postTopicId}")
     public Page<PostDTO> getAllPostsByTopicId(@PathVariable Long postTopicId
-                                                    , Pageable pageable
-                                                    , @ModelAttribute @Valid SearchPostRequest searchPostRequest) {
+            , Pageable pageable
+            , @ModelAttribute @Valid SearchPostRequest searchPostRequest) {
         return postService.getAllPostsByTopicId(postTopicId, pageable, searchPostRequest);
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
-    @DeleteMapping("/{postId}")// de xoa bai post
-    public ResponseEntity<Void> changeStatus(@PathVariable Long postId) {
-        postService.changeStatus(postId);
-        return ResponseEntity.noContent().build();
+    @GetMapping("/{postId}/comments/top-level")
+    public Page<CommentDTO> getAllTopLevelCommentsByPostId(@PathVariable Long postId, @Valid @ModelAttribute SearchCommentRequest searchCommentRequest, Pageable pageable) {
+        return commentService.getAllTopLevelCommentsByPostId(postId, searchCommentRequest, pageable);
     }
 
     @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
@@ -64,11 +62,26 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
-    @PutMapping("/{postId}")
-    public ResponseEntity<Void> updatePost(@PathVariable Long postId, PostRequest postRequest){
-
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @PutMapping("/{postId}/activate")
+    public ResponseEntity<Void> activatePost(@PathVariable Long postId) {
+        postService.changeStatus(postId);
         return ResponseEntity.noContent().build();
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
+    @PutMapping("/{postId}")
+    public ResponseEntity<Void> updatePost(@PathVariable Long postId, @Valid @RequestBody PostRequest postRequest) {
+        postService.updatePost(postId, postRequest);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
+    @DeleteMapping("/{postId}")// de xoa bai post
+    public ResponseEntity<Void> deletePost(@PathVariable Long postId) {
+        postService.changeStatus(postId);
+        return ResponseEntity.noContent().build();
+    }
+
 
 }

@@ -1,6 +1,7 @@
 package com.javaweb.repositories;
 
 import com.javaweb.entities.Report;
+import com.javaweb.enums.ReportType;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -14,6 +15,7 @@ public interface ReportRepository extends JpaRepository<Report, Long> {
 
     @Query("SELECT r FROM Report r WHERE (:reporterName IS NULL OR r.reporter.fullName LIKE %:reporterName%) " +
                                 "AND (:targetName IS NULL OR r.target.fullName LIKE %:targetName%) " +
-                                "AND r.status = :status ")
-    Page<Report> getAllReports(String reporterName, String targetName, String status, Pageable pageable);
+                                "AND r.status = :status AND (r.reportType = :reportType OR :reportType IS NULL)")
+    Page<Report> getAllReports(String reporterName, String targetName, String status, ReportType reportType, Pageable pageable);
+
 }

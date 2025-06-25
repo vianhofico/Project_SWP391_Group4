@@ -21,6 +21,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -37,6 +38,8 @@ public class AuthServiceImpl implements AuthService {
     private final DTOConverter dtoConverter;
     private final MailService mailService;
 
+    @Transactional
+    @Override
     public LoginResponse login(LoginRequest loginRequest) {
         try {
             Authentication authentication = authManager.authenticate(
@@ -55,6 +58,7 @@ public class AuthServiceImpl implements AuthService {
         }
     }
 
+    @Transactional
     @Override
     public void register(RegisterRequest registerRequest) {
         String email = registerRequest.email();
@@ -70,7 +74,7 @@ public class AuthServiceImpl implements AuthService {
         User user = User.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
-                .role("USER")
+                .role("LEARNER")
                 .createdAt(LocalDateTime.now())
                 .reportCount(0)
                 .isActive(true)
@@ -82,6 +86,7 @@ public class AuthServiceImpl implements AuthService {
         return UUID.randomUUID().toString().replace("-", "").substring(0, 8);
     }
 
+    @Transactional
     @Override
     public void resetPassword(ResetPasswordRequest resetPasswordRequest) {
         String emailTo = resetPasswordRequest.to();

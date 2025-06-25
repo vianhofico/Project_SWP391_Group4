@@ -20,6 +20,7 @@ export function Reports() {
     const [sortOrder, setSortOrder] = useState('desc');
     const [reporterName, setReporterName] = useState('');
     const [targetName, setTargetName] = useState('');
+    const [reportType, setReportType] = useState('');
 
     useEffect(() => {
         const fetchReports = async () => {
@@ -29,6 +30,7 @@ export function Reports() {
                     targetName,
                     sortOrder,
                     status,
+                    reportType,
                     page,
                     size
                 });
@@ -39,7 +41,7 @@ export function Reports() {
             }
         }
         fetchReports();
-    }, [page, checkChangeStatus, status, reporterName, targetName, sortOrder]);
+    }, [page, checkChangeStatus, status, reporterName, targetName, sortOrder, reportType]);
 
     useEffect(() => {
         console.log(reportList);
@@ -86,6 +88,40 @@ export function Reports() {
                         className="border border-gray-300 rounded-md px-2 py-1 text-sm"
                     />
                 </div>
+
+                <div className="flex flex-col">
+                    <label className="text-xs text-gray-600 mb-1">Report type</label>
+                    <select
+                        value={reportType}
+                        onChange={(e) => {
+                            setReportType(e.target.value);
+                            setPage(0)
+                        }}
+                        className="border border-gray-300 rounded-md px-2 py-1 text-sm">
+                        <option value="">All</option>
+                        <option value="SPAM">Spam</option>
+                        <option value="INAPPROPRIATE_LANGUAGE">Inappropriate language</option>
+                        <option value="HARASSMENT">Harassment</option>
+                        <option value="MISINFORMATION">Misinformation</option>
+                        <option value="CHEATING">Cheating</option>
+                        <option value="VIOLATES_GUIDELINES">Violates guidelines</option>
+                        <option value="OTHER">Other</option>
+                    </select>
+                </div>
+                <div className="flex flex-col">
+                    <label className="text-xs text-gray-600 mb-1">Status</label>
+                    <select
+                        value={status}
+                        onChange={(e) => {
+                            setStatus(e.target.value);
+                            setPage(0)
+                        }}
+                        className="border border-gray-300 rounded-md px-2 py-1 text-sm">
+                        <option value="pending">Pending</option>
+                        <option value="approved">Approved</option>
+                        <option value="rejected">Rejected</option>
+                    </select>
+                </div>
                 {/* Sort */}
                 <div className="flex flex-col">
                     <label className="text-xs text-gray-600 mb-1">Sort by time</label>
@@ -95,21 +131,6 @@ export function Reports() {
                         className="border border-gray-300 rounded-md px-2 py-1 text-sm">
                         <option value="desc">Latest</option>
                         <option value="asc">Oldest</option>
-                    </select>
-                </div>
-
-                <div className="flex flex-col">
-                    <label className="text-xs text-gray-600 mb-1">Select list</label>
-                    <select
-                        value={status}
-                        onChange={(e) => {
-                            setStatus(e.target.value);
-                            setPage(0)
-                        }}
-                        className="border border-gray-300 rounded-md px-2 py-1 text-sm">
-                        <option value="pending">Pending report list</option>
-                        <option value="approved">Approved report list</option>
-                        <option value="rejected">Rejected report list</option>
                     </select>
                 </div>
 
@@ -174,7 +195,7 @@ export function Reports() {
                                                 href="#"
                                                 className="text-xs font-semibold text-blue-gray-600 max-w-[300px] break-words whitespace-normal"
                                             >
-                                                {report.content}
+                                                {report.reportType}
                                             </Typography>
                                         </td>
                                         <td className={className}>

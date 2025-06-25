@@ -41,6 +41,7 @@ public class DTOConverter {
         reportDTO.setCreatedAt(dateTimeConverter.toString(report.getCreatedAt()));
         reportDTO.setComment(toCommentDTO(report.getComment()));
         reportDTO.setPost(toPostDTO(report.getPost()));
+        reportDTO.setReportType(report.getReportType().name());
         return reportDTO;
     }
 

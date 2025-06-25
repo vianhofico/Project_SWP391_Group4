@@ -7,7 +7,7 @@ import com.javaweb.dtos.response.PostDTO;
 import com.javaweb.entities.Post;
 import com.javaweb.entities.PostTopic;
 import com.javaweb.entities.User;
-import com.javaweb.enums.PostStatus;
+import com.javaweb.enums.Status;
 import com.javaweb.exceptions.AccessDeniedException;
 import com.javaweb.exceptions.BusinessException;
 import com.javaweb.exceptions.ResourceNotFoundException;
@@ -22,6 +22,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -53,6 +54,10 @@ public class PostServiceImpl implements PostService {
         Long postTopicId = (postTopicIdRaw == null || postTopicIdRaw.isBlank()) ? null : Long.parseLong(postTopicIdRaw);
         String status = (statusRaw == null) ? "ACTIVE" : statusRaw;
 
+        if (SecurityUtils.getCurrentUserEmail() == null || SecurityUtils.hasRole("ROLE_LEARNER")) {
+            status = "ACTIVE";
+        }
+
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
 
         pageable = PageRequest.of(
@@ -66,13 +71,14 @@ public class PostServiceImpl implements PostService {
     }
 
 
-    @Override
+    @Override // only for learner
     public Page<PostDTO> getAllPostsByTopicId(Long postTopicId, Pageable pageable, SearchPostRequest searchPostRequest) {
         String sortOrderRaw = searchPostRequest.sortOrder();
         String titleRaw = searchPostRequest.title();
 
         String sortOrder = (sortOrderRaw == null || sortOrderRaw.isBlank()) ? "DESC" : sortOrderRaw.toUpperCase();
         String title = (titleRaw == null || titleRaw.isBlank()) ? "" : titleRaw;
+        String status = "ACTIVE";
 
         Sort.Direction direction = Sort.Direction.fromString(sortOrder);
 
@@ -82,24 +88,25 @@ public class PostServiceImpl implements PostService {
                 Sort.by(direction, "createdAt")
         );
 
-        Page<Post> pagePosts = postRepository.findAllPostByPostTopicId(title, postTopicId, pageable);
+        Page<Post> pagePosts = postRepository.findAllPostByPostTopicId(title, postTopicId, status, pageable);
         return pagePosts.map(dtoConverter::toPostDTO);
     }
 
+    @Transactional
     @Override
     public void changeStatus(Long postId) {
         Post post = postRepository.findById(postId).orElseThrow(() -> new ResourceNotFoundException("Cannot find Post with id: " + postId));
 
         String currentUserEmail = SecurityUtils.getCurrentUserEmail();
 
-        if (currentUserEmail == null || !currentUserEmail.equals(post.getUser().getEmail()) || !SecurityUtils.hasRole("ROLE_ADMIN")) {
+        if (currentUserEmail == null || (!currentUserEmail.equals(post.getUser().getEmail()) && !SecurityUtils.hasRole("ROLE_ADMIN"))) {
             throw new AccessDeniedException("No access");
         }
 
         if (post.getStatus().equalsIgnoreCase("ACTIVE")) {
-            post.setStatus(PostStatus.DELETED.getValue());
+            post.setStatus(Status.DELETED.getValue());
         } else if (post.getStatus().equalsIgnoreCase("DELETED")) {
-            post.setStatus(PostStatus.ACTIVE.getValue());
+            post.setStatus(Status.ACTIVE.getValue());
         }
         postRepository.save(post);
     }
@@ -110,6 +117,7 @@ public class PostServiceImpl implements PostService {
         return dtoConverter.toAdminPostDTO(post);
     }
 
+    @Transactional
     @Override
     public void createPost(PostRequest postRequest) {
         String currentUserEmail = SecurityUtils.getCurrentUserEmail();
@@ -130,11 +138,12 @@ public class PostServiceImpl implements PostService {
                 .createdAt(now)
                 .user(currentUser)
                 .postTopic(postTopic)
-                .status(PostStatus.ACTIVE.getValue())
+                .status(Status.ACTIVE.getValue())
                 .build();
         postRepository.save(post);
     }
 
+    @Transactional
     @Override
     public void updatePost(Long postId, PostRequest postRequest) {
         Post thisPost = postRepository.findById(postId).orElseThrow(

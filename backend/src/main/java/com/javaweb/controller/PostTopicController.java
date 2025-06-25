@@ -5,11 +5,11 @@ import com.javaweb.dtos.response.PostTopicDTO;
 import com.javaweb.services.PostTopicService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/posttopics")
@@ -19,8 +19,8 @@ public class PostTopicController {
     private final PostTopicService postTopicService;
 
     @GetMapping
-    public List<PostTopicDTO> getAllPostTopics(@ModelAttribute @Valid SearchPostTopicRequest searchPostTopicRequest) {
-        return postTopicService.getAllPostTopics(searchPostTopicRequest);
+    public Page<PostTopicDTO> getAllPostTopics(@ModelAttribute @Valid SearchPostTopicRequest searchPostTopicRequest, Pageable pageable) {
+        return postTopicService.getAllPostTopics(searchPostTopicRequest, pageable);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

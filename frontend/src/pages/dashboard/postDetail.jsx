@@ -8,8 +8,8 @@ import {
     Button
 } from "@material-tailwind/react";
 import {useNavigate, useParams} from "react-router-dom";
-import axios from "axios"
-import {changePostStatus, getPostById, getPostComments} from "@/api/postApi.js";
+import {activatePost, deletePost, getPostById, getPostComments} from "@/api/postApi.js";
+import {activateComment, deleteComment} from "@/api/commentApi.js";
 
 export function PostDetail() {
     const navigate = useNavigate();
@@ -24,6 +24,7 @@ export function PostDetail() {
     const [userFullName, setUserFullName] = useState("");
     const [content, setContent] = useState("");
     const [sortOrder, setSortOrder] = useState("DESC");
+    const [commentStatus, setCommentStatus] = useState("");
 
     useEffect(() => {
         const fetchPostById = async () => {
@@ -46,7 +47,8 @@ export function PostDetail() {
                         size,
                         content,
                         sortOrder,
-                        userFullName
+                        userFullName,
+                        status: commentStatus,
                     });
                 setCommentList(res.data.content);
                 setTotalPages(res.data.totalPages);
@@ -55,25 +57,57 @@ export function PostDetail() {
             }
         }
         fetchCommentsByPostId();
-    }, [postId, checkChanges, sortOrder, page, userFullName, content]);
+    }, [postId, checkChanges, sortOrder, page, userFullName, content, commentStatus]);
 
     const changeStatus = async (postId, status) => {
         let confirmText;
         let notification;
+        let isActive = true;
         if (status === "ACTIVE") {
             confirmText = "Are you sure to delete this post?";
             notification = "Delete sucessfully!"
         } else if (status === "DELETED") {
-            confirmText = "Are you sure to active this post?";
-            notification = "Active successfully!"
+            confirmText = "Are you sure to activate this post?";
+            notification = "Activate successfully!"
+            isActive = false;
         }
         if (!window.confirm(confirmText)) return;
         try {
-            await changePostStatus(postId);
+            if (isActive) {
+                await deletePost(postId);
+            } else {
+                await activatePost(postId);
+            }
             setCheckChanges(!checkChanges);
             alert(notification);
         } catch (err) {
             console.log("Error when change status of post:", err);
+        }
+    }
+
+    const handleActionOfComment  = async (commentId, status) => {
+        let confirmText;
+        let notification;
+        let isActive = true;
+        if (status === "ACTIVE") {
+            confirmText = "Are you sure to delete this comment?";
+            notification = "Delete sucessfully!"
+        } else if (status === "DELETED") {
+            confirmText = "Are you sure to activate this comment?";
+            notification = "Activate successfully!"
+            isActive = false;
+        }
+        if (!window.confirm(confirmText)) return;
+        try {
+            if (isActive) {
+                await deleteComment(commentId);
+            } else {
+                await activateComment(commentId);
+            }
+            setCheckChanges(!checkChanges);
+            alert(notification);
+        } catch (err) {
+            console.log("Error when change status of comment:", err);
         }
     }
 
@@ -82,7 +116,7 @@ export function PostDetail() {
             <Card>
                 <CardHeader variant="gradient" className="mb-8 p-6 bg-[#4e73df]">
                     <Typography variant="h6" color="white">
-                        Post Details: {post.title}
+                        Post Details
                     </Typography>
                 </CardHeader>
                 <CardBody className="px-6 pt-0 pb-2">
@@ -182,6 +216,19 @@ export function PostDetail() {
                                         />
                                     </div>
 
+                                    <div className="flex flex-col">
+                                        <label className="text-xs text-gray-600 mb-1">Status</label>
+                                        <select
+                                            value={commentStatus}
+                                            onChange={(e) => setCommentStatus(e.target.value)}
+                                            className="border border-gray-300 rounded-md px-2 py-1 text-sm"
+                                        >
+                                            <option value="">All</option>
+                                            <option value="ACTIVE">Active</option>
+                                            <option value="DELETED">Deleted</option>
+                                        </select>
+                                    </div>
+
                                     {/* Sort order */}
                                     <div className="flex flex-col">
                                         <label className="text-xs text-gray-600 mb-1">Order</label>
@@ -197,18 +244,40 @@ export function PostDetail() {
                                 </div>
 
                                 {commentList.map(comment => (
-                                    <div key={comment.commentId} className="p-4 bg-blue-gray-50 rounded-lg shadow-sm">
+                                    <div
+                                        key={comment.commentId}
+                                        className="p-4 bg-blue-gray-50 rounded-lg shadow-sm border border-gray-200"
+                                    >
                                         <Typography variant="small" className="font-bold text-blue-gray-700">
                                             {comment.user.fullName}
                                         </Typography>
                                         <Typography variant="paragraph" className="text-blue-gray-800">
                                             {comment.content}
                                         </Typography>
-                                        <Typography variant="small" className="text-blue-gray-400 text-xs">
+                                        <Typography variant="small" className="text-blue-gray-400 text-xs mb-2">
                                             {comment.createdAt}
                                         </Typography>
+
+                                        <div className="flex items-center justify-between mt-2 text-xs text-gray-600">
+                                            <span>
+                Status: <span className={`font-medium ${comment.status === "ACTIVE" ? "text-green-600" : "text-red-500"}`}>
+                    {comment.status}
+                </span>
+            </span>
+
+                                            <button
+                                                onClick={() => handleActionOfComment(comment.commentId, comment.status)}
+                                                className={`px-2 py-1 border rounded text-xs font-semibold transition-all duration-200
+                    ${comment.status === "ACTIVE"
+                                                    ? "text-red-600 border-red-600 hover:bg-red-50"
+                                                    : "text-green-600 border-green-600 hover:bg-green-50"}`}
+                                            >
+                                                {comment.status === "ACTIVE" ? "Delete" : "Activate"}
+                                            </button>
+                                        </div>
                                     </div>
                                 ))}
+
                                 <div className="flex justify-center items-center gap-4 mt-4">
                                     <button onClick={() => {
                                         (page + 1 > 1) ? setPage(page - 1) : setPage(page)
