@@ -1,18 +1,19 @@
 package com.javaweb.controller.client;
 
-import com.javaweb.entity.Cart;
-import com.javaweb.entity.CartItem;
-import com.javaweb.entity.User;
-import com.javaweb.entity.dto.CourseDTO;
+import com.javaweb.entities.Cart;
+import com.javaweb.entities.CartItem;
+import com.javaweb.entities.Course;
+import com.javaweb.entities.User;
+//import com.javaweb.entities.dto.response.CourseDTO;
 import com.javaweb.repository.CartItemRepository;
-import com.javaweb.service.CourseDTOService;
-import com.javaweb.service.UserService;
+import com.javaweb.service.impl.CourseServiceImpl;
+import com.javaweb.service.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.util.*;
 
@@ -23,23 +24,40 @@ public class CartRestController {
     private CartItemRepository cartItemRepository;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
-    private CourseDTOService courseDTOService;
-
+    private CourseServiceImpl courseServiceImpl;
 
     @GetMapping("/home")
-    public ResponseEntity<List<CourseDTO>> getAllCourses() {
-        List<CourseDTO> courseDTOList = this.courseDTOService.getAllCourses();
+    public ResponseEntity<List<Course>> getAllCourses() {
+//    public ResponseEntity<List<CourseDTO>> getAllCourses() {
+        List<Course> courseDTOList = this.courseServiceImpl.getAllCourses();
+//        List<CourseDTO> courseDTOList = this.courseService.getAllCourses();
+
+        for (Course course : courseDTOList) {
+//        for (CourseDTO courseDTO : courseDTOList) {
+
+            // Tạo URL đầy đủ: http://localhost:8080/img/java-course.png
+            String imageUrl = ServletUriComponentsBuilder.fromCurrentContextPath()
+                    .path("/images/")
+                    .path(course.getImageUrl())
+//                    .path(courseDTO.getImage())
+                    .toUriString();
+
+            course.setImageUrl(imageUrl);
+//            courseDTO.setImage(imageUrl);
+        }
+
         return ResponseEntity.ok(courseDTOList);
     }
+
 
     @GetMapping("/cart")
     public ResponseEntity<List<CartItem>> getCart(HttpServletRequest request) {
         // Tạm thời lấy user cố định, sau này thay bằng session
-        User user = userService.getUserById(1L);
-        Cart cart = courseDTOService.fetchByUser(user);
+        User user = userServiceImpl.getUserById(1L);
+        Cart cart = courseServiceImpl.fetchByUser(user);
         List<CartItem> cartItems = cart != null ? cart.getCartItems() : new ArrayList<>();
         return ResponseEntity.ok(cartItems);
     }
@@ -47,8 +65,8 @@ public class CartRestController {
     @GetMapping("/cartPrice")
     public ResponseEntity<Double> getPrice(HttpServletRequest request) {
         // Tạm thời lấy user cố định, sau này thay bằng session
-        User user = userService.getUserById(1L);
-        Cart cart = courseDTOService.fetchByUser(user);
+        User user = userServiceImpl.getUserById(1L);
+        Cart cart = courseServiceImpl.fetchByUser(user);
         List<CartItem> cartItems = cart != null ? cart.getCartItems() : new ArrayList<>();
         double totalPrice = cartItems.stream().mapToDouble(CartItem::getPrice).sum();
         return ResponseEntity.ok(totalPrice);
@@ -59,13 +77,10 @@ public class CartRestController {
         HttpSession session = request.getSession(false);
 //        String email = (String) session.getAttribute("email");
         long courseId = id;
-        this.courseDTOService.handleAddCourseToCart("user@gmail.com",
+        this.courseServiceImpl.handleAddCourseToCart("user@gmail.com",
                 id
-<<<<<<< HEAD:backend/src/main/java/com/javaweb/controller/client/CartRestController.java
 //                ,session
-=======
-                ,session
->>>>>>> 4a8d9ff32eb9520727c8f06de377ebfbc1d08484:src/main/java/com/javaweb/controller/client/CartRestController.java
+                , session
         ); // fake command
 //        this.courseDTOService.handleAddCourseToCart(email, courseId, session); real command
         return ResponseEntity.ok().build();
@@ -74,7 +89,7 @@ public class CartRestController {
     // API xoá sản phẩm khỏi giỏ hàng
     @DeleteMapping("/delete-cart-course/{id}")
     public ResponseEntity<Void> deleteCartItem(@PathVariable("id") long id, HttpSession session) {
-        courseDTOService.handleRemoveCartItem(id, session);
+        courseServiceImpl.handleRemoveCartItem(id, session);
         return ResponseEntity.noContent().build();
     }
 
@@ -104,22 +119,17 @@ public class CartRestController {
             @RequestBody List<Long> cartItemIds
     ) {
         HttpSession session = request.getSession(false);
-        User currentUser = this.userService.getUserByEmail("user@gmail.com");
+        User currentUser = this.userServiceImpl.getUserByEmail("user@gmail.com");
         currentUser.setUserId(1l);
 
-        this.courseDTOService.handlePlaceOrder(currentUser,
+        this.courseServiceImpl.handlePlaceOrder(currentUser,
                 session,
                 cartItemIds);
-<<<<<<< HEAD:backend/src/main/java/com/javaweb/controller/client/CartRestController.java
 //        this.courseDTOService.handlePlaceOrder(currentUser, session);
-=======
->>>>>>> 4a8d9ff32eb9520727c8f06de377ebfbc1d08484:src/main/java/com/javaweb/controller/client/CartRestController.java
 
         return ResponseEntity.ok().build(); // status 200 (safe hơn cho frontend)
 
     }
-
-
 
 
 }
