@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ToString(exclude = {"courses"})
 public class CartDTO {
 
     private Long cartId;

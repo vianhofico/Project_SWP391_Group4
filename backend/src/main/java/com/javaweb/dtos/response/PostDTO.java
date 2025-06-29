@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ToString(exclude = {"postTopic"})
 public class PostDTO {
 
     private Long postId;

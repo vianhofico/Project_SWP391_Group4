@@ -11,7 +11,9 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Entity
-@Table(name = "transactions")  
+@Table(name = "transactions")
+
+//bỏ đi
 public class Transaction {
 
     @Id

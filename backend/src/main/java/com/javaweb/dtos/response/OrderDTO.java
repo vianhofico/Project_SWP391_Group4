@@ -13,7 +13,6 @@ import java.util.List;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ToString(exclude = {"orderItems"})
 public class OrderDTO {
 
     private Long orderId;

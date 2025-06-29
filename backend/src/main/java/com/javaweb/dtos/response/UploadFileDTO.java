@@ -8,12 +8,11 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class EnrollmentDTO {
-
-    private Long enrollmentId;
-    private String enrolledAt;
-    private Float progress;
-    private CourseDTO course;
+public class UploadFileDTO {
+    private String fileUrl;
+    private String fileType;
+    private String fileName;
 }

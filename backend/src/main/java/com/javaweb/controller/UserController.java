@@ -119,4 +119,5 @@ public class UserController {
         userService.createAdmin(createAdminRequest);
         return ResponseEntity.noContent().build();
     }
+
 }

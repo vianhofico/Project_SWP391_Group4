@@ -87,7 +87,7 @@ public class DTOConverter {
     }
 
     public PostTopicDTO toPostTopicDTO(PostTopic postTopic) {
-        if(postTopic == null) return null;
+        if (postTopic == null) return null;
         PostTopicDTO postTopicDTO = modelMapper.map(postTopic, PostTopicDTO.class);
         postTopicDTO.setCreatedAt(dateTimeConverter.toString(postTopic.getCreatedAt()));
         return postTopicDTO;
@@ -100,6 +100,13 @@ public class DTOConverter {
         postDTO.setUser(toUserDTO(post.getUser()));
         postDTO.setPostTopic(toPostTopicDTO(post.getPostTopic()));
         return postDTO;
+    }
+
+    public PostFile toPostFile(UploadFileDTO uploadFileDTO, Post post) {
+        if (uploadFileDTO == null) return null;
+        PostFile postFile = modelMapper.map(uploadFileDTO, PostFile.class);
+        postFile.setPost(post);
+        return postFile;
     }
 
 }

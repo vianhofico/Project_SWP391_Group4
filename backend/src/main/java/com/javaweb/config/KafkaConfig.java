@@ -18,6 +18,16 @@ public class KafkaConfig {
     }
 
     @Bean
+    public NewTopic emailDLT() {
+        return new NewTopic("email.DLT", 1, (short) 1);
+    }
+
+    @Bean
+    public NewTopic uploadFileTopic() {
+        return new NewTopic("file", 3, (short) 1);
+    }
+
+    @Bean
     public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory(
             ConsumerFactory<String, String> consumerFactory) {
 
@@ -36,7 +46,7 @@ public class KafkaConfig {
                     System.err.println("Kafka error in message: " + record.value());
                     exception.printStackTrace();
                 },
-                new FixedBackOff(0L, 0) // Không retry
+                new FixedBackOff(2000L, 3)
         );
     }
 }

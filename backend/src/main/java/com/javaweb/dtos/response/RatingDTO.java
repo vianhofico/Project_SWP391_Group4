@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ToString(exclude = {"course"})
 public class RatingDTO {
 
     private Long ratingId;

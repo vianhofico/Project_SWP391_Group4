@@ -2,6 +2,7 @@ package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
 import com.javaweb.dtos.request.CreateAdminRequest;
+import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
 import com.javaweb.dtos.response.UserDTO;
 import com.javaweb.entities.User;
@@ -14,11 +15,13 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
@@ -26,6 +29,7 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final DTOConverter dtoConverter;
+    private final PasswordEncoder passwordEncoder;
 
     private final String USER_NOTFOUND = "Cannot find user with id: ";
 
@@ -101,6 +105,23 @@ public class UserServiceImpl implements UserService {
                 .reportCount(0)
                 .build();
         userRepository.save(user);
+    }
+
+    private String randomPassword() {
+        return UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+    }
+
+    @Transactional
+    @Override
+    public String saveNewPassword(ResetPasswordRequest resetPasswordRequest) {
+        String emailTo = resetPasswordRequest.to();
+        User userTo = userRepository.findByEmail(emailTo).orElseThrow(
+                () -> new ResourceNotFoundException("User with email: " + emailTo + " not found"));
+
+        String newPassword = randomPassword();
+        userTo.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(userTo);
+        return newPassword;
     }
 
 }

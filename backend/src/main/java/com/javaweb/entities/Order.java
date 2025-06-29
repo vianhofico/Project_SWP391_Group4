@@ -27,6 +27,7 @@ public class Order {
     @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
+    // đang thừa
     @Column(name = "status")
     private String status;
 

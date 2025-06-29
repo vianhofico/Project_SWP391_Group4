@@ -15,6 +15,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -149,4 +150,20 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<ErrorResponse> handleIOException(IOException ex, HttpServletRequest request) {
+        String message = ex.getMessage() != null
+                ? ex.getMessage()
+                : ErrorCode.FILE_IO_ERROR.getMessage();
+
+        ErrorResponse errorResponse = new ErrorResponse(
+                ErrorCode.FILE_IO_ERROR.getCode(),
+                List.of(message),
+                request.getRequestURI()
+        );
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
+    }
+
 }

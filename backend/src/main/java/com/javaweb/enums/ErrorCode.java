@@ -34,7 +34,17 @@ public enum ErrorCode {
     INSUFFICIENT_BALANCE(1501, "Không đủ số dư để thanh toán"),
     COURSE_EXPIRED(1502, "Khóa học đã hết hạn"),
     COURSE_ALREADY_ENROLLED(1503, "Người dùng đã đăng ký khóa học"),
-    EXAM_ALREADY_SUBMITTED(1504, "Bài kiểm tra đã được nộp");
+    EXAM_ALREADY_SUBMITTED(1504, "Bài kiểm tra đã được nộp"),
+
+    // 7. FILE / I/O / UPLOAD
+    FILE_UPLOAD_FAILED(1601, "Tải tệp lên thất bại"),
+    FILE_NOT_FOUND(1602, "Không tìm thấy tệp"),
+    FILE_TYPE_NOT_SUPPORTED(1603, "Loại tệp không được hỗ trợ"),
+    FILE_SIZE_TOO_LARGE(1604, "Kích thước tệp vượt quá giới hạn cho phép"),
+    FILE_IO_ERROR(1605, "Lỗi I/O khi xử lý tệp"),
+    DRIVE_UPLOAD_ERROR(1606, "Lỗi khi tải tệp lên Google Drive"),
+    KAFKA_SEND_FILE_ERROR(1607, "Gửi tệp qua Kafka thất bại");
+
 
     private final int code;
     private final String message;

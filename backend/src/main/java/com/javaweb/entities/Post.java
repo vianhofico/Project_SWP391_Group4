@@ -13,12 +13,12 @@ import java.util.List;
 @Setter
 @Builder
 @Entity
-@Table(name = "posts")  
+@Table(name = "posts")
 public class Post {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")  
+    @Column(name = "post_id")
     private Long postId;
 
     @Column(name = "title")
@@ -27,7 +27,7 @@ public class Post {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "created_at")  
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     // DELETED / ACTIVE
@@ -38,13 +38,16 @@ public class Post {
     private List<Comment> comments = new ArrayList<>();
 
     @ManyToOne
-    @JoinColumn(name = "post_topic_id")  
+    @JoinColumn(name = "post_topic_id")
     private PostTopic postTopic;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")  
+    @JoinColumn(name = "user_id")
     private User user;
 
     @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Report> reports = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+    private List<PostFile> files = new ArrayList<>();
 }

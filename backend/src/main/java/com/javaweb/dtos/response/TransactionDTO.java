@@ -10,7 +10,6 @@ import lombok.*;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonIgnoreProperties(ignoreUnknown = true)
-@ToString(exclude = {"order"})
 public class TransactionDTO {
 
     private Long transactionId;

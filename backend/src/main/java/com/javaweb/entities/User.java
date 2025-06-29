@@ -52,6 +52,9 @@ public class User {
     @Column(name = "bio")
     private String bio;
 
+    @Column(name = "is_verified")
+    private Boolean isVerified;
+
     @OneToMany(mappedBy = "reporter", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Report> reportsMade = new ArrayList<>();
 

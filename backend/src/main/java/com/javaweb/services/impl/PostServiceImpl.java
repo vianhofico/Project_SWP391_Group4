@@ -1,5 +1,6 @@
 package com.javaweb.services.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.javaweb.converter.DTOConverter;
 import com.javaweb.dtos.request.PostRequest;
 import com.javaweb.dtos.request.SearchPostRequest;
@@ -11,10 +12,12 @@ import com.javaweb.enums.Status;
 import com.javaweb.exceptions.AccessDeniedException;
 import com.javaweb.exceptions.BusinessException;
 import com.javaweb.exceptions.ResourceNotFoundException;
+import com.javaweb.repositories.PostFileRepository;
 import com.javaweb.repositories.PostRepository;
 import com.javaweb.repositories.PostTopicRepository;
 import com.javaweb.repositories.UserRepository;
 import com.javaweb.security.utils.SecurityUtils;
+import com.javaweb.services.GoogleDriveService;
 import com.javaweb.services.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,18 +26,23 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
 public class PostServiceImpl implements PostService {
 
+    private final GoogleDriveService googleDriveService;
     private final PostRepository postRepository;
     private final DTOConverter dtoConverter;
     private final UserRepository userRepository;
     private final PostTopicRepository postTopicRepository;
+    private final PostFileRepository postFileRepository;
 
     @Override
     public Page<PostDTO> getAllPostsOfUser(Long userId, Pageable pageable) {
@@ -119,7 +127,7 @@ public class PostServiceImpl implements PostService {
 
     @Transactional
     @Override
-    public void createPost(PostRequest postRequest) {
+    public void createPost(PostRequest postRequest, List<MultipartFile> files) throws JsonProcessingException, IOException {
         String currentUserEmail = SecurityUtils.getCurrentUserEmail();
         User currentUser = userRepository.findByEmail(currentUserEmail).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find User with email: " + currentUserEmail));
@@ -131,6 +139,7 @@ public class PostServiceImpl implements PostService {
         String title = postRequest.title();
         String content = postRequest.content();
         LocalDateTime now = LocalDateTime.now();
+
         Post post = Post
                 .builder()
                 .title(title)
@@ -141,6 +150,10 @@ public class PostServiceImpl implements PostService {
                 .status(Status.ACTIVE.getValue())
                 .build();
         postRepository.save(post);
+
+        //send message to kafka
+        googleDriveService.uploadFilesKafka(files, post.getPostId());
+
     }
 
     @Transactional

@@ -1,5 +1,6 @@
 package com.javaweb.services;
 
+import com.javaweb.dtos.events.VerifyEmailRequest;
 import com.javaweb.dtos.request.LoginRequest;
 import com.javaweb.dtos.request.RegisterRequest;
 import com.javaweb.dtos.request.ResetPasswordRequest;
@@ -11,5 +12,11 @@ public interface AuthService {
 
     void register(RegisterRequest registerRequest);
 
-    void resetPassword(ResetPasswordRequest resetPasswordRequest);
+    void sendEmailResetPassword(ResetPasswordRequest resetPasswordRequest);
+
+    void sendEmailVerification(VerifyEmailRequest verifyEmailRequest);
+
+    void verifyEmail(String token);
+
+    void resendVerificationEmail(String email);
 }

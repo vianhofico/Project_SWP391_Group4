@@ -1,10 +1,15 @@
 package com.javaweb.services;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.javaweb.dtos.request.PostRequest;
 import com.javaweb.dtos.request.SearchPostRequest;
 import com.javaweb.dtos.response.PostDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
 
 public interface PostService {
 
@@ -18,7 +23,7 @@ public interface PostService {
 
     PostDTO getPostById(Long postId);
 
-    void createPost(PostRequest postRequest);
+    void createPost(PostRequest postRequest, List<MultipartFile> files) throws IOException, JsonProcessingException;
 
     void updatePost(Long postId, PostRequest postRequest);
 

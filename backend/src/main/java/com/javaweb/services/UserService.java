@@ -1,6 +1,7 @@
 package com.javaweb.services;
 
 import com.javaweb.dtos.request.CreateAdminRequest;
+import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
 import com.javaweb.dtos.response.UserDTO;
 import org.springframework.data.domain.Page;
@@ -17,4 +18,6 @@ public interface UserService {
     UserDTO getUser(Long userId);
 
     void createAdmin(CreateAdminRequest createAdminRequest);
+
+    String saveNewPassword(ResetPasswordRequest resetPasswordRequest);
 }
