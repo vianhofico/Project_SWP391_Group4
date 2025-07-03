@@ -21,8 +21,9 @@ public class FileUploadConsumer {
 
     private final ObjectMapper objectMapper;
     private final PostRepository postRepository;
-    private final GoogleDriveService googleDriveService;
     private final PostFileRepository postFileRepository;
+
+    private final CloudinaryService cloudinaryService;
 
     @KafkaListener(topics = "file", groupId = "file-upload-group")
     public void handleFileUpload(String message) {
@@ -38,12 +39,13 @@ public class FileUploadConsumer {
                     .content(request.fileContent())
                     .build();
 
-            UploadFileDTO fileDTO = googleDriveService.uploadFile(multipartFile);
+            UploadFileDTO fileDTO = cloudinaryService.uploadFile(multipartFile);
 
             PostFile postFile = PostFile.builder()
                     .fileName(fileDTO.getFileName())
                     .fileType(fileDTO.getFileType())
                     .fileUrl(fileDTO.getFileUrl())
+                    .publicFileId(fileDTO.getPublicFileId())
                     .post(post)
                     .build();
 

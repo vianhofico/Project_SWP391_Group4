@@ -103,19 +103,27 @@ public class ReportServiceImpl implements ReportService {
 
         String reportTypeRaw = createReportRequest.reportType();
         ReportType reportType = ReportType.valueOf(reportTypeRaw);
-        String content = null;
+        String content = (reportType == ReportType.OTHER) ? createReportRequest.content() : null;
         Long commentId = createReportRequest.commentId();
         Long postId = createReportRequest.postId();
         if ((commentId == null && postId == null) || (postId != null && commentId != null)) {
             throw new BusinessException("Report comment or post comment is null");
         }
 
-        Post post = postRepository.findById(postId).orElse(null);
-        Comment comment = commentRepository.findById(commentId).orElse(null);
+        Post post = new Post();
+        Comment comment = new Comment();
+        User targetUser = new User();
 
-        User targetUser = (post != null) ? post.getUser() : comment.getUser();
-        if (reportType == ReportType.OTHER && (content == null || content.isBlank())) {
-            content = createReportRequest.content();
+        if (postId != null) {
+            post = postRepository.findById(postId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Post not found"));
+            targetUser = post.getUser();
+            comment = null;
+        } else {
+            comment = commentRepository.findById(commentId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Comment not found"));
+            targetUser = comment.getUser();
+            post = null;
         }
 
         Report report = Report
@@ -131,6 +139,13 @@ public class ReportServiceImpl implements ReportService {
                 .build();
 
         reportRepository.save(report);
+    }
+
+    @Override
+    public ReportDTO getReport(Long reportId) {
+        Report thisReport = reportRepository.findById(reportId).orElseThrow(
+                () -> new ResourceNotFoundException("Report not found"));
+        return dtoConverter.toReportDTO(thisReport);
     }
 
 }

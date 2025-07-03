@@ -63,9 +63,7 @@ export function Sidenav({ brandImg, brandName, routes }) {
 
                 {pages.filter((page) => !page.hidden).map(({ icon, name, path }) => {
                   const fullPath = `/${layout}${path}`;
-                  const isActive =
-                      location.pathname === fullPath ||
-                      location.pathname.startsWith(fullPath);
+                  const isActive = location.pathname.includes(path.split("/:")[0]);
 
                   return (
                       <li key={name}>

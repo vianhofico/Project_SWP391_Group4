@@ -17,6 +17,7 @@ import UserTabs from "@/pages/dashboard/userTab.jsx";
 import PostTopics from "@/pages/dashboard/postTopics.jsx";
 import PostDetail from "@/pages/dashboard/postDetail.jsx";
 import CreatePost from "@/pages/user/CreatePost.jsx";
+import ReportDetails from "@/pages/dashboard/reportDetails.jsx";
 
 const icon = {
     className: "w-5 h-5 text-inherit",
@@ -35,14 +36,8 @@ export const routes = [
             },
             {
                 icon: <TableCellsIcon {...icon} />,
-                name: "admin",
-                path: "/admins",
-                element: <Users/>,
-            },
-            {
-                icon: <TableCellsIcon {...icon} />,
-                name: "learner",
-                path: "/learners",
+                name: "user",
+                path: "/users/:userRole",
                 element: <Users/>,
             },
             {
@@ -60,7 +55,7 @@ export const routes = [
             {
                 icon: <InformationCircleIcon {...icon} />,
                 name: "report",
-                path: "/reports",
+                path: "/reports/:status",
                 element: <Reports/>,
             },
 
@@ -84,6 +79,11 @@ export const routes = [
             {
                 path: "/posts/:postId",
                 element: <PostDetail/>,
+                hidden: true,
+            },
+            {
+                path: "/reports/:reportId/check",
+                element: <ReportDetails/>,
                 hidden: true,
             },
         ],

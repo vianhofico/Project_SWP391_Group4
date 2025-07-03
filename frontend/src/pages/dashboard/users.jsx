@@ -4,12 +4,11 @@ import {
     Typography,
     Avatar,
     Chip,
-    Tooltip,
-    Progress, CardHeader,
+    CardHeader,
 
 } from "@material-tailwind/react";
 import {useEffect, useState} from "react";
-import {Link, useLocation, useSearchParams} from "react-router-dom";
+import {useParams, useNavigate, Link} from "react-router-dom";
 import {getAllUsers} from "@/api/userApi.js";
 
 export function Users() {
@@ -24,16 +23,14 @@ export function Users() {
     const [size, setSize] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
 
-    const location = useLocation();
-    const [userRole, setUserRole] = useState("");
+    const {userRole} = useParams();
+    const navigate = useNavigate();
+
     useEffect(() => {
-        setPage(0);
-        if (location.pathname.includes("/admins")) {
-            setUserRole("admin");
-        } else if (location.pathname.includes("/learners")) {
-            setUserRole("learner");
+        if (!["learner", "admin"].includes(userRole)) {
+            navigate("/dashboard/users/learner", { replace: true });
         }
-    }, [location.pathname]);
+    }, [userRole]);
 
     useEffect(() => {
         const fetchUsers = async () => {
@@ -82,6 +79,25 @@ export function Users() {
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
+            <div className="flex gap-4 px-4">
+                {["learner", "admin"].map((role) => (
+                    <button
+                        key={role}
+                        onClick={() => {
+                            setPage(0);
+                            navigate(`/dashboard/users/${role}`);
+                        }}
+                        className={`px-4 py-2 text-sm font-semibold border-b-2 ${
+                            userRole === role
+                                ? "border-blue-600 text-blue-600"
+                                : "border-transparent text-gray-500 hover:text-blue-600"
+                        }`}
+                    >
+                        {role.charAt(0).toUpperCase() + role.slice(1)}
+                    </button>
+                ))}
+            </div>
+
             <div className="flex flex-wrap items-center gap-4 px-4">
 
                 {/* Input Search */}

@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { getAllPostTopics } from "@/api/postTopicApi";
-import { useNavigate, useParams } from "react-router-dom";
-import {createPost, editPost, getPostById} from "@/api/postApi.js";
+import React, {useState, useEffect} from 'react';
+import {getAllPostTopics} from "@/api/postTopicApi";
+import {useNavigate, useParams} from "react-router-dom";
+import {createPost, editPost, getFilesByPostId, getPostById} from "@/api/postApi.js";
 
 const CreatePost = () => {
     const [title, setTitle] = useState("");
     const [content, setContent] = useState("");
     const [postTopicId, setPostTopicId] = useState("");
     const [topics, setTopics] = useState([]);
+    const [files, setFiles] = useState([]);
+    const [existingFiles, setExistingFiles] = useState([]);
     const navigate = useNavigate();
-    const [post, setPost] = useState({});
-    const { postId } = useParams();
+    const {postId} = useParams();
+    const [removedFiles, setRemovedFiles] = useState([]);
+
 
     useEffect(() => {
         const fetchPostToEdit = async () => {
@@ -24,7 +27,7 @@ const CreatePost = () => {
                 console.error("Lỗi khi tải bài viết để chỉnh sửa:", error);
             }
         };
-        fetchPostToEdit();
+        if (postId) fetchPostToEdit();
     }, [postId]);
 
     useEffect(() => {
@@ -39,30 +42,69 @@ const CreatePost = () => {
         fetchTopics();
     }, []);
 
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const res = await getFilesByPostId(postId);
+                setExistingFiles(res.data);
+            } catch (error) {
+                console.error("error when fetch files by post id: " + error);
+            }
+        };
+        if (postId) fetchFiles();
+    }, [postId]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const postData = {
+        const post = {
             title,
             content,
             postTopicId,
         };
 
+        const formData = new FormData();
+        formData.append(
+            "post",
+            new Blob([JSON.stringify(post)], {type: "application/json"})
+        );
+
+        files.forEach((file) => {
+            formData.append("files", file);
+        });
+
+        if (removedFiles.length > 0) {
+            formData.append(
+                "removedFileIds",
+                new Blob([JSON.stringify(removedFiles)], {type: "application/json"})
+            );
+        }
+
+
         try {
             if (postId) {
-                await editPost(postId, postData);
+                await editPost(postId, formData);
                 alert("Edit successfully!");
+                navigate(`/user/forum/${postId}`);
             } else {
-                await createPost(postData);
+                await createPost(formData);
                 alert("Post successfully!");
+                navigate("/user/forum");
             }
-            navigate("/user/forum");
         } catch (err) {
             console.error("Lỗi khi lưu bài viết:", err);
-            alert("Action failure!");
         }
     };
+
+    const handleRemoveNewFile = (index) => {
+        setFiles(prev => prev.filter((_, i) => i !== index));
+    };
+
+    const handleRemoveFile = (file) => {
+        setRemovedFiles(prev => [...prev, file.postFileId]);
+        setExistingFiles(prev => prev.filter(f => f.fileUrl !== file.fileUrl));
+    };
+
 
     return (
         <div className="max-w-4xl mx-auto mt-10 px-4 py-8 bg-white shadow-md rounded-xl border border-blue-200">
@@ -111,6 +153,66 @@ const CreatePost = () => {
                 </div>
 
                 <div>
+                    <label className="block text-blue-700 font-semibold mb-2">Attachment</label>
+                    <input
+                        type="file"
+                        multiple
+                        onChange={(e) => {
+                            const newFiles = Array.from(e.target.files);
+                            setFiles((prevFiles) => [...prevFiles, ...newFiles]);
+                        }}
+                    />
+
+
+                    {/* Existing files */}
+                    {existingFiles.length > 0 && (
+                        <div className="mt-4">
+                            <p className="text-sm font-semibold text-gray-700 mb-1">📂 Existing files</p>
+                            <div className="border border-gray-200 rounded-md p-3 space-y-1 bg-gray-50">
+                                {existingFiles.map((file, idx) => (
+                                    <div key={idx} className="flex items-center justify-between">
+                                        <a
+                                            href={file.fileUrl}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="text-gray-800 hover:underline break-all text-sm"
+                                        >
+                                            📎 {file.fileName}
+                                        </a>
+                                        <button
+                                            onClick={() => handleRemoveFile(file)}
+                                            className="text-red-500 text-sm hover:underline ml-4"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* New files */}
+                    {files.length > 0 && (
+                        <div className="mt-4">
+                            <p className="text-sm font-semibold text-blue-700 mb-1">🆕 New files to upload</p>
+                            <div className="border border-blue-200 rounded-md p-3 space-y-1 bg-blue-50">
+                                {files.map((file, idx) => (
+                                    <div key={idx} className="flex justify-between items-center">
+                                        <span className="text-blue-800 text-sm break-all">📎 {file.name}</span>
+                                        <button
+                                            onClick={() => handleRemoveNewFile(idx)}
+                                            className="text-red-500 text-sm hover:underline ml-4"
+                                        >
+                                            Remove
+                                        </button>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    )}
+                </div>
+
+                <div>
                     <div className="flex justify-between items-center mt-8">
                         <button
                             type="button"
@@ -124,7 +226,7 @@ const CreatePost = () => {
                             type="submit"
                             className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-md shadow"
                         >
-                            Post
+                            {postId?"Save":"Post"}
                         </button>
                     </div>
                 </div>

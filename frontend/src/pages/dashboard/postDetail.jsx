@@ -8,7 +8,7 @@ import {
     Button
 } from "@material-tailwind/react";
 import {useNavigate, useParams} from "react-router-dom";
-import {activatePost, deletePost, getPostById, getPostComments} from "@/api/postApi.js";
+import {activatePost, deletePost, getFilesByPostId, getPostById, getPostComments} from "@/api/postApi.js";
 import {activateComment, deleteComment} from "@/api/commentApi.js";
 
 export function PostDetail() {
@@ -25,6 +25,7 @@ export function PostDetail() {
     const [content, setContent] = useState("");
     const [sortOrder, setSortOrder] = useState("DESC");
     const [commentStatus, setCommentStatus] = useState("");
+    const [postFiles, setPostFiles] = useState([]);
 
     useEffect(() => {
         const fetchPostById = async () => {
@@ -84,6 +85,19 @@ export function PostDetail() {
             console.log("Error when change status of post:", err);
         }
     }
+
+    useEffect(() => {
+        const fetchPostFiles = async () => {
+            try {
+                const res = await getFilesByPostId(postId);
+                setPostFiles(res.data);
+            } catch (err) {
+                console.error("Failed to load post files:", err);
+            }
+        };
+        fetchPostFiles();
+    }, [postId]);
+
 
     const handleActionOfComment  = async (commentId, status) => {
         let confirmText;
@@ -175,6 +189,23 @@ export function PostDetail() {
                                 {post.content}
                             </Typography>
                         </div>
+                        {postFiles.length > 0 && (
+                            <div className="mt-6">
+                                <Typography variant="small" className="font-bold text-blue-gray-500 mb-2">
+                                    Attachments:
+                                </Typography>
+                                <ul className="space-y-2">
+                                    {postFiles.map((file, index) => (
+                                        <li key={index} className="text-blue-600 underline text-sm">
+                                            <a href={file.fileUrl} target="_blank" rel="noopener noreferrer">
+                                                {file.fileName}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
+                            </div>
+                        )}
+
                     </div>
 
                     {/* Nút và danh sách comment */}

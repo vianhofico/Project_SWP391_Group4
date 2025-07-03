@@ -31,3 +31,7 @@ export const deletePost = (postId) => {
 export const editPost = (postId, postData) => {
     return axiosInstance.put(`/posts/${postId}`, postData);
 }
+
+export const getFilesByPostId = (postId) => {
+    return axiosInstance.get(`/posts/${postId}/files`);
+}

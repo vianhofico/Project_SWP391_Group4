@@ -31,7 +31,7 @@ public class PostTopicServiceImpl implements PostTopicService {
     private final DTOConverter dtoConverter;
 
     @Override
-    public Page<PostTopicDTO> getAllPostTopics(SearchPostTopicRequest searchPostTopicRequest, Pageable pageable) {
+    public Page<PostTopicDTO> getPagePostTopics(SearchPostTopicRequest searchPostTopicRequest, Pageable pageable) {
         String name = searchPostTopicRequest.name();
         String sortOrder = searchPostTopicRequest.sortOrder();
 
@@ -50,8 +50,20 @@ public class PostTopicServiceImpl implements PostTopicService {
                 pageable.getPageSize(),
                 Sort.by(direction, "createdAt")
         );
-        Page<PostTopic> postTopics = postTopicRepository.findAllPostTopics(name, pageable);
+        Page<PostTopic> postTopics = postTopicRepository.findPagePostTopics(name, pageable);
         return postTopics.map(dtoConverter::toPostTopicDTO);
+    }
+
+    @Override
+    public List<PostTopicDTO> getAllPostTopics(SearchPostTopicRequest searchPostTopicRequest) {
+        String name = searchPostTopicRequest.name();
+
+        if (name == null || name.isBlank()) {
+            name = "";
+        }
+
+        List<PostTopic> postTopics = postTopicRepository.findAllPostTopics(name);
+        return postTopics.stream().map(dtoConverter::toPostTopicDTO).toList();
     }
 
     @Transactional

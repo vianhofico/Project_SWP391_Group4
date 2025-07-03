@@ -5,10 +5,11 @@ import com.javaweb.dtos.request.SearchCommentRequest;
 import com.javaweb.dtos.request.SearchPostRequest;
 import com.javaweb.dtos.response.CommentDTO;
 import com.javaweb.dtos.response.PostDTO;
+import com.javaweb.dtos.response.PostFileDTO;
 import com.javaweb.services.CommentService;
+import com.javaweb.services.PostFileService;
 import com.javaweb.services.PostService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,7 @@ public class PostController {
 
     private final PostService postService;
     private final CommentService commentService;
+    private final PostFileService postFileService;
 
     @GetMapping
     public Page<PostDTO> getAllPosts(@Valid @ModelAttribute SearchPostRequest searchPostRequest, Pageable pageable) {
@@ -37,8 +39,13 @@ public class PostController {
     }
 
     @GetMapping("/{postId}")
-    public ResponseEntity<PostDTO> getPostById(@PathVariable @Positive(message = "postId must positive") Long postId) {
+    public ResponseEntity<PostDTO> getPostById(@PathVariable Long postId) {
         return ResponseEntity.ok(postService.getPostById(postId));
+    }
+
+    @GetMapping("/{postId}/files")
+    public List<PostFileDTO> getPostFilesByPostId(@PathVariable Long postId) {
+        return postFileService.getPostFilesByPostId(postId);
     }
 
     @GetMapping("/{postId}/comments")
@@ -63,7 +70,7 @@ public class PostController {
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<Void> createPost(
             @RequestPart("post") @Valid PostRequest postRequest,
-            @RequestPart(value = "file", required = false) List<MultipartFile> files
+            @RequestPart(value = "files", required = false) List<MultipartFile> files
     ) throws IOException {
         postService.createPost(postRequest, files);
         return ResponseEntity.noContent().build();
@@ -76,10 +83,14 @@ public class PostController {
         return ResponseEntity.noContent().build();
     }
 
-    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
-    @PutMapping("/{postId}")
-    public ResponseEntity<Void> updatePost(@PathVariable Long postId, @Valid @RequestBody PostRequest postRequest) {
-        postService.updatePost(postId, postRequest);
+    @PreAuthorize("hasRole('LEARNER')")
+    @PutMapping(value = "/{postId}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updatePost(
+            @PathVariable Long postId,
+            @RequestPart("post") @Valid PostRequest postRequest,
+            @RequestPart(value = "files", required = false) List<MultipartFile> files,
+            @RequestPart(value = "removedFileIds", required = false) List<Long> removedFileIds) throws IOException {
+        postService.updatePost(postId, postRequest, files, removedFileIds);
         return ResponseEntity.noContent().build();
     }
 

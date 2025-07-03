@@ -5,9 +5,8 @@ import {
     Typography,
 } from "@material-tailwind/react";
 import {useEffect, useState} from "react";
-import axios from "axios";
 import PostTopicForm from "./PostTopicForm.jsx";
-import {deletePostTopic, getAllPostTopics} from "@/api/postTopicApi.js";
+import {deletePostTopic, getPagePostTopics} from "@/api/postTopicApi.js";
 
 export function PostTopics() {
 
@@ -23,7 +22,7 @@ export function PostTopics() {
 
     const fetchPostTopics = async () => {
         try {
-            const res = await getAllPostTopics({name, sortOrder, page, size});
+            const res = await getPagePostTopics({name, sortOrder, page, size});
             setPostTopicList(res.data.content);
             setTotalPages(res.data.totalPages);
         } catch (err) {

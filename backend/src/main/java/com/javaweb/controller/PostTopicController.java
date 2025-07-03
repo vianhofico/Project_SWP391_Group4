@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/posttopics")
 @RequiredArgsConstructor
@@ -18,9 +20,14 @@ public class PostTopicController {
 
     private final PostTopicService postTopicService;
 
+    @GetMapping("/pages")
+    public Page<PostTopicDTO> getPagePostTopics(@ModelAttribute @Valid SearchPostTopicRequest searchPostTopicRequest, Pageable pageable) {
+        return postTopicService.getPagePostTopics(searchPostTopicRequest, pageable);
+    }
+
     @GetMapping
-    public Page<PostTopicDTO> getAllPostTopics(@ModelAttribute @Valid SearchPostTopicRequest searchPostTopicRequest, Pageable pageable) {
-        return postTopicService.getAllPostTopics(searchPostTopicRequest, pageable);
+    public List<PostTopicDTO> getAllPostTopics(@ModelAttribute @Valid SearchPostTopicRequest searchPostTopicRequest) {
+        return postTopicService.getAllPostTopics(searchPostTopicRequest);
     }
 
     @PreAuthorize("hasRole('ADMIN')")

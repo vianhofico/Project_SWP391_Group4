@@ -26,6 +26,9 @@ public class PostFile {
     @Column(name = "file_name")
     private String fileName;
 
+    @Column(name = "public_file_id")
+    private String publicFileId;
+
     @ManyToOne
     @JoinColumn(name = "post_id")
     private Post post;

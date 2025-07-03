@@ -4,6 +4,10 @@ export const getAllPostTopics = (params) => {
     return axiosInstance.get("/posttopics", {params});
 }
 
+export const getPagePostTopics = (params) => {
+    return axiosInstance.get("/posttopics/pages", {params});
+}
+
 export const addPostTopic = (name) => {
     return axiosInstance.post(`/posttopics`, {name});
 }

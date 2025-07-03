@@ -109,4 +109,9 @@ public class DTOConverter {
         return postFile;
     }
 
+    public PostFileDTO toPostFileDTO(PostFile postFile) {
+        if (postFile == null) return null;
+        return modelMapper.map(postFile, PostFileDTO.class);
+    }
+
 }

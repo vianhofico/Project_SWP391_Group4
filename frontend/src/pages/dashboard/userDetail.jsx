@@ -1,6 +1,5 @@
 import {useParams, useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
-import axios from "axios";
 import UserTabs from "/src/pages/dashboard/userTab.jsx";
 import {getUserById} from "@/api/userApi.js";
 
@@ -53,7 +52,7 @@ export default function UserDetail() {
     }, [userId]);
 
     const availableTabs = userRole === "admin"
-        ? [{label: "Posts", key: "posts"}]
+        ? []
         : tabs;
 
     return (

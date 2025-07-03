@@ -2,6 +2,7 @@ package com.javaweb.controller;
 
 import com.javaweb.dtos.request.CreateReportRequest;
 import com.javaweb.dtos.request.SearchReportRequest;
+import com.javaweb.dtos.response.CommentDTO;
 import com.javaweb.dtos.response.ReportDTO;
 import com.javaweb.services.ReportService;
 import jakarta.validation.Valid;
@@ -10,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -18,7 +18,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/reports")
 @RequiredArgsConstructor
-@Validated
 public class ReportController {
 
     private final ReportService reportService;
@@ -38,9 +37,16 @@ public class ReportController {
 
     @PreAuthorize("hasRole('LEARNER')")
     @PostMapping()
-    public ResponseEntity<Void> createReport(@ModelAttribute @Valid CreateReportRequest createReportRequest) {
+    public ResponseEntity<Void> createReport(@RequestBody @Valid CreateReportRequest createReportRequest) {
         reportService.createReport(createReportRequest);
         return ResponseEntity.noContent().build();
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN', 'LEARNER')")
+    @GetMapping("/{reportId}")
+    public ResponseEntity<ReportDTO> getReportById(@PathVariable("reportId") Long reportId) {
+        return ResponseEntity.ok(reportService.getReport(reportId));
+    }
+
 
 }

@@ -4,3 +4,4 @@ export * from "@/pages/dashboard/users.jsx";
 export * from "@/pages/dashboard/notifications";
 export * from "@/pages/dashboard/posts.jsx"
 export * from "@/pages/dashboard/postTopics.jsx"
+export * from "@/pages/dashboard/ReportDetails.jsx"

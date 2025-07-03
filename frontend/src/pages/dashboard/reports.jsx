@@ -8,6 +8,7 @@ import {
 import {useEffect, useState} from "react";
 import axios from "axios";
 import {getAllReports} from "@/api/reportApi.js";
+import { useNavigate, Link, useParams } from "react-router-dom";
 
 export function Reports() {
 
@@ -16,11 +17,19 @@ export function Reports() {
     const [size, setSize] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
     const [checkChangeStatus, setCheckChangeStatus] = useState(false);
-    const [status, setStatus] = useState('pending');
     const [sortOrder, setSortOrder] = useState('desc');
     const [reporterName, setReporterName] = useState('');
     const [targetName, setTargetName] = useState('');
     const [reportType, setReportType] = useState('');
+    const navigate = useNavigate();
+    const { status } = useParams();
+
+    useEffect(() => {
+        const validStatuses = ["pending", "approved", "rejected"];
+        if (!validStatuses.includes(status)) {
+            navigate("/dashboard/reports/pending");
+        }
+    }, [status]);
 
     useEffect(() => {
         const fetchReports = async () => {
@@ -65,6 +74,25 @@ export function Reports() {
 
     return (
         <div className="mt-12 mb-8 flex flex-col gap-12">
+            <div className="flex gap-4 px-4">
+                {["pending", "approved", "rejected"].map((tab) => (
+                    <button
+                        key={tab}
+                        onClick={() => {
+                            setPage(0);
+                            navigate(`/dashboard/reports/${tab}`);
+                        }}
+                        className={`px-4 py-2 text-sm font-semibold border-b-2 ${
+                            status === tab
+                                ? "border-blue-600 text-blue-600"
+                                : "border-transparent text-gray-500 hover:text-blue-600"
+                        }`}
+                    >
+                        {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                    </button>
+                ))}
+            </div>
+
             <div className="flex flex-wrap items-center gap-4 px-4">
                 {/* Input Search */}
                 <div className="flex flex-col">
@@ -108,21 +136,6 @@ export function Reports() {
                         <option value="OTHER">Other</option>
                     </select>
                 </div>
-                <div className="flex flex-col">
-                    <label className="text-xs text-gray-600 mb-1">Status</label>
-                    <select
-                        value={status}
-                        onChange={(e) => {
-                            setStatus(e.target.value);
-                            setPage(0)
-                        }}
-                        className="border border-gray-300 rounded-md px-2 py-1 text-sm">
-                        <option value="pending">Pending</option>
-                        <option value="approved">Approved</option>
-                        <option value="rejected">Rejected</option>
-                    </select>
-                </div>
-                {/* Sort */}
                 <div className="flex flex-col">
                     <label className="text-xs text-gray-600 mb-1">Sort by time</label>
                     <select
@@ -222,31 +235,14 @@ export function Reports() {
 
                                         <td className={className}>
                                             <div className="flex space-x-2">
-                                                {/*{(status === "pending" || status === "rejected") && (*/}
-                                                {/*    <button*/}
-                                                {/*        onClick={() => changeStatus(report.reportId, "approved")}*/}
-                                                {/*        className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"*/}
-                                                {/*    >*/}
-                                                {/*        {status === "pending" ? "Approve" : "Change to Approved"}*/}
-                                                {/*    </button>*/}
-                                                {/*)}*/}
-
-                                                {/*{(status === "pending" || status === "approved") && (*/}
-                                                {/*    <button*/}
-                                                {/*        onClick={() => changeStatus(report.reportId, "rejected")}*/}
-                                                {/*        className="text-xs font-semibold text-red-600 border border-red-600 px-2 py-1 rounded hover:bg-red-50"*/}
-                                                {/*    >*/}
-                                                {/*        {status === "pending" ? "Reject" : "Change to Rejected"}*/}
-                                                {/*    </button>*/}
-                                                {/*)}*/}
-                                                <button
+                                                <Link
+                                                    to={`/dashboard/reports/${report.reportId}/check`}
                                                     className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"
                                                 >
                                                     View details
-                                                </button>
+                                                </Link>
                                             </div>
                                         </td>
-
 
                                     </tr>
                                 );

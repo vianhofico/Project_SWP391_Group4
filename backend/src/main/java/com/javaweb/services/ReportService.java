@@ -18,4 +18,5 @@ public interface ReportService {
 
     void createReport(CreateReportRequest createReportRequest);
 
+    ReportDTO getReport(Long reportId);
 }

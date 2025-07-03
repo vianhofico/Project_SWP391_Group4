@@ -25,6 +25,6 @@ public interface PostService {
 
     void createPost(PostRequest postRequest, List<MultipartFile> files) throws IOException, JsonProcessingException;
 
-    void updatePost(Long postId, PostRequest postRequest);
+    void updatePost(Long postId, PostRequest postRequest, List<MultipartFile> files, List<Long> removedFileIds) throws JsonProcessingException, IOException;
 
 }

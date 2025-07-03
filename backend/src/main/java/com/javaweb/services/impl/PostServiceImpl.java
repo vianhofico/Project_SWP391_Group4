@@ -17,7 +17,7 @@ import com.javaweb.repositories.PostRepository;
 import com.javaweb.repositories.PostTopicRepository;
 import com.javaweb.repositories.UserRepository;
 import com.javaweb.security.utils.SecurityUtils;
-import com.javaweb.services.GoogleDriveService;
+import com.javaweb.services.CloudinaryService;
 import com.javaweb.services.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ import java.util.List;
 @Service
 public class PostServiceImpl implements PostService {
 
-    private final GoogleDriveService googleDriveService;
+    private final CloudinaryService cloudinaryService;
     private final PostRepository postRepository;
     private final DTOConverter dtoConverter;
     private final UserRepository userRepository;
@@ -151,14 +151,14 @@ public class PostServiceImpl implements PostService {
                 .build();
         postRepository.save(post);
 
-        //send message to kafka
-        googleDriveService.uploadFilesKafka(files, post.getPostId());
-
+        if (files != null && !files.isEmpty()) {
+            cloudinaryService.uploadFilesKafka(files, post.getPostId());
+        }
     }
 
     @Transactional
     @Override
-    public void updatePost(Long postId, PostRequest postRequest) {
+    public void updatePost(Long postId, PostRequest postRequest, List<MultipartFile> files, List<Long> removedFileIds) throws JsonProcessingException, IOException {
         Post thisPost = postRepository.findById(postId).orElseThrow(
                 () -> new ResourceNotFoundException("Cannot find Post with id: " + postId));
 
@@ -177,7 +177,7 @@ public class PostServiceImpl implements PostService {
         String newContent = postRequest.content();
         Long currentPostTopicId = thisPost.getPostTopic().getPostTopicId();
         Long newPostTopicId = postRequest.postTopicId();
-        if (newPostTopicId.equals(currentPostTopicId)) {
+        if (!newPostTopicId.equals(currentPostTopicId)) {
             PostTopic postTopic = postTopicRepository.findById(newPostTopicId).orElseThrow(
                     () -> new ResourceNotFoundException("Cannot find new Post Topic"));
             thisPost.setPostTopic(postTopic);
@@ -185,7 +185,14 @@ public class PostServiceImpl implements PostService {
         thisPost.setTitle(newTitle);
         thisPost.setContent(newContent);
         postRepository.save(thisPost);
-    }
 
+        if (removedFileIds != null && !removedFileIds.isEmpty()) {
+            postFileRepository.detachPostFromFiles(removedFileIds);
+        }
+
+        if (files != null && !files.isEmpty()) {
+            cloudinaryService.uploadFilesKafka(files, postId);
+        }
+    }
 
 }

@@ -1,8 +1,12 @@
 import React, {useEffect, useState} from 'react'
 import {useParams, useNavigate} from "react-router-dom";
-import {getPostById, getPostComments} from "@/api/postApi.js";
 import {deletePost} from "@/api/postApi.js";
-import {activateComment, createComment, deleteComment, editComment} from "@/api/commentApi.js";
+import {createComment, deleteComment, editComment} from "@/api/commentApi.js";
+import {getFilesByPostId, getPostById, getPostComments} from "@/api/postApi.js";
+import {PhotoProvider, PhotoView} from 'react-photo-view';
+import 'react-photo-view/dist/react-photo-view.css';
+import {createReport} from "@/api/reportApi.js";
+
 
 const DetailPost = () => {
 
@@ -20,6 +24,11 @@ const DetailPost = () => {
     const [replyCommentId, setReplyCommentId] = useState(null);
     const [editCommentId, setEditCommentId] = useState(null);
     const [editContent, setEditContent] = useState("");
+    const [existingFiles, setExistingFiles] = useState([]);
+    const [showReportForm, setShowReportForm] = useState(false);
+    const [reportType, setReportType] = useState("");
+    const [reportContent, setReportContent] = useState("");
+    const [commentIdToReport, setCommentIdToReport] = useState(null);
 
 
     const addNewComment = async () => {
@@ -62,6 +71,19 @@ const DetailPost = () => {
         }
         fetchPostById();
     }, [postId, checkChanges])
+
+    useEffect(() => {
+        const fetchFiles = async () => {
+            try {
+                const res = await getFilesByPostId(postId);
+                setExistingFiles(res.data);
+            } catch (error) {
+                console.error("error when fetch files by post id: " + error);
+            }
+        };
+        fetchFiles();
+    }, [])
+
 
     const deleteThisPost = async (postId) => {
         const confirmText = "Are you sure you want to delete this post?";
@@ -119,6 +141,19 @@ const DetailPost = () => {
         }
     }
 
+    const makeReport = async () => {
+        try {
+            if (commentIdToReport !== null)
+                await createReport({reportType, content: reportContent, postId: null, commentId: commentIdToReport});
+            else
+                await createReport({reportType, content: reportContent, postId, commentId: null})
+            alert("Create report successfully!");
+            setShowReportForm(false);
+        } catch (err) {
+            console.log("Error when create report", err);
+        }
+    }
+
     return (<>
         <div className="bg-gray-100">
 
@@ -134,56 +169,21 @@ const DetailPost = () => {
                             </svg>
                         </button>
                     </div>
-                    <div className="flex items-center space-x-2 sm:space-x-4">
-                        <button className="p-2 rounded-full hover:bg-gray-100 text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
-                                 stroke="currentColor" className="h-5 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M17.593 3.322c1.1.128 1.907 1.077 1.907 2.185V21L12 17.5 4.5 21V5.507c0-1.108.806-2.057 1.907-2.185a48.507 48.507 0 0111.186 0z"/>
-                            </svg>
-                        </button>
-                        <button className="p-2 rounded-full hover:bg-gray-100 text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
-                                 stroke="currentColor" className="h-5 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5M16.5 12L12 16.5m0 0L7.5 12m4.5 4.5V3"/>
-                            </svg>
-                        </button>
-                        <button className="p-2 rounded-full hover:bg-gray-100 text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
-                                 stroke="currentColor" className="h-5 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M7.217 10.907a2.25 2.25 0 100 4.186 2.25 2.25 0 000-4.186zm0 1.575a.675.675 0 110 1.35.675.675 0 010-1.35zm0 0V9.525m0 0h.01M12 9.525h.01M16.783 10.907a2.25 2.25 0 100 4.186 2.25 2.25 0 000-4.186zm0 1.575a.675.675 0 110 1.35.675.675 0 010-1.35zm0 0V9.525m0 0h.01M6.006 21H6a2.25 2.25 0 01-2.25-2.25V6A2.25 2.25 0 016 3.75c1.619 0 3.097 1.128 3.675 2.701.05.145.106.286.167.428M21 6a2.25 2.25 0 00-2.25-2.25h-.006c-1.619 0-3.097 1.128-3.675 2.701a18.724 18.724 0 00-.167.428m0 0V21m0 0h-3.379m3.379 0a2.25 2.25 0 01-2.25 2.25H12m0 0a2.25 2.25 0 01-2.25-2.25H6.006"/>
-                            </svg>
-                        </button>
-                        <button className="p-2 rounded-full hover:bg-gray-100 text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
-                                 stroke="currentColor" className="w-5 h-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99"/>
-                            </svg>
-                        </button>
-                        <button className="p-2 rounded-full hover:bg-gray-100 text-gray-600">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                 strokeWidth="1.5"
-                                 stroke="currentColor" className="h-5 w-5">
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M2.036 12.322a1.012 1.012 0 010-.639C3.423 7.51 7.36 4.5 12 4.5c4.638 0 8.573 3.007 9.963 7.178.07.207.07.431 0 .639C20.577 16.49 16.64 19.5 12 19.5c-4.638 0-8.573-3.007-9.963-7.178z"/>
-                                <path strokeLinecap="round" strokeLinejoin="round"
-                                      d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
-                            </svg>
-                        </button>
-                    </div>
                 </div>
             </header>
 
             <div className="container mx-auto px-4 py-8">
                 <div className="bg-white shadow-lg rounded-lg overflow-hidden">
-                    <div className="p-6 md:p-8">
+                    <div className="p-6 md:p-8 relative">
+                        {post.user?.userId !== user?.userId && (
+                            <button
+                                onClick={() => setShowReportForm(true)}
+                                className="absolute top-0 right-0 mt-4 mr-4 bg-red-100 text-red-600 text-sm font-semibold px-3 py-1 rounded hover:bg-red-200"
+                            >
+                                Report
+                            </button>
+                        )}
+
                         <div className="flex items-center mb-1">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                  className="w-5 h-5 text-gray-500 mr-2">
@@ -209,7 +209,72 @@ const DetailPost = () => {
                                 <div className="col-span-1 font-medium text-gray-600">Author</div>
                                 <div className="col-span-3 md:col-span-5">{post.user?.fullName}</div>
                             </div>
+                            <PhotoProvider>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                                    {(() => {
+                                        const normalFiles = existingFiles.filter(file => {
+                                            const ext = file.fileName.split('.').pop().toLowerCase();
+                                            return !['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'mp4', 'webm', 'ogg'].includes(ext);
+                                        });
+
+                                        const mediaFiles = existingFiles.filter(file => {
+                                            const ext = file.fileName.split('.').pop().toLowerCase();
+                                            return ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp', 'mp4', 'webm', 'ogg'].includes(ext);
+                                        });
+
+                                        return (
+                                            <>
+                                                <div className="space-y-2 mb-6">
+                                                    {normalFiles.map((file, idx) => (
+                                                        <div key={`file-${idx}`}>
+                                                            <a
+                                                                href={file.fileUrl}
+                                                                target="_blank"
+                                                                rel="noopener noreferrer"
+                                                                className="text-blue-600 hover:underline break-all"
+                                                            >
+                                                                📎 {file.fileName}
+                                                            </a>
+                                                        </div>
+                                                    ))}
+                                                </div>
+
+                                                {mediaFiles.map((file, idx) => {
+                                                    const extension = file.fileName.split('.').pop().toLowerCase();
+                                                    const isImage = ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'webp'].includes(extension);
+                                                    const isVideo = ['mp4', 'webm', 'ogg'].includes(extension);
+                                                    const isPdf = extension === 'pdf';
+
+                                                    return (
+                                                        <div key={`media-${idx}`} className="text-sm space-y-2">
+                                                            {isImage ? (
+                                                                <PhotoView src={file.fileUrl}>
+                                                                    <img
+                                                                        src={file.fileUrl}
+                                                                        alt={file.fileName}
+                                                                        className="w-full h-64 object-cover rounded-md cursor-zoom-in"
+                                                                    />
+                                                                </PhotoView>
+                                                            ) : isVideo ? (
+                                                                <video controls
+                                                                       className="w-full max-h-64 rounded-md object-cover">
+                                                                    <source src={file.fileUrl}
+                                                                            type={`video/${extension}`}/>
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                            ) : null}
+                                                        </div>
+                                                    );
+                                                })}
+                                            </>
+                                        );
+                                    })()}
+
+                                </div>
+                            </PhotoProvider>
+
                         </div>
+
 
                         {post.user?.userId === user?.userId && (
                             <div className="mt-8 pt-6 border-t border-gray-200 flex items-center space-x-3">
@@ -282,22 +347,34 @@ const DetailPost = () => {
                                             }} className="hover:text-blue-600 font-bold">
                                                 Reply
                                             </button>
+                                            {comment.user?.userId === user?.userId ? (
+                                                <>
+                                                    <button onClick={() => {
+                                                        setEditCommentId(comment.commentId);
+                                                        setReplyCommentId(null);
+                                                        setEditContent(comment.content);
+                                                    }} className="hover:text-teal-600 font-bold">
+                                                        Edit
+                                                    </button>
 
-                                            {comment.user?.userId === user?.userId && (<>
-                                                <button onClick={() => {
-                                                    setEditCommentId(comment.commentId);
-                                                    setReplyCommentId(null);
-                                                    setEditContent(comment.content);
-                                                }} className="hover:text-teal-600 font-bold">
-                                                    Edit
+                                                    <button onClick={() => {
+                                                        handleDelete(comment.commentId);
+                                                    }} className="hover:text-red-600 font-bold">
+                                                        Delete
+                                                    </button>
+                                                </>
+                                            ) : (
+                                                <button
+                                                    onClick={() => {
+                                                        setShowReportForm(true);
+                                                        setCommentIdToReport(comment.commentId)
+                                                    }}
+                                                    className="hover:text-yellow-700 font-bold"
+                                                >
+                                                    Report
                                                 </button>
+                                            )}
 
-                                                <button onClick={() => {
-                                                    handleDelete(comment.commentId);
-                                                }} className="hover:text-red-600 font-bold">
-                                                    Delete
-                                                </button>
-                                            </>)}
                                         </div>
 
                                         {/* Reply textarea */}
@@ -351,6 +428,7 @@ const DetailPost = () => {
 
                     </div>
                 </div>
+
             </div>
 
             <footer className="text-center py-8 text-sm text-gray-500">
@@ -370,6 +448,63 @@ const DetailPost = () => {
                 // Add any necessary JavaScript here, e.g., for comment editor functionality
                 // or mobile menu toggles if you reuse the full header.
             </script>
+            {showReportForm && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center">
+                    <div className="bg-white rounded-lg shadow-lg w-96 max-w-full p-6 relative">
+                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Report Post</h2>
+
+                        <label className="block mb-2 text-sm font-medium text-gray-700">Report Type</label>
+                        <select
+                            value={reportType}
+                            onChange={(e) => setReportType(e.target.value)}
+                            className="w-full border border-gray-300 rounded px-3 py-2 mb-4 focus:outline-none"
+                        >
+                            <option value="">Select a reason</option>
+                            <option value="SPAM">Spam or misleading</option>
+                            <option value="INAPPROPRIATE_LANGUAGE">Inappropriate content</option>
+                            <option value="HARASSMENT">Harassment or hate speech</option>
+                            <option value="MISINFORMATION">Misinformation</option>
+                            <option value="CHEATING">Cheating</option>
+                            <option value="VIOLATES_GUIDELINES">Violates community guidelines</option>
+                            <option value="OTHER">Other</option>
+                        </select>
+
+                        {reportType === "OTHER" && (
+                            <>
+                                <label className="block mb-2 text-sm font-medium text-gray-700">Details</label>
+                                <textarea
+                                    value={reportContent}
+                                    onChange={(e) => setReportContent(e.target.value)}
+                                    rows={4}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 mb-4 resize-y focus:outline-none"
+                                    placeholder="Describe the issue..."
+                                ></textarea>
+                            </>
+                        )}
+
+                        <div className="flex justify-end gap-2">
+                            <button
+                                onClick={() => {
+                                    setShowReportForm(false);
+                                    setReportType("");
+                                    setCommentIdToReport(null)
+                                }}
+                                className="px-4 py-2 rounded text-sm text-gray-600 hover:text-gray-800"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                className="px-4 py-2 rounded bg-red-600 text-white hover:bg-red-700 text-sm"
+                                onClick={() => {
+                                    makeReport()
+                                }}
+                            >
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
 
         </div>
     </>)

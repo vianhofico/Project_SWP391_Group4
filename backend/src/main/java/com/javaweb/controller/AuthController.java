@@ -37,7 +37,7 @@ public class AuthController {
     }
 
     @GetMapping("/verify")
-    public ResponseEntity<Void> verifyEmail(@RequestParam("token") String token){
+    public ResponseEntity<Void> verifyEmail(@RequestParam("token") String token) {
         authService.verifyEmail(token);
         return ResponseEntity.noContent().build();
     }
@@ -49,7 +49,7 @@ public class AuthController {
     }
 
     @PostMapping("/reset-password")
-    public ResponseEntity<String> sendEmail(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest)
+    public ResponseEntity<Void> sendEmail(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest)
             throws JsonProcessingException {
         EmailEvent event = new EmailEvent(
                 "RESET_PASSWORD",
@@ -57,7 +57,7 @@ public class AuthController {
         );
         String json = objectMapper.writeValueAsString(event);
         kafkaTemplate.send("email", json);
-        return ResponseEntity.ok("Đã nhận yêu cầu gửi email");
+        return ResponseEntity.noContent().build();
     }
 
 }

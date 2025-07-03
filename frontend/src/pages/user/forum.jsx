@@ -49,7 +49,7 @@ const Forum = () => {
         const fetchTopics = async () => {
             try {
                 const res = await getAllPostTopics();
-                setTopics(res.data.content);
+                setTopics(res.data);
             } catch
                 (err) {
                 console.error(err);
@@ -223,6 +223,24 @@ const Forum = () => {
                             </article>
                         </Link>
                     ))}
+                </div>
+                <div className="flex justify-center items-center gap-4 mt-4">
+                    <button onClick={() => {
+                        (page + 1 > 1) ? setPage(page - 1) : setPage(page)
+                    }}
+                            className="px-3 py-1 rounded text-blue-600 bg-white text-sm font-semibold hover:bg-blue-700 hover:text-white">
+                        Prev
+                    </button>
+                    <button
+                        className="px-4 py-1 rounded bg-blue-800 text-white text-sm font-semibold cursor-default">
+                        {page + 1}/{totalPages}
+                    </button>
+                    <button onClick={() => {
+                        (page + 1 < totalPages) ? setPage(page + 1) : setPage(page)
+                    }}
+                            className="px-3 py-1 rounded text-blue-600 bg-white text-sm font-semibold hover:bg-blue-700 hover:text-white">
+                        Next
+                    </button>
                 </div>
             </main>
         </>
