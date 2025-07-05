@@ -1,5 +1,6 @@
 package com.javaweb.dtos.response.admin;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.javaweb.entities.OrderItem;
@@ -20,8 +21,11 @@ public class OrderDTO {
 
     private Long orderId;
     private double amount;
+
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private String createdAt;
-    private User user;
+
+    private UserDTO user;
+//    private User user;
     private List<OrderItemDTO> orderItems = new ArrayList<>();
-//    private List<OrderItem> orderItems = new ArrayList<>();
 }

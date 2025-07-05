@@ -13,17 +13,9 @@ public interface CourseService {
 
     Cart fetchByUser(User user);
 
-//    void handleAddCourseToCart(String email, long courseId, HttpSession session);
+    void handleAddCourseToCart(long courseId);
 
-    void handleAddCourseToCart(long courseId, HttpSession session);
+    void handleRemoveCartItem(long id);
 
-    void handleRemoveCartItem(long id, HttpSession session);
-
-//    void handlePlaceOrder(User user, HttpSession session, List<Long> cartItemIds);
-
-    void handlePlaceOrder(HttpSession session, List<Long> cartItemIds);
-
-
-
-
+    void handlePlaceOrder(List<Long> cartItemIds);
 }

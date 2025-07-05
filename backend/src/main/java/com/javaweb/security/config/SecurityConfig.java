@@ -43,8 +43,10 @@ public class SecurityConfig {
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
                                 "/api/auth/**",
-                                "api/client/discounts/**",
-                                "/api/home",// login, register...
+                                "/api/client/discounts/**",
+                                "/api/admin/discount-events",
+                                "/api/admin/discount-events/courses",
+                                "/api/home",
                                 "/images/**",
                                 "/static/**",
                                 "/resources/**",
@@ -70,7 +72,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(Arrays.asList("http://localhost:3000")); // frontend
+        config.setAllowedOrigins(Arrays.asList("http://localhost:3000", "http://localhost:5173")); // frontend
         config.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         config.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type"));
         config.setAllowCredentials(true); // nếu bạn dùng session/cookie

@@ -6,10 +6,15 @@ package com.javaweb.converter;
 //import com.javaweb.entities.*;
 import com.javaweb.dtos.response.admin.OrderDTO;
 import com.javaweb.dtos.response.admin.*;
+import com.javaweb.dtos.response.client.CartDTO;
+import com.javaweb.dtos.response.client.CourseSummaryDTO;
 import com.javaweb.entities.*;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Component
 @RequiredArgsConstructor
@@ -129,15 +134,47 @@ public class DTOConverter {
 //                .build();
 //    }
 
+//    public OrderDTO toOrderDTO(Order order) {
+//        if (order == null) return null;
+//        OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
+//        orderDTO.setCreatedAt(dateTimeConverter.toString(order.getCreatedAt()));
+//        orderDTO.setUser(toUserDTO(order.getUser()));
+////        orderDTO.setUser(order.getUser());
+//        orderDTO.setAmount(order.getTotalPrice());
+////        orderDTO.setAmount(order.getAmount());
+//        return orderDTO;
+//    }
+
     public OrderDTO toOrderDTO(Order order) {
         if (order == null) return null;
-        OrderDTO orderDTO = modelMapper.map(order, OrderDTO.class);
-        orderDTO.setCreatedAt(dateTimeConverter.toString(order.getCreatedAt()));
-        orderDTO.setUser(order.getUser());
-        orderDTO.setAmount(order.getTotalPrice());
-//        orderDTO.setAmount(order.getAmount());
-        return orderDTO;
+
+        OrderDTO dto = new OrderDTO();
+        dto.setOrderId(order.getOrderId());
+        dto.setAmount(order.getTotalPrice());
+        dto.setCreatedAt(dateTimeConverter.toString(order.getCreatedAt()));
+        dto.setUser(toUserDTO(order.getUser()));
+
+        List<OrderItemDTO> itemDTOs = new ArrayList<>();
+        for (OrderItem item : order.getOrderItems()) {
+            OrderItemDTO itemDTO = new OrderItemDTO();
+            itemDTO.setOrderItemId(item.getOrderItemId());
+            itemDTO.setPrice(item.getPrice().longValue());
+
+            Course course = item.getCourse();
+            CourseSummaryDTO courseDTO = new CourseSummaryDTO();
+            courseDTO.setCourseId(course.getCourseId());
+            courseDTO.setTitle(course.getTitle());
+            courseDTO.setPrice(course.getPrice());
+            courseDTO.setImageUrl(course.getImageUrl());
+
+            itemDTO.setCourse(courseDTO);
+            itemDTOs.add(itemDTO);
+        }
+
+        dto.setOrderItems(itemDTOs);
+        return dto;
     }
+
 
     public UserDTO toUserDTO(User user) {
         if (user == null) return null;

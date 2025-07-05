@@ -2,7 +2,6 @@ package com.javaweb.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 //import com.javaweb.entities.dto.response.CourseDTO;
-import com.javaweb.dtos.response.CourseDTO;
 import jakarta.persistence.*;
 
 @Entity

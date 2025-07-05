@@ -1,7 +1,6 @@
 package com.javaweb.entities;
 
 //import com.javaweb.entities.dto.response.CourseDTO;
-import com.javaweb.dtos.response.CourseDTO;
 import com.javaweb.enums.DiscountType;
 import com.javaweb.enums.TargetType;
 import jakarta.persistence.*;

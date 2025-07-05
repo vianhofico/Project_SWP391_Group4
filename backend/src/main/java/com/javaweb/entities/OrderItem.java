@@ -1,66 +1,107 @@
+//package com.javaweb.entities;
+//
+//
+//import com.fasterxml.jackson.annotation.JsonBackReference;
+////import com.javaweb.entities.dto.response.CourseDTO;
+//import com.fasterxml.jackson.annotation.JsonManagedReference;
+//import jakarta.persistence.*;
+//
+//@Entity
+//@Table(name = "OrderItems")
+//public class OrderItem {
+//
+//    @Id
+//    @GeneratedValue(strategy = GenerationType.IDENTITY)
+//    @Column(name = "orderItemId")
+//    private Long orderItemId;
+//
+//    @Column(name = "price")
+//    private double price;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "courseId")
+////    @JsonBackReference
+//    @JsonManagedReference
+//    private Course course;
+////    private CourseDTO courseDTO;
+//
+//    @ManyToOne
+//    @JoinColumn(name = "order_id")
+////    @JsonIgnore
+//    @JsonBackReference
+//    private Order order;
+//
+//
+//    public Long getOrderItemId() {
+//        return orderItemId;
+//    }
+//
+//    public void setOrderItemId(Long orderItemId) {
+//        this.orderItemId = orderItemId;
+//    }
+//
+//    public double getPrice() {
+//        return price;
+//    }
+//
+//    public void setPrice(double price) {
+//        this.price = price;
+//    }
+//
+//    public Course getCourse() {
+//        return course;
+//    }
+//
+//    public void setCourse(Course course) {
+//        this.course = course;
+//    }
+//
+//    public Order getOrder() {
+//        return order;
+//    }
+//
+//    public void setOrder(Order order) {
+//        this.order = order;
+//    }
+//}
+
 package com.javaweb.entities;
 
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-//import com.javaweb.entities.dto.response.CourseDTO;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@Builder
 @Entity
-@Table(name = "OrderItems")
+@Table(name = "order_items")
+//@Table(name = "OrderItems")
 public class OrderItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "orderItemId")
+    @Column(name = "order_item_id")
+//    @Column(name = "orderItemId")
     private Long orderItemId;
 
     @Column(name = "price")
-    private double price;
+    private Double price;
+//    private Long price;
 
     @ManyToOne
-    @JoinColumn(name = "courseId")
-//    @JsonBackReference
-    @JsonManagedReference
+    @JsonBackReference
+    @JoinColumn(name = "course_id")
+    @JsonIgnore
     private Course course;
-//    private CourseDTO courseDTO;
 
     @ManyToOne
     @JoinColumn(name = "order_id")
-//    @JsonIgnore
-    @JsonBackReference
+    @JsonIgnore
     private Order order;
 
 
-    public Long getOrderItemId() {
-        return orderItemId;
-    }
-
-    public void setOrderItemId(Long orderItemId) {
-        this.orderItemId = orderItemId;
-    }
-
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
-    public Course getCourse() {
-        return course;
-    }
-
-    public void setCourse(Course course) {
-        this.course = course;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
-    }
 }

@@ -1,4 +1,4 @@
-package com.javaweb.dtos.response;
+package com.javaweb.dtos.response.client;
 
 
 

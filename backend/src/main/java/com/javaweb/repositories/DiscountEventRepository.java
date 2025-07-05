@@ -1,6 +1,7 @@
 package com.javaweb.repositories;
 
 import com.javaweb.entities.DiscountEvent;
+import com.javaweb.enums.TargetType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
@@ -17,6 +18,13 @@ public interface DiscountEventRepository extends JpaRepository<DiscountEvent, Lo
             LocalDate today1,
             LocalDate today2
     );
+
+    List<DiscountEvent> findByTargetTypeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
+            TargetType targetType,
+            LocalDate today1,
+            LocalDate today2
+    );
+
 
     // Tùy chọn: tìm tất cả event hiện tại (để áp dụng toàn cục nếu cần)
     List<DiscountEvent> findByStartDateLessThanEqualAndEndDateGreaterThanEqual(LocalDate now1, LocalDate now2);

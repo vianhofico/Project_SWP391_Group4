@@ -34,10 +34,6 @@ public class DiscountEventController {
     public ResponseEntity<?> getDiscountForCourse(@PathVariable Long courseId) {
         LocalDate today = LocalDate.now();
 
-        // Lấy các event áp dụng cho TẤT CẢ hoặc cho course cụ thể
-        List<DiscountEvent> activeEvents = discountEventRepository
-                .findByStartDateLessThanEqualAndEndDateGreaterThanEqual(today, today);
-
         Optional<Course> courseOpt = courseRepository.findById(courseId);
         if (courseOpt.isEmpty()) {
             return ResponseEntity.notFound().build();
@@ -45,14 +41,23 @@ public class DiscountEventController {
 
         Course course = courseOpt.get();
 
-        // Tìm sự kiện giảm giá phù hợp với khóa học này
-        DiscountEvent discount = activeEvents.stream()
-                .filter(event ->
-                        (event.getTargetType() == TargetType.ALL) ||
-                                (event.getTargetType() == TargetType.PRODUCT && event.getCourse() != null && event.getCourse().getCourseId().equals(courseId))
-                )
-                .findFirst()
-                .orElse(null);
+        // 1. Ưu tiên sự kiện áp dụng riêng cho khoá học
+        List<DiscountEvent> specificEvents = discountEventRepository
+                .findByCourse_CourseIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(courseId, today, today);
+
+        DiscountEvent discount = null;
+
+        if (!specificEvents.isEmpty()) {
+            discount = specificEvents.get(0); // Ưu tiên PRODUCT
+        } else {
+            // 2. Nếu không có, fallback sang sự kiện ALL
+            List<DiscountEvent> globalEvents = discountEventRepository
+                    .findByTargetTypeAndStartDateLessThanEqualAndEndDateGreaterThanEqual(TargetType.ALL, today, today);
+
+            if (!globalEvents.isEmpty()) {
+                discount = globalEvents.get(0);
+            }
+        }
 
         if (discount == null) {
             return ResponseEntity.ok(Map.of(

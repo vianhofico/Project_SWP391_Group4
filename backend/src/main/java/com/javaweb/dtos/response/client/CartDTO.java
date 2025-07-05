@@ -1,8 +1,7 @@
-package com.javaweb.dtos.response.admin;
+package com.javaweb.dtos.response.client;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.javaweb.dtos.response.CourseDTO;
 import lombok.*;
 
 import java.util.ArrayList;
