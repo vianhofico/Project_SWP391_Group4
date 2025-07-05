@@ -5,13 +5,16 @@ import com.javaweb.entities.CartItem;
 import com.javaweb.entities.Course;
 import com.javaweb.entities.User;
 //import com.javaweb.entities.dto.response.CourseDTO;
-import com.javaweb.repository.CartItemRepository;
-import com.javaweb.service.impl.CourseServiceImpl;
-import com.javaweb.service.impl.UserServiceImpl;
+import com.javaweb.repositories.CartItemRepository;
+import com.javaweb.services.impl.CourseServiceImpl;
+import com.javaweb.services.impl.UserServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -28,6 +31,25 @@ public class CartRestController {
 
     @Autowired
     private CourseServiceImpl courseServiceImpl;
+    private User getCurrentAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            String email = null;
+
+            if (principal instanceof UserDetails) {
+                email = ((UserDetails) principal).getUsername();
+            } else if (principal instanceof String) {
+                email = (String) principal;
+            }
+
+            if (email != null) {
+                return userServiceImpl.getUserByEmail(email);
+            }
+        }
+        return null;
+    }
+
 
     @GetMapping("/home")
     public ResponseEntity<List<Course>> getAllCourses() {
@@ -56,7 +78,8 @@ public class CartRestController {
     @GetMapping("/cart")
     public ResponseEntity<List<CartItem>> getCart(HttpServletRequest request) {
         // Tạm thời lấy user cố định, sau này thay bằng session
-        User user = userServiceImpl.getUserById(1L);
+//        User user = userServiceImpl.getUserById(1L);
+        User user = getCurrentAuthenticatedUser();
         Cart cart = courseServiceImpl.fetchByUser(user);
         List<CartItem> cartItems = cart != null ? cart.getCartItems() : new ArrayList<>();
         return ResponseEntity.ok(cartItems);
@@ -65,7 +88,8 @@ public class CartRestController {
     @GetMapping("/cartPrice")
     public ResponseEntity<Double> getPrice(HttpServletRequest request) {
         // Tạm thời lấy user cố định, sau này thay bằng session
-        User user = userServiceImpl.getUserById(1L);
+//        User user = userServiceImpl.getUserById(1L);
+        User user = getCurrentAuthenticatedUser();
         Cart cart = courseServiceImpl.fetchByUser(user);
         List<CartItem> cartItems = cart != null ? cart.getCartItems() : new ArrayList<>();
         double totalPrice = cartItems.stream().mapToDouble(CartItem::getPrice).sum();
@@ -77,12 +101,8 @@ public class CartRestController {
         HttpSession session = request.getSession(false);
 //        String email = (String) session.getAttribute("email");
         long courseId = id;
-        this.courseServiceImpl.handleAddCourseToCart("user@gmail.com",
-                id
-//                ,session
-                , session
-        ); // fake command
-//        this.courseDTOService.handleAddCourseToCart(email, courseId, session); real command
+//        this.courseServiceImpl.handleAddCourseToCart("user@gmail.com", id, session); // fake command
+        this.courseServiceImpl.handleAddCourseToCart(id, session);
         return ResponseEntity.ok().build();
     }
 
@@ -119,12 +139,12 @@ public class CartRestController {
             @RequestBody List<Long> cartItemIds
     ) {
         HttpSession session = request.getSession(false);
-        User currentUser = this.userServiceImpl.getUserByEmail("user@gmail.com");
-        currentUser.setUserId(1l);
+        User user = getCurrentAuthenticatedUser();
+//        User currentUser = this.userServiceImpl.getUserByEmail("user@gmail.com");
+//        currentUser.setUserId(1l);
 
-        this.courseServiceImpl.handlePlaceOrder(currentUser,
-                session,
-                cartItemIds);
+//        this.courseServiceImpl.handlePlaceOrder(currentUser, session, cartItemIds);
+        this.courseServiceImpl.handlePlaceOrder(session, cartItemIds);
 //        this.courseDTOService.handlePlaceOrder(currentUser, session);
 
         return ResponseEntity.ok().build(); // status 200 (safe hơn cho frontend)

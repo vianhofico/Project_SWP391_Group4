@@ -1,12 +1,12 @@
 package com.javaweb.controller.client;
 
-import com.javaweb.dtos.response.CourseDTO;
 import com.javaweb.entities.Course;
 import com.javaweb.entities.DiscountEvent;
 
 import com.javaweb.enums.DiscountType;
-import com.javaweb.repository.CourseRepository;
-import com.javaweb.repository.DiscountEventRepository;
+import com.javaweb.enums.TargetType;
+import com.javaweb.repositories.CourseRepository;
+import com.javaweb.repositories.DiscountEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -33,28 +34,33 @@ public class DiscountEventController {
     public ResponseEntity<?> getDiscountForCourse(@PathVariable Long courseId) {
         LocalDate today = LocalDate.now();
 
+        // Lấy các event áp dụng cho TẤT CẢ hoặc cho course cụ thể
         List<DiscountEvent> activeEvents = discountEventRepository
-                .findByCourse_CourseIdAndStartDateLessThanEqualAndEndDateGreaterThanEqual(
-                        courseId, today, today
-                );
+                .findByStartDateLessThanEqualAndEndDateGreaterThanEqual(today, today);
 
-        if (activeEvents.isEmpty()) {
+        Optional<Course> courseOpt = courseRepository.findById(courseId);
+        if (courseOpt.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Course course = courseOpt.get();
+
+        // Tìm sự kiện giảm giá phù hợp với khóa học này
+        DiscountEvent discount = activeEvents.stream()
+                .filter(event ->
+                        (event.getTargetType() == TargetType.ALL) ||
+                                (event.getTargetType() == TargetType.PRODUCT && event.getCourse() != null && event.getCourse().getCourseId().equals(courseId))
+                )
+                .findFirst()
+                .orElse(null);
+
+        if (discount == null) {
             return ResponseEntity.ok(Map.of(
                     "courseId", courseId,
                     "discounted", false
             ));
         }
 
-        DiscountEvent discount = activeEvents.get(0); // lấy sự kiện đầu tiên
-        Optional<Course> courseOpt = courseRepository.findById(courseId);
-//        Optional<CourseDTO> courseOpt = courseRepository.findById(courseId);
-
-        if (courseOpt.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
-
-        Course course = courseOpt.get();
-//        CourseDTO course = courseOpt.get();
         double originalPrice = course.getPrice();
         double finalPrice;
 
@@ -66,14 +72,17 @@ public class DiscountEventController {
 
         if (finalPrice < 0) finalPrice = 0;
 
-        return ResponseEntity.ok(Map.of(
-                "courseId", courseId,
-                "originalPrice", originalPrice,
-                "finalPrice", finalPrice,
-                "discountType", discount.getDiscountType(),
-                "discountValue", discount.getDiscountValue(),
-                "discounted", true,
-                "eventName", discount.getName()
-        ));
+        Map<String, Object> response = new HashMap<>();
+        response.put("courseId", courseId);
+        response.put("originalPrice", originalPrice);
+        response.put("finalPrice", finalPrice);
+        response.put("discountType", discount.getDiscountType());
+        response.put("discountValue", discount.getDiscountValue());
+        response.put("discounted", true);
+        response.put("eventName", discount.getName());
+
+        return ResponseEntity.ok(response);
     }
+
+
 }

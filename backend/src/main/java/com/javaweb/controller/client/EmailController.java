@@ -1,11 +1,14 @@
 package com.javaweb.controller.client;
 
+import com.javaweb.entities.User;
+import com.javaweb.services.impl.UserServiceImpl;
 import jakarta.mail.internet.MimeMessage;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +23,31 @@ public class EmailController {
 
 
     private final JavaMailSender mailSender;
+    private final UserServiceImpl userServiceImpl;
 
-    public EmailController(JavaMailSender mailSender) {
+    public EmailController(JavaMailSender mailSender, UserServiceImpl userServiceImpl) {
         this.mailSender = mailSender;
+        this.userServiceImpl = userServiceImpl;
     }
 
+    private User getCurrentAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            String email = null;
+
+            if (principal instanceof UserDetails) {
+                email = ((UserDetails) principal).getUsername();
+            } else if (principal instanceof String) {
+                email = (String) principal;
+            }
+
+            if (email != null) {
+                return userServiceImpl.getUserByEmail(email);
+            }
+        }
+        return null;
+    }
 
     @GetMapping("/send-email")
     public String sendEmail() {
@@ -32,7 +55,7 @@ public class EmailController {
             SimpleMailMessage message = new SimpleMailMessage();
 
             message.setFrom("he182488toquoctung@gmail.com");
-            message.setTo("toqupctung14102004@gmail.com");
+//            message.setTo(user.getEmail());
             message.setSubject("Simple test email from tungtq");
             message.setText("This is a sample email body for my first email");
 
@@ -68,13 +91,14 @@ public class EmailController {
     @GetMapping("/send-html-email")
     public String sendHtmlEmail() {
         try {
+            User user = getCurrentAuthenticatedUser();
 
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
             helper.setFrom("he182488toquoctung@gmail.com");
 //            helper.setTo("q314e25r@gmail.com");
-            helper.setTo("toqupctung14102004@gmail.com");
+            helper.setTo(user.getEmail());
             helper.setSubject("Simple test email from tungtq");
             try (var inputStream = Objects.requireNonNull(EmailController.class.getResourceAsStream("/templates/email-content.html"))) {
                 helper.setText(
