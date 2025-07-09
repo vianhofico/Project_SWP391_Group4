@@ -1,69 +1,350 @@
-import React from "react";
-import { Link } from 'react-router-dom';
-import { FaShoppingCart } from "react-icons/fa";
+import React, {useEffect, useState} from "react";
+import {Link, useNavigate} from 'react-router-dom';
+import {FaShoppingCart, FaUserCircle} from "react-icons/fa";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min.js';
+import axios from "axios";
 
 export const Navigation = () => {
-  return (
-    <nav className="navbar navbar-default navbar-fixed-top">
-      <div className="container">
-        <div className="navbar-header">
-          {/* <a className="navbar-brand page-scroll" href="#page-top">
-            REACT LANDING PAGE
-          </a> */}
-          <Link to="/">
-            REACT LANDING PAGE
-          </Link>
-        </div>
-        <div className="navbar-collapse">
-          <ul className="nav navbar-nav navbar-right">
-            <li><a href="#features" className="page-scroll">Features</a></li>
-            <li><a href="#about" className="page-scroll">About</a></li>
-            <li><a href="#services" className="page-scroll">Services</a></li>
-            <li>
-              <Link to="/cart">
-                <FaShoppingCart color="black" />
-              </Link>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-  );
+    const [cartCount, setCartCount] = useState(0);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    const navigate = useNavigate();
+    const [userName, setUserName] = useState("");
+
+    // Khởi tạo khi load lại trang
+    useEffect(() => {
+        setIsLoggedIn(!!localStorage.getItem("token"));
+        const stored = JSON.parse(localStorage.getItem("cartItems") || "[]");
+        setCartCount(stored.length);
+    }, []);
+
+    // Lắng nghe login/logout/cart update
+    useEffect(() => {
+        const handleLoginOrCartUpdate = () => {
+            const stored = JSON.parse(localStorage.getItem("cartItems") || "[]");
+            setCartCount(stored.length);
+            setIsLoggedIn(!!localStorage.getItem("token"));
+        };
+
+        window.addEventListener("loginSuccess", handleLoginOrCartUpdate);
+        window.addEventListener("logout", handleLoginOrCartUpdate);
+        window.addEventListener("cartUpdated", handleLoginOrCartUpdate);
+        window.addEventListener("storage", handleLoginOrCartUpdate); // cho các tab khác
+
+        return () => {
+            window.removeEventListener("loginSuccess", handleLoginOrCartUpdate);
+            window.removeEventListener("logout", handleLoginOrCartUpdate);
+            window.removeEventListener("cartUpdated", handleLoginOrCartUpdate);
+            window.removeEventListener("storage", handleLoginOrCartUpdate);
+        };
+    }, []);
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                const token = localStorage.getItem("token");
+                const res = await axios.get("http://localhost:8080/api/users/account/profile", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                const data = res.data;
+                setUserName(res.data.fullName);
+            } catch (error) {
+                console.error("Lỗi khi lấy thông tin:", error);
+            }
+        };
+        fetchUser();
+    }, []);
+
+
+    const handleLogout = () => {
+        localStorage.removeItem("token");
+        window.dispatchEvent(new Event("logout"));
+        navigate("/");
+    };
+
+    // return (
+    //     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    //         <div className="container">
+    //             <Link className="navbar-brand" to="/">
+    //                 REACT LANDING PAGE
+    //             </Link>
+    //
+    //             <button
+    //                 className="navbar-toggler"
+    //                 type="button"
+    //                 data-bs-toggle="collapse"
+    //                 data-bs-target="#navbarNav"
+    //             >
+    //                 <span className="navbar-toggler-icon"></span>
+    //             </button>
+    //
+    //             <div className="collapse navbar-collapse" id="navbarNav">
+    //                 <ul className="navbar-nav ms-auto">
+    //                     {!isLoggedIn ? (
+    //                         <li className="nav-item">
+    //                             <Link to="/login" className="nav-link fw-semibold text-primary">
+    //                                 Đăng nhập
+    //                             </Link>
+    //                         </li>
+    //                     ) : (
+    //                         <>
+    //                             {/*/!* Dropdown user icon *!/*/}
+    //                             {/*<li className="nav-item dropdown">*/}
+    //                             {/*    <a*/}
+    //                             {/*        className="nav-link dropdown-toggle"*/}
+    //                             {/*        href="/#"*/}
+    //                             {/*        id="userDropdown"*/}
+    //                             {/*        role="button"*/}
+    //                             {/*        data-bs-toggle="dropdown"*/}
+    //                             {/*    >*/}
+    //                             {/*        <FaUserCircle size={26} />*/}
+    //                             {/*    </a>*/}
+    //                             {/*    <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">*/}
+    //                             {/*        <li>*/}
+    //                             {/*            <Link className="dropdown-item" to="/account-settings">Quản lý tài khoản</Link>*/}
+    //                             {/*        </li>*/}
+    //                             {/*        <li>*/}
+    //                             {/*            <Link className="dropdown-item" to="/my-courses">Khóa học của tôi</Link> /!* Thêm dòng này *!/*/}
+    //                             {/*        </li>*/}
+    //                             {/*        <li>*/}
+    //                             {/*            <Link className="dropdown-item" to="/order-history">Lịch sử mua hàng</Link>*/}
+    //                             {/*        </li>*/}
+    //                             {/*        <li>*/}
+    //                             {/*            <button className="dropdown-item text-danger" onClick={handleLogout}>*/}
+    //                             {/*                Đăng xuất*/}
+    //                             {/*            </button>*/}
+    //                             {/*        </li>*/}
+    //                             {/*    </ul>*/}
+    //                             {/*</li>*/}
+    //
+    //                             {/* Dropdown user */}
+    //                             <li className="nav-item dropdown">
+    //                                 <a
+    //                                     className="nav-link dropdown-toggle d-flex align-items-center bg-light rounded-pill px-3 py-1"
+    //                                     href="/#"
+    //                                     id="userDropdown"
+    //                                     role="button"
+    //                                     data-bs-toggle="dropdown"
+    //                                     style={{ border: "1px solid #dee2e6" }}
+    //                                 >
+    //                                     <FaUserCircle className="me-2" />
+    //                                     <span className="text-dark fw-medium">Hey, {userName}</span>
+    //                                 </a>
+    //                                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+    //                                     <li>
+    //                                         <Link className="dropdown-item" to="/account-settings">Quản lý tài khoản</Link>
+    //                                     </li>
+    //                                     <li>
+    //                                         <Link className="dropdown-item" to="/my-courses">Khóa học của tôi</Link>
+    //                                     </li>
+    //                                     <li>
+    //                                         <Link className="dropdown-item" to="/order-history">Lịch sử mua hàng</Link>
+    //                                     </li>
+    //                                     <li>
+    //                                         <button className="dropdown-item text-danger" onClick={handleLogout}>
+    //                                             Đăng xuất
+    //                                         </button>
+    //                                     </li>
+    //                                 </ul>
+    //                             </li>
+    //
+    //                             {/* Giỏ hàng */}
+    //                             <li className="nav-item position-relative mx-2">
+    //                                 <Link to="/cart" className="nav-link">
+    //                                     <FaShoppingCart size={26} />
+    //                                     {cartCount > 0 ? (
+    //                                         <span
+    //                                             className="position-absolute -top-2 start-100 translate-middle badge rounded-pill bg-danger"
+    //                                             style={{ fontSize: '0.8rem' }}
+    //                                         >
+    //                                             {cartCount}
+    //                                         </span>
+    //                                     ) : <span
+    //                                         className="position-absolute -top-2 start-100 translate-middle badge rounded-pill bg-danger"
+    //                                         style={{ fontSize: '0.8rem' }}
+    //                                     >
+    //                                             0
+    //                                         </span>}
+    //                                 </Link>
+    //                             </li>
+    //                         </>
+    //                     )}
+    //                 </ul>
+    //             </div>
+    //         </div>
+    //     </nav>
+    // );
+
+    // return (
+    //     <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+    //         <div className="container">
+    //             <Link className="navbar-brand fw-bold text-primary" to="/">
+    //                 SWP TEAM
+    //             </Link>
+    //
+    //             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+    //                 <span className="navbar-toggler-icon"></span>
+    //             </button>
+    //
+    //             <div className="collapse navbar-collapse" id="navbarNav">
+    //
+    //
+    //                 <ul className="navbar-nav ms-auto">
+    //                     {!isLoggedIn ? (
+    //                         <li className="nav-item">
+    //                             <Link to="/login" className="nav-link fw-semibold text-primary">Đăng nhập</Link>
+    //                         </li>
+    //                     ) : (
+    //                         <>
+    //                             {/* User Dropdown Custom */}
+    //                             <li className="nav-item dropdown">
+    //                                 <a
+    //                                     className="nav-link dropdown-toggle d-flex align-items-center bg-light rounded-pill px-3 py-1"
+    //                                     href="#"
+    //                                     id="userDropdown"
+    //                                     role="button"
+    //                                     data-bs-toggle="dropdown"
+    //                                     style={{border: "1px solid #dee2e6"}}
+    //                                 >
+    //                                     <FaUserCircle className="me-2"/>
+    //                                     <span className="text-primary fw-medium">Hey, {userName}</span>
+    //                                 </a>
+    //
+    //                                 {/* Custom dropdown layout */}
+    //                                 <div className="dropdown-menu dropdown-menu-end p-4 shadow"
+    //                                      style={{width: '380px', borderRadius: '15px'}}>
+    //                                     <h6 className="fw-bold mb-3 text-uppercase text-muted">Góc học tập</h6>
+    //                                     <div className="row">
+    //                                         <div className="col-6">
+    //                                             <Link to="/my-courses" className="dropdown-item px-0 py-1">Khóa học của tôi</Link>
+    //                                             <Link to="/order-history" className="dropdown-item px-0 py-1">Lịch sử mua hàng</Link>
+    //                                         </div>
+    //                                         <div className="col-6">
+    //                                             <Link to="/quizzes" className="dropdown-item px-0 py-1">Làm Quiz</Link>
+    //                                             <Link to="/assignments" className="dropdown-item px-0 py-1">Bài tập</Link>
+    //                                         </div>
+    //                                     </div>
+    //                                     <hr className="my-3"/>
+    //                                     <div className="d-flex justify-content-end">
+    //                                         <button onClick={handleLogout}
+    //                                                 className="btn btn-link text-danger p-0">Logout
+    //                                         </button>
+    //                                     </div>
+    //                                 </div>
+    //                             </li>
+    //
+    //                             {/* Giỏ hàng */}
+    //                             <li className="nav-item position-relative mx-2">
+    //                                 <Link to="/cart" className="nav-link">
+    //                                     <FaShoppingCart size={26}/>
+    //                                     {cartCount > 0 ? (
+    //                                         <span
+    //                                             className="position-absolute -top-2 start-100 translate-middle badge rounded-pill bg-danger"
+    //                                             style={{fontSize: '0.8rem'}}
+    //                                         >
+    //                                                                              {cartCount}
+    //                                                                          </span>
+    //                                     ) : <span
+    //                                         className="position-absolute -top-2 start-100 translate-middle badge rounded-pill bg-danger"
+    //                                         style={{fontSize: '0.8rem'}}
+    //                                     >
+    //                                                                              0
+    //                                                                          </span>}
+    //                                 </Link>
+    //                             </li>
+    //                         </>
+    //                     )}
+    //                 </ul>
+    //             </div>
+    //         </div>
+    //     </nav>
+    // );
+    return (
+        <nav className="navbar navbar-expand-lg navbar-light bg-light fixed-top shadow-sm">
+            <div className="container d-flex justify-content-between align-items-center">
+                <Link className="navbar-brand fw-bold text-primary" to="/">
+                    SWP TEAM
+                </Link>
+
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarNav"
+                >
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
+                <div className="collapse navbar-collapse justify-content-end" id="navbarNav">
+                    <ul className="navbar-nav align-items-center">
+                        {!isLoggedIn ? (
+                            <li className="nav-item">
+                                <Link to="/login" className="nav-link fw-semibold text-primary">Đăng nhập</Link>
+                            </li>
+                        ) : (
+                            <>
+                                {/* User Dropdown Custom */}
+                                <li className="nav-item dropdown d-flex align-items-center me-3">
+                                    <a
+                                        className="nav-link dropdown-toggle d-flex align-items-center bg-light rounded-pill px-3 py-1"
+                                        href="#"
+                                        id="userDropdown"
+                                        role="button"
+                                        data-bs-toggle="dropdown"
+                                        style={{
+                                            border: "1px solid #dee2e6",
+                                            height: "42px",
+                                            fontSize: "1rem"
+                                        }}
+                                    >
+                                        <FaUserCircle className="me-2" size={20} />
+                                        <span className="text-primary fw-medium">Hey, {userName}</span>
+                                    </a>
+
+                                    {/* Custom dropdown layout */}
+                                    <div className="dropdown-menu dropdown-menu-end p-4 shadow"
+                                         style={{ width: '400px', borderRadius: '15px', fontSize: "1rem" }}>
+                                        <h6 className="fw-bold mb-3 text-uppercase text-muted">Góc học tập</h6>
+                                        <div className="row">
+                                            <div className="col-6">
+                                                <Link to="/my-courses" className="dropdown-item px-0 py-2">Khóa học của tôi</Link>
+                                                <Link to="/order-history" className="dropdown-item px-0 py-2">Lịch sử mua hàng</Link>
+                                            </div>
+                                            <div className="col-6">
+                                                <Link to="/quizzes" className="dropdown-item px-0 py-2">Làm Quiz</Link>
+                                                <Link to="/assignments" className="dropdown-item px-0 py-2">Bài tập</Link>
+                                            </div>
+                                        </div>
+                                        <hr className="my-3" />
+                                        <div className="d-flex justify-content-end">
+                                            <button onClick={handleLogout} className="btn btn-link text-danger p-0">
+                                                Logout
+                                            </button>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                {/* Giỏ hàng */}
+                                <li className="nav-item position-relative d-flex align-items-center">
+                                    <Link to="/cart" className="nav-link d-flex align-items-center">
+                                        <FaShoppingCart size={24} />
+                                        <span
+                                            className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                            style={{ fontSize: '0.75rem' }}
+                                        >
+                                        {cartCount}
+                                    </span>
+                                    </Link>
+                                </li>
+                            </>
+                        )}
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    );
+
+
 };
-
-// import React, { useContext } from "react";
-// import { Link } from 'react-router-dom';
-// import { FaShoppingCart } from "react-icons/fa";
-// import { CartContext } from "./components/"; // Cập nhật đường dẫn phù hợp
-
-// export const Navigation = () => {
-//   const { cartItems } = useContext(CartContext);
-
-//   return (
-//     <nav className="navbar navbar-default navbar-fixed-top">
-//       <div className="container">
-//         <div className="navbar-header">
-//           <Link to="/">REACT LANDING PAGE</Link>
-//         </div>
-//         <div className="navbar-collapse">
-//           <ul className="nav navbar-nav navbar-right">
-//             <li><a href="#features" className="page-scroll">Features</a></li>
-//             <li><a href="#about" className="page-scroll">About</a></li>
-//             <li><a href="#services" className="page-scroll">Services</a></li>
-//             <li>
-//               <Link to="/cart" className="cart-icon-wrapper">
-//                 <FaShoppingCart color="black" size={20} />
-//                 {cartItems.length > 0 && (
-//                   <span className="cart-count">{cartItems.length}</span>
-//                 )}
-//               </Link>
-//             </li>
-//           </ul>
-//         </div>
-//       </div>
-//     </nav>
-//   );
-// };
-
-
-

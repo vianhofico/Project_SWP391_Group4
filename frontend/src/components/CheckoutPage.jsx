@@ -1,6 +1,6 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, {useEffect, useState, useRef} from "react";
 import axios from "axios";
-import { useNavigate, useLocation } from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 import Swal from 'sweetalert2';
 
 const CheckoutPage = () => {
@@ -11,21 +11,53 @@ const CheckoutPage = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const [lastId, setLastId] = useState(0);
-    const [isSuccess, setIsSuccess] = useState(false);
     const intervalRef = useRef(null);
     const hasShownPopup = useRef(false);
+    const hasShownErrorPopup = useRef(false);
     const lastIdRef = useRef(0);
+    const lastTransactionIdRef = useRef("");  // lưu giao dịch đã xử lý
+    const lastRowCountRef = useRef(0);
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
-       const fetchLastId = async() => {
-           const response = await axios.get("http://localhost:8080/api/last-order-id");
-           lastIdRef.current = response.data + 2;
-       }
-       fetchLastId();
+        if (!location.state || !location.state.checkoutData) {
+            // Nếu không có dữ liệu từ CartDetail => Redirect
+            navigate("/cart");
+        }
+    }, [location, navigate]);
+
+    useEffect(() => {
+        const initRowCount = async () => {
+            try {
+                const response = await fetch("https://script.google.com/macros/s/AKfycbwqdfAnrurKdOwl8IOOGfbeIbVKkn22xk0jFQF0WH5dsBAXRbsJHHzeSUPH-7knLqX37w/exec");
+                const data = await response.json();
+                lastRowCountRef.current = data.data.length;
+            } catch (error) {
+                console.error("Lỗi khi khởi tạo số dòng Google Sheet:", error);
+            }
+        };
+        initRowCount();
     }, []);
 
-    useEffect(async() => {
-        const response = await axios.get("http://localhost:8080/api/last-order-id");
+
+    useEffect(() => {
+        const fetchLastId = async () => {
+            const response = await axios.get("http://localhost:8080/api/last-order-id", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            lastIdRef.current = response.data + 2;
+        }
+        fetchLastId();
+    }, []);
+
+    useEffect(async () => {
+        const response = await axios.get("http://localhost:8080/api/last-order-id", {
+            headers : {
+                Authorization: `Bearer ${token}`
+            }
+        });
         setLastId(response.data + 2);
     }, []);
 
@@ -67,8 +99,16 @@ const CheckoutPage = () => {
     const fetchCart = async () => {
         try {
             const selectedIds = cartItems.map(item => item.id);
-            const response = await axios.post("http://localhost:8080/api/confirm-checkout", selectedIds);
-            const priceResponse = await axios.get("http://localhost:8080/api/cartPrice");
+            const response = await axios.post("http://localhost:8080/api/confirm-checkout", selectedIds, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            const priceResponse = await axios.get("http://localhost:8080/api/cartPrice", {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
 
             const items = response.data;
             const price = priceResponse.data;
@@ -83,97 +123,165 @@ const CheckoutPage = () => {
     };
 
     async function checkPaid() {
-        if(isSuccess===true){
-            return;
-        } else{
-            try {
-                const response = await fetch("https://script.google.com/macros/s/AKf" +
-                    "ycbybYFrQxZDgZgJJZgr4CVyTSOR4GSVWLB3-yrRfLzzrTixLCEwGHDVBMoPy3IHPQJQaVg/exec"
-                );
-                const data = await response.json();
-                const lastPaid = data.data[data.data.length - 1];
-                let lastPrice = lastPaid["Giá trị"];
-                const index = lastPaid["Mô tả"].toLowerCase().indexOf("ma");
-                let lastContent = "ORDER" + lastPaid["Mô tả"].substring(5, index);
-                const paidContent = `ORDER${lastIdRef.current}`;
-                // console.log("lastPrice:", lastPrice);
-                // console.log("totalPrice:", totalRef.current / 100);
-                // console.log(totalRef.current / 100 === parseInt(lastPrice));
+        try {
+            const response = await fetch("https://script.google.com/macros/s/" +
+                "AKfycbwqdfAnrurKdOwl8IOOGfbeIbVKkn22xk0jFQF0WH5dsBAXRbsJHHzeSUPH-7knLqX37w/exec");
+            const data = await response.json();
+            const lastPaid = data.data[data.data.length - 1];
 
-                if(lastContent.includes(paidContent) && (parseInt(lastPrice) === totalRef.current / 100 )&& !hasShownPopup.current){
-                    const storedIds = JSON.parse(localStorage.getItem("checkoutIds") || "[]");
-                    await axios.post("http://localhost:8080/api/place-order", storedIds);
+            const transactionId = lastPaid["Mô tả"];
 
-                    hasShownPopup.current = true;
-                    clearInterval(intervalRef.current);
-                    setIsSuccess(true);
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Thanh toán thành công',
-                        text: 'Cảm ơn bạn đã đặt hàng.',
-                        confirmButtonText: 'Về trang chủ'
-                    }).then(() => {
-                        navigate("/");
-                        // navigate("/order-history", {state: {checkoutData}});
-                    });
-                    await axios.get("http://localhost:8080/api/send-html-email");
-                }
-            }catch {
-                console.log("Error");
+            if (transactionId === lastTransactionIdRef.current) return;
+
+            lastTransactionIdRef.current = transactionId;
+
+            let lastPrice = lastPaid["Giá trị"];
+            const index = lastPaid["Mô tả"].toLowerCase().indexOf("ma");
+            let lastContent = "ORDER" + lastPaid["Mô tả"].substring(5, index);
+            const paidContent = `ORDER${lastIdRef.current}`;
+            // if(lastContent.includes(paidContent) && (parseInt(lastPrice) === totalRef.current)&& !hasShownPopup.current){
+            if (transactionId.includes(paidContent) && (parseInt(lastPrice) === totalRef.current / 100) && !hasShownPopup.current) {
+                const storedIds = JSON.parse(localStorage.getItem("checkoutIds") || "[]");
+                await axios.post("http://localhost:8080/api/place-order", storedIds, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                // cap nhat lai gio hang (xoa cac san pham duoc thanh toan ra khoi gio hang)
+                const cartResponse = await axios.get("http://localhost:8080/api/cart", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                localStorage.setItem("cartItems", JSON.stringify(cartResponse.data || []));
+                window.dispatchEvent(new Event("cartUpdated"));
+                hasShownPopup.current = true;
+                clearInterval(intervalRef.current);
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thanh toán thành công',
+                    text: 'Cảm ơn bạn đã đặt hàng.',
+                    confirmButtonText: 'Về trang chủ'
+                }).then(() => {
+                    navigate("/");
+                });
+                await axios.get("http://localhost:8080/api/send-html-email", {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
             }
+        } catch {
+            console.log("Error");
         }
-
     }
 
 
+
+    const handleCancelPayment = () => {
+        Swal.fire({
+            title: 'Bạn có chắc muốn hủy đơn hàng?',
+            text: "Nếu xác nhận, bạn sẽ quay lại trang chủ.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Xác nhận hủy đơn',
+            cancelButtonText: 'Bỏ, tiếp tục thanh toán'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                navigate("/");
+            }
+            // Nếu nhấn cancel thì không làm gì
+        });
+    };
+
+
     return (
-        <div className="container py-5">
+        <div style={{ paddingTop: '100px' }}>
             <div className="container py-5">
-                <h2>Giỏ hàng</h2>
-                <table className="table">
-                    <thead>
-                    <tr>
-                        <th>Ảnh</th>
-                        <th>Tên</th>
-                        <th>Giá</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {cartItems.map((item) => (
-                        <tr key={item.id}>
+                <h2 className="mb-4">Xác nhận đơn hàng</h2>
+                <div className="row">
+                    {/* Cột trái: Danh sách sản phẩm */}
+                    <div className="col-md-8">
+                        {cartItems.map((item) => {
+                            const originalPrice = item.course?.originalPrice || item.course.price;
+                            const finalPrice = item.price;
 
-                            <td>
-                                <img
-                                    src={`http://localhost:8080/images/product/${item.courseDTO.image}`}
-                                        alt=""
-                                        style={{ width: 80, height: 80, objectFit: "cover" }}
+                            return (
+                                <div className="d-flex align-items-center border-bottom py-3" key={item.id}>
+                                    {/* Ảnh đại diện */}
+                                    <div className="me-3">
+                                        <img
+                                            src={encodeURI(item.course.imageUrl)}
+                                            alt={item.course.title}
+                                            className="img-thumbnail"
+                                            style={{ width: '80px', height: '80px', objectFit: 'cover' }}
                                         />
-                                        </td>
-                                        <td>{item.courseDTO.title}</td>
-                            <td>{item.courseDTO.price.toLocaleString()} đ</td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                                    </div>
 
-                <h4 className="mt-4">Tổng tiền: {totalPrice.toLocaleString()} đ</h4>
+                                    <div className="flex-grow-1">
+                                        <h5 className="mb-1">{item.course.title}</h5>
+                                    </div>
 
-            </div>
-            <img
-                src={`https://img.vietqr.io/image/mbbank-0969064150-compact2.jpg?amount=${totalPrice / 100}
-                    &addInfo=ORDER_${lastId}&accountName=To%20Quoc%20Tung`}
-                alt="QR Thanh toán"
-                style={{ width: 300 }}
-            />
+                                    <div className="text-end">
+                                        {finalPrice < originalPrice ? (
+                                            <>
+                                                <div className="text-danger fw-bold fs-5">
+                                                    {finalPrice.toLocaleString()} đ
+                                                </div>
+                                                <div className="text-muted text-decoration-line-through fs-5">
+                                                    {originalPrice.toLocaleString()} đ
+                                                </div>
+                                            </>
+                                        ) : (
+                                            <div className="fs-5">{finalPrice.toLocaleString()} đ</div>
+                                        )}
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
 
+                    {/* Cột phải: QR và tổng kết */}
+                    <div className="col-md-4">
+                        <div className="border p-3 rounded">
+                            <h5 className="mb-3">Tổng thanh toán</h5>
+                            <ul className="list-unstyled">
+                                <li className="d-flex justify-content-between">
+                                    <span>Tạm tính:</span>
+                                    <strong>{totalPrice.toLocaleString()} đ</strong>
+                                </li>
+                                <hr />
+                                <li className="d-flex justify-content-between fs-5">
+                                    <strong>Tổng cộng:</strong>
+                                    <strong>{totalPrice.toLocaleString()} đ</strong>
+                                </li>
+                            </ul>
+                        </div>
 
-            <div className="mt-4">
-                {/*<button className="btn btn-primary me-2" onClick={handleConfirmPayment}>*/}
-                {/*    Xác nhận thanh toán*/}
-                {/*</button>*/}
-                <button className="btn btn-secondary" onClick={() => window.history.back()}>
-                    Quay lại giỏ hàng
-                </button>
+                        <div className="mt-4 text-center">
+                            <h6 className="mb-3">Quét mã để thanh toán</h6>
+                            <img
+                                src={`https://img.vietqr.io/image/mbbank-0969064150-compact2.jpg?amount=${totalPrice / 100}&addInfo=ORDER_${lastId}&accountName=To%20Quoc%20Tung`}
+                                alt="QR Thanh toán"
+                                style={{ width: 300 }}
+                            />
+                        </div>
+                    </div>
+                </div>
+
+                {/* Nút điều hướng */}
+                <div className="row mt-4">
+                    <div className="col-md-8 d-flex justify-content-center gap-3 align-items-center">
+                        <button className="btn btn-secondary" onClick={() => window.history.back()}>
+                            ← Quay lại giỏ hàng
+                        </button>
+                        <button className="btn btn-outline-danger" onClick={handleCancelPayment}>
+                            Hủy thanh toán
+                        </button>
+                    </div>
+                    {/* Cột phải trống để giữ căn chỉnh layout */}
+                    <div className="col-md-4"></div>
+                </div>
             </div>
         </div>
     );

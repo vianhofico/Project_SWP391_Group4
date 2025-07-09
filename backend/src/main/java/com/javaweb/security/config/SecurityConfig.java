@@ -44,8 +44,6 @@ public class SecurityConfig {
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/client/discounts/**",
-                                "/api/admin/discount-events",
-                                "/api/admin/discount-events/courses",
                                 "/api/home",
                                 "/images/**",
                                 "/static/**",

@@ -1,109 +1,136 @@
-// "use client";
-
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
-import Swal from "sweetalert2";
-// import "bootstrap/dist/css/bootstrap.min.css";
+import {useNavigate} from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import dayjs from "dayjs";
+
 
 
 export const OrderHistory = () => {
     const [orderItems, setOrderItems] = useState([]);
-    // const [cartItems, setCartItems] = useState([]);
-    // const [totalPrice, setTotalPrice] = useState(0);
-    // const [selectedItems, setSelectedItems] = useState([]);
+    const [page, setPage] = useState(0);        // Trang hiện tại (bắt đầu từ 0)
+    const [pageSize] = useState(5);             // Số đơn hàng mỗi trang
+    const navigate = useNavigate();
+    const token = localStorage.getItem("token");
 
-    // const router = useRouter();
 
-    useEffect(() => {
-        fetchOrder();
+    const formatFullDate = (str) => {
+        const parsed = dayjs(str, "DD/MM/YYYY HH:mm");
+        if (!parsed.isValid()) return "Không rõ";
+        return parsed.format("DD/MM/YYYY HH:mm");
+    };
+
+    useEffect(async () => {
+        const response = await axios.get("http://localhost:8080/api/order-history", {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        });
+        const items = response.data;
+        setOrderItems(Array.isArray(items) ? items : []);
     }, []);
 
-
-
-    const fetchOrder = async () => {
-        try {
-            // const response = await axios.get(`http://localhost:8080/api/cart`);
-            const response = await axios.get(`http://localhost:8080/api/order-history`);
-
-            const items = response.data;
-
-            // setOrderItems(items);
-            // const numberOfCourse = response.data.length;
-            // localStorage.setItem("numberOfCourse", numberOfCourse);
-
-            setOrderItems(Array.isArray(items) ? items : []);
-            // setTotalPrice(price || 0);
-        } catch (error) {
-            console.error("Lỗi khi lấy giỏ hàng:", error);
-            // setCartItems([]);
-            // setTotalPrice(0);
-        }
-    };
-
     const fetchOrderItem = async (id) => {
-
-        // const validIds = selectedItems.filter((id) => id !== null && id !== undefined);
-
-
         try {
-            // const response = await axios.post("http://localhost:8080/api/confirm-checkout", selectedItems);
-            const response = await axios.get(`http://localhost:8080/api/order-items/${id}`);
-            setOrderItems(response.data);
-            const orderItemsData = response.data; // giả sử backend trả về danh sách CartItem
-
-            localStorage.setItem("orderItemsData", JSON.stringify(orderItemsData));
-
-            // router.push("/order-items");
-
-        } catch (error) {
-            Swal.fire({
-                title: "Lỗi!",
-                text: "Đã có lỗi xảy ra trong quá trình thanh toán.",
-                icon: "error",
-                confirmButtonText: "Thử lại"
+            const response = await axios.get(`http://localhost:8080/api/orders/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
             });
+            const orderItemsData = response.data; // giả sử backend trả về danh sách CartItem
+            navigate("/order-items", {state: {orderItemsData}})
+        } catch (error) {
         }
     };
 
+    const totalPages = Math.ceil(orderItems.length / pageSize);
+    const currentItems = orderItems.slice(page * pageSize, (page + 1) * pageSize);
 
     return (
-        <div style={{ paddingTop: '150px' }}>
+        <div className="container" style={{ paddingTop: "100px", minHeight: "70vh" }}>
             {orderItems.length === 0 ? (
-                <p color="red">Không có đơn hàng nào được thực hiện</p>
+                <div className="text-center">
+                    <img
+                        src="/images/empty-order.png"
+                        alt="No Orders"
+                        style={{ width: "200px", marginBottom: "20px" }}
+                    />
+                    <h4 className="text-muted">Bạn chưa có đơn hàng nào.</h4>
+                    <p className="text-secondary">Hãy khám phá khoá học hấp dẫn ngay hôm nay!</p>
+                    <button className="btn btn-primary mt-3" onClick={() => navigate("/")}>
+                        Khám phá khoá học
+                    </button>
+                </div>
             ) : (
-                <div className="container py-5">
-                    <h2>Lịch sử mua hàng</h2>
-                    <table className="table-auto w-full text-center border border-gray-200 shadow-sm">
-                        <thead className="bg-gray-800 text-white">
-                        <tr>
-                            <th>Mã đơn hàng</th>
-                            <th>Tổng tiền</th>
-                            <th>Chi tiết đơn hàng</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        {orderItems.map((item) => (
-                            <tr key={item.orderId}>
+                <>
+                    <h2 className="text-center fw-bold mb-4 text-uppercase">
+                        🧾 Lịch sử mua hàng
+                    </h2>
 
-                                <td>{item.orderId}</td>
-                                <td>{item.totalPrice.toLocaleString()} đ</td>
-                                <td>
-                                    <button onClick={() => fetchOrderItem(item.orderId)}>
-                                        Chi tiết đơn hàng
-                                    </button>
-                                </td>
-                            </tr>
+                    <div className="d-flex flex-column gap-4">
+                        {currentItems.map((item) => (
+                            <div key={item.orderId} className="border rounded shadow-sm p-3">
+                                <div className="d-flex justify-content-between align-items-center mb-2">
+                                    <div className="fw-bold text-success">
+                                        🟢 ĐÃ HOÀN THÀNH
+                                    </div>
+                                    <div className="text-end">
+                                        <button
+                                            className="btn btn-primary btn-sm"
+                                            onClick={() => fetchOrderItem(item.orderId)}
+                                        >
+                                            Details
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div className="row">
+                                    <div className="col-md-8">
+                                        <p className="mb-1">
+                                            <strong>Mã đơn hàng:</strong> #{item.orderId}
+                                        </p>
+                                        <p className="mb-1">
+                                            <strong>Date:</strong> {formatFullDate(item.createdAt)}
+                                        </p>
+                                        <p className="mb-1">
+                                            <strong>Payment Method:</strong> Chuyển Khoản Ngân Hàng
+                                        </p>
+                                    </div>
+                                    <div className="col-md-4 text-end">
+                                        <h5 className="text-dark mb-0">
+                                            {item.amount.toLocaleString()} đ
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
                         ))}
-                        </tbody>
-                    </table>
+                    </div>
 
-                    {/* <h4 className="mt-4">Tổng tiền: {totalPrice.toLocaleString()} đ</h4>
-                    <button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-6 rounded-lg shadow" onClick={handleCheckout}>
-                        Tiến hành thanh toán
-                    </button> */}
-                </div>)}
+                    {/* Pagination */}
+                    <div className="d-flex justify-content-center align-items-center gap-3 mt-4">
+                        <button
+                            className="btn btn-outline-secondary btn-sm"
+                            disabled={page === 0}
+                            onClick={() => setPage(page - 1)}
+                        >
+                            ← Trang trước
+                        </button>
+                        <span className="fw-bold">
+                            {totalPages > 0 ? `${page + 1} / ${totalPages}` : "0 / 0"}
+                        </span>
+                        <button
+                            className="btn btn-outline-secondary btn-sm"
+                            disabled={page + 1 >= totalPages}
+                            onClick={() => setPage(page + 1)}
+                        >
+                            Trang sau →
+                        </button>
+                    </div>
+                </>
+            )}
         </div>
     );
 };
 
 export default OrderHistory;
+
