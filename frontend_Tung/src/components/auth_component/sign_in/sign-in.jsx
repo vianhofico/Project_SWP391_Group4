@@ -43,7 +43,7 @@ export function SignIn() {
           createdAt: userData.createdAt,
         }));
         toast.success("Đăng nhập thành công!");
-        setTimeout(() => navigate("/"), 2000);
+        setTimeout(() =>window.location.assign("/"), 2000);
       }
       
       else {

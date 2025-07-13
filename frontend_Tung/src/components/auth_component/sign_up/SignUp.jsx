@@ -33,7 +33,7 @@ export function SignUp() {
       await registerUser({ ...formData, role: "USER" });
       toast.success("Đăng ký thành công!");
       setTimeout(() => {
-        navigate("/dashboard/posts");
+        navigate("/sign-in");
       }, 2000);
     } catch (err) {
       toast.error(error || "Đăng ký thất bại, đã có data tồn tại trong hệ thống");

@@ -33,7 +33,6 @@ const handleSubmit = async (e) => {
           toast.error("Lỗi server, vui lòng thử lại sau");
           break;
         default:
-          toast.error("Có lỗi xảy ra khi đặt lại mật khẩu");
       }
     if (response.ok) {
       const message = await response.text();
