@@ -4,7 +4,7 @@ import dev.likeech.java.mapper.AttachmentDTOConverter;
 import dev.likeech.java.model.dto.AttachmentDTO;
 import dev.likeech.java.repository.AttachmentRepository;
 import dev.likeech.java.repository.GcsRepository;
-import dev.likeech.java.entity.AttachmentEntity;
+import dev.likeech.java.entity.Attachment;
 import dev.likeech.java.entity.ResourceType;
 import dev.likeech.java.service.AttachmentService;
 import lombok.RequiredArgsConstructor;
@@ -28,9 +28,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     @Override
     @Transactional
-    public AttachmentEntity createImageAttachment(String url) {
+    public Attachment createImageAttachment(String url) {
         return attachmentRepository.save(
-                AttachmentEntity.builder()
+                Attachment.builder()
                         .url(url)
                         .type(ResourceType.image)
                         .isDeleted(false)
@@ -41,9 +41,9 @@ public class AttachmentServiceImpl implements AttachmentService {
 
     @Override
     @Transactional
-    public AttachmentEntity createVideoAttachment(String url) {
+    public Attachment createVideoAttachment(String url) {
         return attachmentRepository.save(
-                AttachmentEntity.builder()
+                Attachment.builder()
                         .url(url)
                         .type(ResourceType.video)
                         .isDeleted(false)
@@ -53,9 +53,9 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
 
     @Override
-    public AttachmentEntity createDocumentAttachment(String url) {
+    public Attachment createDocumentAttachment(String url) {
         return attachmentRepository.save(
-                AttachmentEntity.builder()
+                Attachment.builder()
                         .url(url)
                         .type(ResourceType.document)
                         .isDeleted(false)
@@ -67,8 +67,8 @@ public class AttachmentServiceImpl implements AttachmentService {
     @Scheduled(cron = "0 0 3 * * *")
     public void cleanupOldDeletedAttachments() {
         LocalDateTime cutoff = LocalDateTime.now().minusDays(7);
-        List<AttachmentEntity> attachments = attachmentRepository.findByIsDeletedTrueAndDeletedAtBefore(cutoff);
-        for (AttachmentEntity attachment : attachments) {
+        List<Attachment> attachments = attachmentRepository.findByIsDeletedTrueAndDeletedAtBefore(cutoff);
+        for (Attachment attachment : attachments) {
             try {
                 gcsRepository.deleteViaSignedUrl(attachment.getUrl());
                 attachmentRepository.delete(attachment);
@@ -79,9 +79,9 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
     @Override
     public List<AttachmentDTO> getAttachments(Long courseId, ResourceType type) {
-        List<AttachmentEntity> attachmentEntities = attachmentRepository.findByCourse_CourseIdAndIsDeletedTrueAndType(courseId, type);
+        List<Attachment> attachmentEntities = attachmentRepository.findByCourse_CourseIdAndIsDeletedTrueAndType(courseId, type);
         List<AttachmentDTO> attachmentDTOs = new ArrayList<>();
-        for(AttachmentEntity attachment : attachmentEntities) {
+        for(Attachment attachment : attachmentEntities) {
             AttachmentDTO attachmentDTO = attachmentDTOConverter.toDTO(attachment);
             attachmentDTOs.add(attachmentDTO);
         }
@@ -89,8 +89,8 @@ public class AttachmentServiceImpl implements AttachmentService {
     }
     @Override
     @Transactional
-    public AttachmentEntity markAttachmentAsRecoverById(Long id) {
-        AttachmentEntity attachment = attachmentRepository.findByAttachmentIdAndIsDeletedTrue(id)
+    public Attachment markAttachmentAsRecoverById(Long id) {
+        Attachment attachment = attachmentRepository.findByAttachmentIdAndIsDeletedTrue(id)
                 .orElseThrow(() -> new IllegalArgumentException("Attachment not found or already deleted"));
         attachment.setIsDeleted(true);
         attachment.setDeletedAt(LocalDateTime.now());

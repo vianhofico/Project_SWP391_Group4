@@ -7,8 +7,8 @@ import dev.likeech.java.model.dto.ChapterDTO;
 import dev.likeech.java.model.request.ChapterReorderRequest;
 import dev.likeech.java.repository.ChapterRepository;
 import dev.likeech.java.repository.CourseRepository;
-import dev.likeech.java.entity.ChapterEntity;
-import dev.likeech.java.entity.CourseEntity;
+import dev.likeech.java.entity.Chapter;
+import dev.likeech.java.entity.Course;
 import dev.likeech.java.service.ChapterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -32,16 +32,16 @@ public class ChapterServiceImpl implements ChapterService {
     private final ChapterDTOConverter chapterDTOConverter;
     @Override
     public List<ChapterDTO> createChapters(List<String> titles, Long courseId){
-        List<ChapterEntity> entities = new ArrayList<>();
-        CourseEntity courseEntity = courseRepository.findById(courseId)
+        List<Chapter> entities = new ArrayList<>();
+        Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new AppException(ErrorCode.COURSE_NOT_FOUND));
-        Integer maxOrder = chapterRepository.findMaxOrderByCourseId(courseEntity.getCourseId());
+        Integer maxOrder = chapterRepository.findMaxOrderByCourseId(course.getCourseId());
         int nextOrder = (maxOrder == null ? 1 : maxOrder + 1);
         for(String title : titles) {
-            ChapterEntity chapterEntity = new ChapterEntity();
+            Chapter chapterEntity = new Chapter();
             chapterEntity.setCreatedAt(LocalDateTime.now());
             chapterEntity.setUpdateAt(LocalDateTime.now());
-            chapterEntity.setCourse(courseEntity);
+            chapterEntity.setCourse(course);
             chapterEntity.setTitle(title);
             chapterEntity.setChapterOrder(nextOrder);
             chapterEntity.setStatus(false);
@@ -50,7 +50,7 @@ public class ChapterServiceImpl implements ChapterService {
         }
         chapterRepository.saveAll(entities);
         List<ChapterDTO> dtos = new ArrayList<>();
-        for(ChapterEntity entity : entities) {
+        for(Chapter entity : entities) {
             ChapterDTO dto = chapterDTOConverter.toChapterDTO(entity);
             dtos.add(dto);
         }
@@ -59,27 +59,33 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public Page<ChapterDTO> getChapters(Long courseId, int page, int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by("chapterId").ascending());
-        Page<ChapterEntity> chapterPage = chapterRepository.findByCourse_courseId(courseId, pageable);
+        Pageable pageable = PageRequest.of(page, size, Sort.by("chapterOrder").ascending());
+        Page<Chapter> chapterPage = chapterRepository.findByCourse_courseId(courseId, pageable);
+        return chapterPage.map(chapterDTOConverter::toChapterDTO);
+    }
+    @Override
+    public Page<ChapterDTO> getActiveChapters(Long courseId, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("chapterOrder").ascending());
+        Page<Chapter> chapterPage = chapterRepository.findByCourse_courseIdAndStatusTrue(courseId, pageable);
         return chapterPage.map(chapterDTOConverter::toChapterDTO);
     }
 
 
     @Override
     public List<ChapterDTO> reorderChapters(Long courseId, List<ChapterReorderRequest> request) {
-        CourseEntity course = courseRepository.findById(courseId)
+        Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new AppException(ErrorCode.COURSE_NOT_FOUND));
 
         List<Long> chapterIds = request.stream()
                 .map(ChapterReorderRequest::chapterId)
                 .toList();
 
-        List<ChapterEntity> chapters = chapterRepository.findAllById(chapterIds);
+        List<Chapter> chapters = chapterRepository.findAllById(chapterIds);
 
         Map<Long, Integer> orderMap = request.stream()
                 .collect(Collectors.toMap(ChapterReorderRequest::chapterId, ChapterReorderRequest::chapterOrder));
 
-        for (ChapterEntity chapter : chapters) {
+        for (Chapter chapter : chapters) {
             if (!chapter.getCourse().getCourseId().equals(courseId)) {
                 throw new AppException(ErrorCode.INVALID_REQUEST);
             }
@@ -90,14 +96,14 @@ public class ChapterServiceImpl implements ChapterService {
         }
         chapterRepository.saveAll(chapters);
         List<ChapterDTO> dtos = chapters.stream()
-                .sorted(Comparator.comparing(ChapterEntity::getChapterOrder))
+                .sorted(Comparator.comparing(Chapter::getChapterOrder))
                 .map(chapterDTOConverter::toChapterDTO)
                 .toList();
         return dtos;
     }
     @Override
     public void updateChapterTitle(Long chapterId, String newTitle) {
-        ChapterEntity chapter = chapterRepository.findById(chapterId)
+        Chapter chapter = chapterRepository.findById(chapterId)
                 .orElseThrow(() -> new AppException(ErrorCode.CHAPTER_NOT_FOUND));
         if(!newTitle.isBlank()){
             chapter.setTitle(newTitle);
@@ -107,12 +113,24 @@ public class ChapterServiceImpl implements ChapterService {
 
     @Override
     public void updateChapterStatus(Long chapterId, String status) {
-        ChapterEntity chapter = chapterRepository.findById(chapterId)
+        Chapter chapter = chapterRepository.findById(chapterId)
                 .orElseThrow(() -> new AppException(ErrorCode.CHAPTER_NOT_FOUND));
         if(!status.isBlank()){
             chapter.setStatus(status.equalsIgnoreCase("ACTIVE") ? true : false);
         }
         chapterRepository.save(chapter);
+    }
+
+    @Override
+    public void deleteChapter(Long chapterId) {
+        Chapter chapter = chapterRepository.findById(chapterId)
+                .orElseThrow(() -> new AppException(ErrorCode.CHAPTER_NOT_FOUND));
+        if(chapter.getCourse().getEnrollments() != null && chapter.getCourse().getEnrollments().size() > 0){
+            throw new AppException(ErrorCode.COURSE_HAS_ENROLLMENTS);
+        }
+        else {
+            chapterRepository.delete(chapter);
+        }
     }
 
 }

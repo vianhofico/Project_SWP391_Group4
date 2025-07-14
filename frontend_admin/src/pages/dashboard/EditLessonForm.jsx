@@ -10,7 +10,8 @@ export default function EditLessonForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [mainVideoUrl, setMainVideoUrl] = useState("");
-  const [status, setStatus] = useState(""); // initially empty
+  const [videoViewUrl, setVideoViewUrl] = useState(""); // ✅ signed URL để mở video
+  const [status, setStatus] = useState("");
 
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
@@ -21,16 +22,22 @@ export default function EditLessonForm() {
         const res = await apiClient.get(`/admin/chapter/${chapterId}/lessons/${lessonId}`);
         const data = res.data;
 
-        console.log("✅ Lesson data:", data);
-
         if (data && data.lessonId) {
           setLesson(data);
           setTitle(data.title || "");
           setContent(data.content || "");
           setMainVideoUrl(data.mainVideoUrl || "");
-          setStatus(data.status === "Inactive" ? "Inactive" : "Active"); // Set correctly
+          setStatus(data.status === "Inactive" ? "Inactive" : "Active");
+
+          if (data.mainVideoUrl) {
+            const videoRes = await apiClient.post("/file/public/signed-url/view", {
+              objectName: data.mainVideoUrl,
+              folder: "mainvideo",
+              type: "video",
+            });
+            setVideoViewUrl(videoRes.data.signedUrl);
+          }
         } else {
-          console.warn("⚠️ Invalid lesson:", data);
           setLesson(null);
         }
       } catch (err) {
@@ -62,26 +69,6 @@ export default function EditLessonForm() {
       alert("Failed to update lesson.");
     } finally {
       setSaving(false);
-    }
-  };
-
-  const handleViewVideo = async () => {
-    if (!mainVideoUrl) {
-      return alert("No video URL specified.");
-    }
-
-    try {
-      const res = await apiClient.post("/file/signed-url/view", {
-        objectName: mainVideoUrl,
-        folder: "mainvideo",
-      });
-
-      const signedUrl = res.data.signedUrl;
-      if (!signedUrl) return alert("Could not get signed video URL.");
-      window.open(signedUrl, "_blank");
-    } catch (err) {
-      console.error("❌ Error viewing video:", err);
-      alert("Could not open video.");
     }
   };
 
@@ -130,15 +117,24 @@ export default function EditLessonForm() {
           placeholder="e.g. lesson01.mp4"
           className="w-full border px-4 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        {mainVideoUrl && (
-          <button
-            onClick={handleViewVideo}
-            className="mt-2 text-sm text-blue-600 underline"
-          >
-            ▶️ View current video
-          </button>
-        )}
       </div>
+
+      {/* ✅ Link để mở video thay vì phát video */}
+      {videoViewUrl ? (
+        <div className="mb-6">
+          <label className="block mb-2 font-medium">🎥 Current Video URL</label>
+          <a
+            href={videoViewUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-600 underline hover:text-blue-800"
+          >
+            Click to view video
+          </a>
+        </div>
+      ) : (
+        <div className="text-sm text-gray-500">Chưa có video hiển thị</div>
+      )}
 
       <div className="mb-5">
         <label className="block mb-1 font-medium">📌 Status</label>
@@ -152,21 +148,13 @@ export default function EditLessonForm() {
         </select>
       </div>
 
-      <div className="flex gap-4">
-        <button
-          onClick={handleUpdate}
-          disabled={saving}
-          className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-xl disabled:opacity-60"
-        >
-          💾 {saving ? "Saving..." : "Save Changes"}
-        </button>
-        <button
-          onClick={() => navigate(-1)}
-          className="bg-gray-300 hover:bg-gray-400 text-gray-800 px-5 py-2 rounded-xl"
-        >
-          🔙 Back
-        </button>
-      </div>
+      <button
+        onClick={handleUpdate}
+        className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded disabled:opacity-60"
+        disabled={saving}
+      >
+        {saving ? "Đang lưu..." : "💾 Cập nhật bài học"}
+      </button>
     </div>
   );
 }

@@ -24,4 +24,6 @@ public class CourseDTO {
     private String videoTrialUrl;
     private List<Long> attachmentIds;
     private List<Long> topicIds;
+    private List<Long> enrollmentIds;
+    private Float progress;
 }

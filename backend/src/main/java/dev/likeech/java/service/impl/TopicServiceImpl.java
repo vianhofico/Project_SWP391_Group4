@@ -10,8 +10,8 @@ import dev.likeech.java.model.request.SearchRequest;
 import dev.likeech.java.model.request.TopicRequest;
 import dev.likeech.java.repository.CourseRepository;
 import dev.likeech.java.repository.TopicRepository;
-import dev.likeech.java.entity.CourseEntity;
-import dev.likeech.java.entity.TopicEntity;
+import dev.likeech.java.entity.Course;
+import dev.likeech.java.entity.Topic;
 import dev.likeech.java.service.CourseService;
 import dev.likeech.java.service.TopicService;
 import jakarta.persistence.EntityNotFoundException;
@@ -25,9 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -61,33 +59,33 @@ public class TopicServiceImpl implements TopicService {
                 Sort.by(direction, sortField)
         );
 
-        Page<TopicEntity> result = topicRepository.searchTopics(search, status, pageable);
+        Page<Topic> result = topicRepository.searchTopics(search, status, pageable);
 
         return result.map(topicDTOConverter::toTopicDTO);
     }
 
     @Override
     @Transactional
-    public TopicEntity createTopic(TopicRequest requests) {
-        TopicEntity topicEntity = new TopicEntity();
-        topicEntity.setName(requests.getName());
-        topicEntity.setDescription(requests.getDescription());
+    public Topic createTopic(TopicRequest requests) {
+        Topic topic = new Topic();
+        topic.setName(requests.getName());
+        topic.setDescription(requests.getDescription());
         if(requests.getStatus() == null || requests.getStatus().equals("inactive")){
-            topicEntity.setStatus(false);
+            topic.setStatus(false);
         }
         else if(requests.getStatus().equals("active")){
-            topicEntity.setStatus(true);
+            topic.setStatus(true);
         }
-        return  topicRepository.save(topicEntity);
+        return  topicRepository.save(topic);
     }
     @Override
     @Transactional
-    public TopicEntity updateTopic(TopicRequest topicRequest, Long id) {
-        TopicEntity topicEntity = topicRepository.findById(id).orElseThrow(
+    public Topic updateTopic(TopicRequest topicRequest, Long id) {
+        Topic topic = topicRepository.findById(id).orElseThrow(
                 () -> new AppException(ErrorCode.TOPIC_NOT_FOUND));
-        topicEntity.setName(topicRequest.getName());
-        topicEntity.setDescription(topicRequest.getDescription());
-        boolean isCurrentlyActive = topicEntity.getStatus() != null && topicEntity.getStatus();
+        topic.setName(topicRequest.getName());
+        topic.setDescription(topicRequest.getDescription());
+        boolean isCurrentlyActive = topic.getStatus() != null && topic.getStatus();
         boolean willBeActive = topicRequest.getStatus() != null && topicRequest.getStatus().equals("ACTIVE");
         if(isCurrentlyActive && !willBeActive){
             List<CourseDTO> courseDTOS = courseService.getCoursesInTopic(id);
@@ -100,18 +98,18 @@ public class TopicServiceImpl implements TopicService {
                 courseIdsRequest.setCourseIds(courseIds);
                 deleteCoursesInTopic(id, courseIdsRequest);
             }
-            topicEntity.setStatus(false);
+            topic.setStatus(false);
 
         }
         else if(!isCurrentlyActive && willBeActive){
-            topicEntity.setStatus(true);
+            topic.setStatus(true);
         }
-        return topicRepository.save(topicEntity);
+        return topicRepository.save(topic);
     }
 
 
     @Override
-    public TopicEntity getTopic(Long id) {
+    public Topic getTopic(Long id) {
         return  topicRepository.findById(id).orElseThrow(
                 () -> new AppException(ErrorCode.TOPIC_NOT_FOUND)
         );
@@ -120,51 +118,51 @@ public class TopicServiceImpl implements TopicService {
     @Override
     @Transactional
     public List<CourseDTO> addCourseInTopic(Long topicID, CourseIdsRequest courseIdsRequest) {
-        TopicEntity topicEntity = topicRepository.findById(topicID).orElseThrow(
+        Topic topic = topicRepository.findById(topicID).orElseThrow(
                 () -> new AppException(ErrorCode.TOPIC_NOT_FOUND));
-        List<CourseEntity> courses = courseRepository.findAllById(courseIdsRequest.getCourseIds());
-        for(CourseEntity course : courses) {
-            if (!topicEntity.getCourses().contains(course)) {
-                topicEntity.getCourses().add(course);
+        List<Course> courses = courseRepository.findAllById(courseIdsRequest.getCourseIds());
+        for(Course course : courses) {
+            if (!topic.getCourses().contains(course)) {
+                topic.getCourses().add(course);
                 course.setUpdateAt(LocalDateTime.now());
-                course.getTopics().add(topicEntity);
+                course.getTopics().add(topic);
                 courseRepository.save(course);
             }
         }
         List<CourseDTO> courseDTOS = new ArrayList<>();
-        for (CourseEntity course : topicEntity.getCourses()) {
+        for (Course course : topic.getCourses()) {
             CourseDTO courseDTO = courseDTOConverter.toCourseDTO(course);
             courseDTOS.add(courseDTO);
         }
-        topicRepository.save(topicEntity);
+        topicRepository.save(topic);
         return courseDTOS;
     }
 
     @Override
     @Transactional
     public List<CourseDTO> deleteCoursesInTopic(Long topicID, CourseIdsRequest courseIdsRequest) {
-        TopicEntity topicEntity = topicRepository.findById(topicID)
+        Topic topic = topicRepository.findById(topicID)
                 .orElseThrow(() -> new AppException(ErrorCode.TOPIC_NOT_FOUND));
 
-        List<CourseEntity> courses = courseRepository.findAllById(courseIdsRequest.getCourseIds());
+        List<Course> courses = courseRepository.findAllById(courseIdsRequest.getCourseIds());
 
-        for (CourseEntity course : courses) {
-            boolean removedFromCourse = course.getTopics().remove(topicEntity);
-            boolean removedFromTopic = topicEntity.getCourses().remove(course);
+        for (Course course : courses) {
+            boolean removedFromCourse = course.getTopics().remove(topic);
+            boolean removedFromTopic = topic.getCourses().remove(course);
             if (removedFromCourse || removedFromTopic) {
                 course.setUpdateAt(LocalDateTime.now());
             }
         }
-        topicRepository.save(topicEntity);
+        topicRepository.save(topic);
         courseRepository.saveAll(courses);
-        return topicEntity.getCourses().stream()
+        return topic.getCourses().stream()
                 .map(courseDTOConverter::toCourseDTO)
                 .toList();
     }
     @Override
     @Transactional
-    public TopicEntity deleteTopic(Long id) {
-        TopicEntity topic = topicRepository.findById(id)
+    public Topic deleteTopic(Long id) {
+        Topic topic = topicRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Topic not found with id: " + id));
         if (Boolean.TRUE.equals(topic.getStatus())) {
             throw new IllegalStateException("Cannot delete an active topic.");
@@ -178,10 +176,21 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public List<TopicDTO> getAllTopics() {
-        List<TopicEntity> topicEntities = topicRepository.findAll();
+        List<Topic> topicEntities = topicRepository.findAll();
         List<TopicDTO> topicDTOS = new ArrayList<>();
-        for (TopicEntity topicEntity : topicEntities) {
-            TopicDTO topicDTO = topicDTOConverter.toTopicDTO(topicEntity);
+        for (Topic topic : topicEntities) {
+            TopicDTO topicDTO = topicDTOConverter.toTopicDTO(topic);
+            topicDTOS.add(topicDTO);
+        }
+        return topicDTOS;
+    }
+
+    @Override
+    public List<TopicDTO> getTopicsByStatus(Boolean status) {
+        List<Topic> topicEntities = topicRepository.findByStatus(status);
+        List<TopicDTO> topicDTOS = new ArrayList<>();
+        for (Topic topic : topicEntities) {
+            TopicDTO topicDTO = topicDTOConverter.toTopicDTO(topic);
             topicDTOS.add(topicDTO);
         }
         return topicDTOS;

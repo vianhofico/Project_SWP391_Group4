@@ -1,8 +1,11 @@
 package dev.likeech.java.service;
 
+import dev.likeech.java.entity.User;
 import dev.likeech.java.model.dto.LessonDTO;
 import dev.likeech.java.model.request.LessonReorderRequest;
 import dev.likeech.java.model.request.LessonRequest;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -12,4 +15,8 @@ public interface LessonService {
     List<LessonDTO> reorderLessons(Long chapterId, List<LessonReorderRequest> request);
     LessonDTO updateLesson(Long lessonId, LessonRequest request);
     LessonDTO getLesson(Long lessonId);
+    void deleteLesson(Long lessonId);
+    Page<LessonDTO> getActiveLessons(Long chapterId,int page, int size);
+    LessonDTO getLessonDetailForUser(Long lessonId, String username);
+    List<LessonDTO> getActiveLessonsByChapterForUser(Long chapterId, Long userId);
 }

@@ -13,4 +13,6 @@ public interface ChapterService {
     List<ChapterDTO> reorderChapters(Long courseId, List<ChapterReorderRequest> request);
     void updateChapterTitle(Long chapterId, String newTitle);
     void updateChapterStatus(Long chapterId, String status);
+    void deleteChapter(Long chapterId);
+    Page<ChapterDTO> getActiveChapters(Long courseId, int page, int size);
 }

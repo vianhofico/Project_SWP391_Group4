@@ -2,7 +2,7 @@ package dev.likeech.java.service.impl;
 
 import dev.likeech.java.repository.GcsRepository;
 import dev.likeech.java.repository.LessonMainVideoRepository;
-import dev.likeech.java.entity.LessonMainVideoEntity;
+import dev.likeech.java.entity.LessonMainVideo;
 import dev.likeech.java.entity.ResourceType;
 import dev.likeech.java.service.LessonMainVideoService;
 import lombok.RequiredArgsConstructor;
@@ -23,9 +23,9 @@ public class LessonMainVideoServiceImpl implements LessonMainVideoService {
     private static final Logger log = LoggerFactory.getLogger(LessonMainVideoServiceImpl.class);
     @Override
     @Transactional
-    public LessonMainVideoEntity createMainVideo(String url) {
+    public LessonMainVideo createMainVideo(String url) {
         return lessonMainVideoRepository.save(
-                LessonMainVideoEntity.builder().url(url)
+                LessonMainVideo.builder().url(url)
                         .createdAt(LocalDateTime.now())
                         .isDelete(false)
                         .type(ResourceType.video)
@@ -37,8 +37,8 @@ public class LessonMainVideoServiceImpl implements LessonMainVideoService {
     @Scheduled(cron = "0 0 3 * * *")
     public void cleanupOldDeletedMainVideos() {
         LocalDateTime cutoff = LocalDateTime.now().minusDays(7);
-        List<LessonMainVideoEntity> lessonMainVideoEntities = lessonMainVideoRepository.findByIsDeleteTrueAndDeletedAtBefore(cutoff);
-        for (LessonMainVideoEntity lessonMainVideo : lessonMainVideoEntities) {
+        List<LessonMainVideo> lessonMainVideoEntities = lessonMainVideoRepository.findByIsDeleteTrueAndDeletedAtBefore(cutoff);
+        for (LessonMainVideo lessonMainVideo : lessonMainVideoEntities) {
             try {
                 gcsRepository.deleteViaSignedUrl(lessonMainVideo.getUrl());
                 lessonMainVideoRepository.delete(lessonMainVideo);

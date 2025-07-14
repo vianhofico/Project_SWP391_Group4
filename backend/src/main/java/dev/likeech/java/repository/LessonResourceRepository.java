@@ -1,7 +1,7 @@
 package dev.likeech.java.repository;
 
-import dev.likeech.java.entity.LessonEntity;
-import dev.likeech.java.entity.LessonResourceEntity;
+import dev.likeech.java.entity.Lesson;
+import dev.likeech.java.entity.LessonResource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -12,11 +12,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 
-public interface LessonResourceRepository extends JpaRepository<LessonResourceEntity, Long> {
-   List<LessonResourceEntity> findByIsDeletedTrueAndDeletedAtBefore(LocalDateTime localDateTime);
-   @Query("SELECT r FROM LessonResourceEntity r JOIN r.lessons l WHERE l.lessonId = :lessonId")
-   Page<LessonResourceEntity> findByLessonId(Long lessonId, Pageable pageable);
+public interface LessonResourceRepository extends JpaRepository<LessonResource, Long> {
+   List<LessonResource> findByIsDeletedTrueAndDeletedAtBefore(LocalDateTime localDateTime);
+   @Query("SELECT r FROM LessonResource r JOIN r.lessons l WHERE l.lessonId = :lessonId")
+   Page<LessonResource> findByLessonId(Long lessonId, Pageable pageable);
 
-   @Query("SELECT r FROM LessonResourceEntity r WHERE :lesson NOT MEMBER OF r.lessons")
-   Page<LessonResourceEntity> findNotInLesson(@Param("lesson") LessonEntity lesson, Pageable pageable);
+   @Query("SELECT r FROM LessonResource r WHERE :lesson NOT MEMBER OF r.lessons")
+   Page<LessonResource> findNotInLesson(@Param("lesson") Lesson lesson, Pageable pageable);
 }

@@ -1,9 +1,9 @@
 package dev.likeech.java.service;
 
 
-import dev.likeech.java.entity.LessonMainVideoEntity;
+import dev.likeech.java.entity.LessonMainVideo;
 
 public interface LessonMainVideoService {
-    LessonMainVideoEntity createMainVideo(String url);
+    LessonMainVideo createMainVideo(String url);
     void cleanupOldDeletedMainVideos();
 }

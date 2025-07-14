@@ -1,17 +1,22 @@
 package dev.likeech.java.repository;
 
-import dev.likeech.java.entity.LessonEntity;
+import dev.likeech.java.entity.Chapter;
+import dev.likeech.java.entity.Lesson;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface LessonRepository extends JpaRepository<LessonEntity, Long> {
-    @Query("SELECT MAX(l.lessonOrder) FROM LessonEntity l WHERE l.chapter.chapterId = :chapterId")
+public interface LessonRepository extends JpaRepository<Lesson, Long> {
+    @Query("SELECT MAX(l.lessonOrder) FROM Lesson l WHERE l.chapter.chapterId = :chapterId")
     Integer findMaxOrderByCourseId(@Param("chapterId") Long chapterId);
-    List<LessonEntity> findByChapter_chapterId(Long chapterId);
-    List<LessonEntity> findByMainVideoUrl(String mainVideoUrl);
+    List<Lesson> findByChapter_chapterId(Long chapterId);
     boolean existsByMainVideoUrlAndLessonIdNot(String mainVideoUrl, Long id);
     boolean existsByMainVideoUrl(String mainVideoUrl);
+    Page<Lesson> findByChapter_chapterIdAndStatusTrue(Long chapterId, Pageable pageable);
+    List<Lesson>findByChapter_ChapterIdAndStatusTrueOrderByLessonOrderAsc(Long chapterId);
+    List<Lesson> findByChapter_Course_CourseIdAndStatusTrue(Long courseId);
 }

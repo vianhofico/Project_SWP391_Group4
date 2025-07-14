@@ -22,4 +22,6 @@ public class LessonDTO {
     private String mainVideoUrl;
     private List<Long> mainVideoIds;
     private List<Long> resourceIds;
+    private Boolean isCompleted;
+    private Boolean isLocked;
 }

@@ -11,7 +11,9 @@ export default function CourseList() {
   const sortField = searchParams.get("field") || "";
   const page = searchParams.get("page") || "0";
   const size = searchParams.get("size") || "10";
-  const status = searchParams.get("status") || "";
+
+  // ✅ Nếu không có status thì mặc định là ACTIVE
+  const status = searchParams.get("status") || "ACTIVE";
 
   const [topics, setTopics] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -38,6 +40,7 @@ export default function CourseList() {
     try {
       const res = await apiClient.post("/file/signed-url/view", {
         objectName,
+        type: "img",
         folder: "img",
       });
       return res.data.signedUrl;
@@ -186,6 +189,8 @@ export default function CourseList() {
             <option value="price">Price</option>
             <option value="title">Name</option>
             <option value="rating">Rating</option>
+            <option value="popular">Popular</option>
+            <option value="updateAt">Newest</option>
           </select>
           <select
             value={sortOrder}
@@ -210,9 +215,9 @@ export default function CourseList() {
           </select>
         </div>
 
+        {/* ✅ Bỏ nút "All", chỉ còn Active / Inactive */}
         <div className="flex gap-2">
           {[
-            { label: "All", value: "" },
             { label: "Active", value: "ACTIVE" },
             { label: "Inactive", value: "INACTIVE" },
           ].map((btn) => (
@@ -220,7 +225,9 @@ export default function CourseList() {
               key={btn.value}
               onClick={() => handleStatusChange(btn.value)}
               className={`px-3 py-2 rounded border ${
-                status === btn.value ? "bg-blue-600 text-white" : "bg-white text-gray-700"
+                status === btn.value
+                  ? "bg-blue-600 text-white"
+                  : "bg-white text-gray-700"
               }`}
             >
               {btn.label}
@@ -230,7 +237,9 @@ export default function CourseList() {
       </div>
 
       {loading && (
-        <div className="text-center py-6 text-blue-500 font-medium">Loading...</div>
+        <div className="text-center py-6 text-blue-500 font-medium">
+          Loading...
+        </div>
       )}
       {error && (
         <div className="text-center py-6 text-red-500 font-medium">{error}</div>
@@ -242,25 +251,30 @@ export default function CourseList() {
             <table className="min-w-full text-left text-sm border border-gray-200 rounded-md overflow-hidden">
               <thead className="bg-gray-100 text-gray-700">
                 <tr>
-                  {["ID", "Image", "Title", "Price", "Status", "Rating", "Updated At", "Actions"].map(
-                    (col) => (
-                      <th key={col} className="px-4 py-3 border-b">
-                        {col}
-                      </th>
-                    )
-                  )}
+                  <th className="px-4 py-3 border-b">ID</th>
+                  <th className="px-4 py-3 border-b">Image</th>
+                  <th className="px-4 py-3 border-b">Title</th>
+                  <th className="px-4 py-3 border-b">Price</th>
+                  <th className="px-4 py-3 border-b">Status</th>
+                  <th className="px-4 py-3 border-b">Rating</th>
+                  <th className="px-4 py-3 border-b">Learner</th>
+                  <th className="px-4 py-3 border-b">Updated At</th>
+                  <th className="px-4 py-3 border-b">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {courses.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="text-center py-6 text-gray-500">
+                    <td colSpan={9} className="text-center py-6 text-gray-500">
                       No courses available.
                     </td>
                   </tr>
                 ) : (
                   courses.map((course, index) => (
-                    <tr key={course.courseId} className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}>
+                    <tr
+                      key={course.courseId}
+                      className={index % 2 === 0 ? "bg-white" : "bg-gray-50"}
+                    >
                       <td className="px-4 py-3 border-b">{course.courseId}</td>
                       <td className="px-4 py-3 border-b">
                         {course.signedImageUrl ? (
@@ -279,7 +293,14 @@ export default function CourseList() {
                       <td className="px-4 py-3 border-b">
                         {course.rating != null ? course.rating.toFixed(1) : "N/A"}
                       </td>
-                      <td className="px-4 py-3 border-b">{formatDate(course.updateAt)}</td>
+                      <td className="px-4 py-3 border-b text-center">
+                        {Array.isArray(course.enrollmentIds)
+                          ? course.enrollmentIds.length
+                          : 0}
+                      </td>
+                      <td className="px-4 py-3 border-b">
+                        {formatDate(course.updateAt)}
+                      </td>
                       <td className="px-4 py-3 border-b space-x-2">
                         <button
                           onClick={() => handleEdit(course.courseId)}

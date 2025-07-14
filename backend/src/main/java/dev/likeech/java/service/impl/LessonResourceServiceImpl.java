@@ -1,7 +1,7 @@
 package dev.likeech.java.service.impl;
 
-import dev.likeech.java.entity.LessonEntity;
-import dev.likeech.java.entity.LessonResourceEntity;
+import dev.likeech.java.entity.Lesson;
+import dev.likeech.java.entity.LessonResource;
 import dev.likeech.java.exp.AppException;
 import dev.likeech.java.exp.ErrorCode;
 import dev.likeech.java.mapper.ResourceDTOConverter;
@@ -19,7 +19,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -31,7 +30,7 @@ public class LessonResourceServiceImpl implements LessonResourceService {
     private final LessonRepository lessonRepository;
     @Override
     public LessonResourceDTO createResource(ResourceCreateRequest request) {
-        LessonResourceEntity entity = LessonResourceEntity.builder()
+        LessonResource entity = LessonResource.builder()
                 .title(request.title())
                 .url(request.url())
                 .type(request.type())
@@ -41,7 +40,7 @@ public class LessonResourceServiceImpl implements LessonResourceService {
                 .lessons(new ArrayList<>())
                 .build();
 
-        LessonResourceEntity saved = lessonResourceRepository.save(entity);
+        LessonResource saved = lessonResourceRepository.save(entity);
         return resourceDTOConverter.toDto(saved);
     }
     @Override
@@ -52,13 +51,13 @@ public class LessonResourceServiceImpl implements LessonResourceService {
                 Sort.by(Sort.Direction.fromString(filter.directionSafe()), filter.sortBySafe())
         );
 
-        Page<LessonResourceEntity> page = lessonResourceRepository.findByLessonId(lessonId, pageable);
+        Page<LessonResource> page = lessonResourceRepository.findByLessonId(lessonId, pageable);
 
         // Filter in-memory nếu cần, hoặc query trong repo nếu performance quan trọng
-        Page<LessonResourceEntity> filteredPage = page.map(entity -> entity); // giữ nguyên nếu không cần filter
+        Page<LessonResource> filteredPage = page.map(entity -> entity); // giữ nguyên nếu không cần filter
 
         // Hoặc áp dụng filter thủ công nếu không lọc trong query:
-        Stream<LessonResourceEntity> stream = filteredPage.getContent().stream();
+        Stream<LessonResource> stream = filteredPage.getContent().stream();
 
         if (filter.title() != null && !filter.title().isBlank()) {
             String titleFilter = filter.title().toLowerCase();
@@ -77,7 +76,7 @@ public class LessonResourceServiceImpl implements LessonResourceService {
     }
     @Override
     public Page<LessonResourceDTO> getResourcesNotInLesson(Long lessonId, ResourceFilterRequest filter) {
-        LessonEntity lesson = lessonRepository.findById(lessonId)
+        Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new AppException(ErrorCode.LESSON_NOT_FOUND));
 
         Pageable pageable = PageRequest.of(
@@ -86,8 +85,8 @@ public class LessonResourceServiceImpl implements LessonResourceService {
                 Sort.by(Sort.Direction.fromString(filter.directionSafe()), filter.sortBySafe())
         );
 
-        Page<LessonResourceEntity> page = lessonResourceRepository.findNotInLesson(lesson, pageable);
-        Stream<LessonResourceEntity> stream = page.getContent().stream();
+        Page<LessonResource> page = lessonResourceRepository.findNotInLesson(lesson, pageable);
+        Stream<LessonResource> stream = page.getContent().stream();
         if (filter.title() != null && !filter.title().isBlank()) {
             String titleFilter = filter.title().toLowerCase();
             stream = stream.filter(r -> r.getTitle() != null && r.getTitle().toLowerCase().contains(titleFilter));
@@ -105,15 +104,15 @@ public class LessonResourceServiceImpl implements LessonResourceService {
 
     @Override
     public void assignResourcesToLesson(Long lessonId, List<Long> resourceIds) {
-        LessonEntity lesson = lessonRepository.findById(lessonId)
+        Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new AppException(ErrorCode.LESSON_NOT_FOUND));
-        List<LessonResourceEntity> resources = lessonResourceRepository.findAllById(resourceIds);
-        for (LessonResourceEntity res : resources) {
+        List<LessonResource> resources = lessonResourceRepository.findAllById(resourceIds);
+        for (LessonResource res : resources) {
             if (!lesson.getResources().contains(res)) {
                 lesson.getResources().add(res);
                 res.setIsDeleted(false);
                 res.setDeletedAt(null);
-                List<LessonEntity> list = res.getLessons();
+                List<Lesson> list = res.getLessons();
                 list.add(lesson);
                 lessonResourceRepository.save(res);
             }
@@ -124,11 +123,11 @@ public class LessonResourceServiceImpl implements LessonResourceService {
 
     @Override
     public void removeResourcesFromLesson(Long lessonId, List<Long> resourceIds) {
-        LessonEntity lesson = lessonRepository.findById(lessonId)
+        Lesson lesson = lessonRepository.findById(lessonId)
                 .orElseThrow(() -> new AppException(ErrorCode.LESSON_NOT_FOUND));
 
-        List<LessonResourceEntity> resources = lessonResourceRepository.findAllById(resourceIds);
-        for (LessonResourceEntity res : resources) {
+        List<LessonResource> resources = lessonResourceRepository.findAllById(resourceIds);
+        for (LessonResource res : resources) {
             lesson.getResources().remove(res);
             res.getLessons().remove(lesson);
             if(res.getLessons().isEmpty()) {
@@ -145,7 +144,7 @@ public class LessonResourceServiceImpl implements LessonResourceService {
     @Transactional
     public void permanentlyDeleteOldResources() {
         LocalDateTime oneMonthAgo = LocalDateTime.now().minusMonths(1);
-        List<LessonResourceEntity> oldResources = lessonResourceRepository
+        List<LessonResource> oldResources = lessonResourceRepository
                 .findByIsDeletedTrueAndDeletedAtBefore(oneMonthAgo);
 
         if (!oldResources.isEmpty()) {

@@ -25,6 +25,7 @@ function ChapterLessonsPage() {
     try {
       const res = await apiClient.post("/file/signed-url/view", {
         objectName: filename,
+        type: "video",
         folder: "mainvideo",
       });
       const signedUrl = res.data.signedUrl;
@@ -35,6 +36,19 @@ function ChapterLessonsPage() {
       alert("Unable to open video.");
     }
   };
+
+  const handleDeleteLesson = async (lessonId) => {
+  if (!window.confirm("⚠️ Are you sure you want to delete this lesson?")) return;
+
+  try {
+    await apiClient.delete(`/admin/chapter/${chapterId}/lessons/${lessonId}`);
+    setLessons((prev) => prev.filter((l) => l.lessonId !== lessonId));
+  } catch (err) {
+    console.error("❌ Error deleting lesson:", err);
+    alert("Failed to delete lesson.");
+  }
+};
+
 
   const moveLesson = async (index, direction) => {
     const newList = [...lessons];
@@ -151,6 +165,13 @@ function ChapterLessonsPage() {
                     className="text-xs bg-purple-600 text-white px-3 py-1 rounded"
                   >
                     Resources
+                  </button>
+
+                  <button
+                    onClick={() => handleDeleteLesson(lesson.lessonId)}
+                    className="text-xs bg-red-600 text-white px-3 py-1 rounded"
+                  >
+                    Delete
                   </button>
                 </td>
               </tr>

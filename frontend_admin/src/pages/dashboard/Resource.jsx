@@ -39,6 +39,7 @@ const Resource = () => {
     try {
       const { data } = await apiClient.post("/file/signed-url/view", {
         objectName,
+        type:"document",
         folder: "resources",
       });
       return data.signedUrl;

@@ -1,9 +1,10 @@
 package dev.likeech.java.mapper;
 
-import dev.likeech.java.entity.LessonResourceEntity;
+import dev.likeech.java.entity.LessonProgress;
+import dev.likeech.java.entity.LessonResource;
 import dev.likeech.java.model.dto.LessonDTO;
-import dev.likeech.java.entity.LessonEntity;
-import dev.likeech.java.entity.LessonMainVideoEntity;
+import dev.likeech.java.entity.Lesson;
+import dev.likeech.java.entity.LessonMainVideo;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
@@ -14,17 +15,27 @@ import java.util.List;
 @Component
 public class LessonDTOConverter {
     private final ModelMapper modelMapper;
-    public LessonDTO toLessonDTO(LessonEntity lessonEntity) {
-        LessonDTO lessonDTO = modelMapper.map(lessonEntity, LessonDTO.class);
-        lessonDTO.setStatus(lessonEntity.getStatus() ? "Active" : "Inactive");
-        lessonDTO.setChapterId(lessonEntity.getChapter().getChapterId());
-        lessonDTO.setMainVideoUrl(lessonEntity.getMainVideoUrl());
-        List<Long> mainVideoIds =lessonEntity.getMainVideos().stream()
-                .map(LessonMainVideoEntity::getMainVideoId).toList();
-        List<Long> resourceIds = lessonEntity.getResources().stream()
-                        .map(LessonResourceEntity::getResourceId).toList();
-        lessonDTO.setResourceIds(resourceIds);
+    private final LessonProgressDTOConverter lessonProgressDTOConverter;
+
+    public LessonDTO toLessonDTO(Lesson lesson) {
+        return toLessonDTO(lesson, null);
+    }
+    public LessonDTO toLessonDTO(Lesson lesson, LessonProgress progress) {
+        LessonDTO lessonDTO = modelMapper.map(lesson, LessonDTO.class);
+        lessonDTO.setStatus(lesson.getStatus() ? "Active" : "Inactive");
+        lessonDTO.setChapterId(lesson.getChapter().getChapterId());
+        lessonDTO.setMainVideoUrl(lesson.getMainVideoUrl());
+
+        List<Long> mainVideoIds = lesson.getMainVideos().stream()
+                .map(LessonMainVideo::getMainVideoId)
+                .toList();
         lessonDTO.setMainVideoIds(mainVideoIds);
+
+        List<Long> resourceIds = lesson.getResources().stream()
+                .map(LessonResource::getResourceId)
+                .toList();
+        lessonDTO.setResourceIds(resourceIds);
+        lessonDTO.setIsCompleted(progress != null && Boolean.TRUE.equals(progress.getIsCompleted()));
         return lessonDTO;
     }
 }

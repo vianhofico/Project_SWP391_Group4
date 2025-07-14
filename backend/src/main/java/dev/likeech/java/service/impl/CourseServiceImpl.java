@@ -1,5 +1,6 @@
 package dev.likeech.java.service.impl;
 
+import dev.likeech.java.entity.*;
 import dev.likeech.java.exp.AppException;
 import dev.likeech.java.exp.ErrorCode;
 import dev.likeech.java.mapper.CourseDTOConverter;
@@ -8,15 +9,10 @@ import dev.likeech.java.model.request.CourseUpdateRequest;
 import dev.likeech.java.model.dto.CourseDTO;
 import dev.likeech.java.model.request.SearchCourseRequest;
 import dev.likeech.java.model.request.SearchRequest;
-import dev.likeech.java.repository.AttachmentRepository;
-import dev.likeech.java.repository.CourseRepository;
-import dev.likeech.java.repository.TopicRepository;
-import dev.likeech.java.entity.AttachmentEntity;
-import dev.likeech.java.entity.CourseEntity;
-import dev.likeech.java.entity.ResourceType;
-import dev.likeech.java.entity.TopicEntity;
+import dev.likeech.java.repository.*;
 import dev.likeech.java.service.AttachmentService;
 import dev.likeech.java.service.CourseService;
+import dev.likeech.java.service.LessonProgressService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.*;
@@ -34,12 +30,17 @@ public class CourseServiceImpl implements CourseService {
     private final TopicRepository topicRepository;
     private final AttachmentRepository attachmentRepository;
     private final AttachmentService attachmentService;
+    private final LessonRepository lessonRepository;
+    private final LessonProgressRepository lessonProgressRepository;
+    private final EnrollmentRepository enrollmentRepository;
+
     @Override
     public List<CourseDTO> getAllCourseDtos() {
         List<CourseDTO> courseDtos = new ArrayList<>();
-        List<CourseEntity> courseEntity = courseRepository.findAll();
-        for (CourseEntity entity : courseEntity) {
+        List<Course> course = courseRepository.findAll();
+        for (Course entity : course) {
             CourseDTO courseDTO = courseDTOConverter.toCourseDTO(entity);
+            courseDTO.setRating(getAverageRating(entity));
             courseDtos.add(courseDTO);
         }
         return courseDtos;
@@ -47,10 +48,13 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public CourseDTO getCourse(Long id) {
-        CourseEntity courseEntity = courseRepository.findById(id)
+        Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.COURSE_NOT_FOUND));
-        return courseDTOConverter.toCourseDTO(courseEntity);
+        CourseDTO courseDTO = courseDTOConverter.toCourseDTO(course);
+        courseDTO.setRating(getAverageRating(course));
+        return courseDTO;
     }
+
     private void validateUniqueMedia(String imageUrl, String videoTrialUrl, Long currentCourseId, boolean isUpdate) {
         if (imageUrl != null) {
             boolean isImageUsed = isUpdate
@@ -73,37 +77,39 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public CourseEntity createCourse(CourseCreateRequest request) {
-        TopicEntity topicEntity=topicRepository.findById(request.topicId()).orElseThrow(()-> new AppException(ErrorCode.TOPIC_NOT_FOUND)) ;
-        validateUniqueMedia(request.imageUrl(),request.videoTrialUrl(),null,false);
-        AttachmentEntity imageAttachment = attachmentService.createImageAttachment(request.imageUrl());
-        AttachmentEntity videoAttachment = attachmentService.createVideoAttachment(request.videoTrialUrl());
-        CourseEntity courseEntity = new CourseEntity();
-        List<TopicEntity> topicEntities = new ArrayList<>();
-        topicEntities.add(topicEntity);
-        courseEntity.setTopics(topicEntities);
-        courseEntity.setTitle(request.title());
-        courseEntity.setDescription(request.description());
-        courseEntity.setImageUrl(request.imageUrl());
-        courseEntity.setVideoTrialUrl(request.videoTrialUrl());
-        courseEntity.setPrice(request.price());
-        courseEntity.setCreatedAt(LocalDateTime.now());
-        courseEntity.setUpdateAt(LocalDateTime.now());
-        courseEntity.setStatus(false);
-        imageAttachment.setCourse(courseEntity);
-        videoAttachment.setCourse(courseEntity);
-        List<AttachmentEntity> attachmentEntities = new ArrayList<>();
+    public Course createCourse(CourseCreateRequest request) {
+        Topic topic = topicRepository.findById(request.topicId()).orElseThrow(() -> new AppException(ErrorCode.TOPIC_NOT_FOUND));
+        validateUniqueMedia(request.imageUrl(), request.videoTrialUrl(), null, false);
+        Attachment imageAttachment = attachmentService.createImageAttachment(request.imageUrl());
+        Attachment videoAttachment = attachmentService.createVideoAttachment(request.videoTrialUrl());
+        Course course = new Course();
+        List<Topic> topicEntities = new ArrayList<>();
+        topicEntities.add(topic);
+        course.setTopics(topicEntities);
+        course.setTitle(request.title());
+        course.setDescription(request.description());
+        course.setImageUrl(request.imageUrl());
+        course.setVideoTrialUrl(request.videoTrialUrl());
+        course.setPrice(request.price());
+        course.setCreatedAt(LocalDateTime.now());
+        course.setUpdateAt(LocalDateTime.now());
+        course.setStatus(false);
+        imageAttachment.setCourse(course);
+        videoAttachment.setCourse(course);
+        List<Attachment> attachmentEntities = new ArrayList<>();
         attachmentEntities.add(imageAttachment);
         attachmentEntities.add(videoAttachment);
-        courseEntity.setAttachments(attachmentEntities);
-        return courseRepository.save(courseEntity);
+        course.setAttachments(attachmentEntities);
+        return courseRepository.save(course);
     }
+
     @Override
-    public List<CourseDTO> getCoursesNotInTopic(TopicEntity topicEntity) {
-        List<CourseEntity> entities = courseRepository.findByTopicsNotContaining(topicEntity);
+    public List<CourseDTO> getCoursesNotInTopic(Topic topic) {
+        List<Course> entities = courseRepository.findByTopicsNotContaining(topic);
         List<CourseDTO> courseDtos = new ArrayList<>();
-        for (CourseEntity entity : entities) {
+        for (Course entity : entities) {
             CourseDTO courseDTO = courseDTOConverter.toCourseDTO(entity);
+            courseDTO.setRating(getAverageRating(entity));
             courseDtos.add(courseDTO);
         }
         return courseDtos;
@@ -111,74 +117,129 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     @Transactional
-    public CourseEntity updateCourse(CourseUpdateRequest request, Long id) {
-        CourseEntity courseEntity = courseRepository.findById(id)
+    public Course updateCourse(CourseUpdateRequest request, Long id) {
+        Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new AppException(ErrorCode.COURSE_NOT_FOUND));
         validateUniqueMedia(request.imageUrl(), request.videoTrialUrl(), id, true);
-        List<AttachmentEntity> newAttachments = new ArrayList<>();
+        List<Attachment> newAttachments = new ArrayList<>();
         LocalDateTime now = LocalDateTime.now();
-        if (request.imageUrl() != null && !Objects.equals(courseEntity.getImageUrl(), request.imageUrl())) {
-            courseEntity.getAttachments().stream()
+        if (request.imageUrl() != null && !Objects.equals(course.getImageUrl(), request.imageUrl())) {
+            course.getAttachments().stream()
                     .filter(a -> a.getType() == ResourceType.image && !a.getIsDeleted())
                     .forEach(a -> {
                         a.setIsDeleted(true);
                         a.setDeletedAt(now);
                     });
-            AttachmentEntity newImageAttachment = attachmentService.createImageAttachment(request.imageUrl());
+            Attachment newImageAttachment = attachmentService.createImageAttachment(request.imageUrl());
             newAttachments.add(newImageAttachment);
-            courseEntity.setImageUrl(request.imageUrl());
+            course.setImageUrl(request.imageUrl());
         }
 
-        if (request.videoTrialUrl() != null && !Objects.equals(courseEntity.getVideoTrialUrl(), request.videoTrialUrl())) {
-            courseEntity.getAttachments().stream()
+        if (request.videoTrialUrl() != null && !Objects.equals(course.getVideoTrialUrl(), request.videoTrialUrl())) {
+            course.getAttachments().stream()
                     .filter(a -> a.getType() == ResourceType.video && !a.getIsDeleted())
                     .forEach(a -> {
                         a.setIsDeleted(true);
                         a.setDeletedAt(now);
                     });
-            AttachmentEntity newVideoAttachment = attachmentService.createVideoAttachment(request.videoTrialUrl());
+            Attachment newVideoAttachment = attachmentService.createVideoAttachment(request.videoTrialUrl());
             newAttachments.add(newVideoAttachment);
-            courseEntity.setVideoTrialUrl(request.videoTrialUrl());
+            course.setVideoTrialUrl(request.videoTrialUrl());
         }
         if (request.status() != null) {
-            courseEntity.setStatus(request.status().equalsIgnoreCase("ACTIVE") ? true : false);
+            course.setStatus(request.status().equalsIgnoreCase("ACTIVE") ? true : false);
         }
         if (request.title() != null) {
-            courseEntity.setTitle(request.title());
+            course.setTitle(request.title());
         }
 
         if (request.description() != null) {
-            courseEntity.setDescription(request.description());
+            course.setDescription(request.description());
         }
 
         if (request.price() != null) {
-            courseEntity.setPrice(request.price());
+            course.setPrice(request.price());
         }
 
-        courseEntity.setUpdateAt(now);
+        course.setUpdateAt(now);
 
         if (!newAttachments.isEmpty()) {
-            courseEntity.getAttachments().addAll(newAttachments);
+            course.getAttachments().addAll(newAttachments);
         }
 
-        return courseRepository.save(courseEntity);
+        return courseRepository.save(course);
     }
 
     @Override
     public List<CourseDTO> getCoursesInTopic(Long topicId) {
-        TopicEntity topicEntity = topicRepository.findById(topicId).orElseThrow(
+        Topic topic = topicRepository.findById(topicId).orElseThrow(
                 () -> new AppException(ErrorCode.TOPIC_NOT_FOUND));
-        List<CourseEntity> entities = courseRepository.findByTopics(topicEntity);
+        List<Course> entities = courseRepository.findByTopics(topic);
         List<CourseDTO> courseDtos = new ArrayList<>();
-        for (CourseEntity entity : entities) {
+        for (Course entity : entities) {
+            double rating = getAverageRating(entity);
             CourseDTO courseDTO = courseDTOConverter.toCourseDTO(entity);
+            courseDTO.setRating(rating);
             courseDtos.add(courseDTO);
         }
         return courseDtos;
     }
 
+    public double getAverageRating(Course course) {
+        if (course.getRatings() != null && !course.getRatings().isEmpty()) {
+            return course.getRatings().stream()
+                    .mapToDouble(Rating::getScore)
+                    .average()
+                    .orElse(0.0);
+        }
+        return 0.0;
+    }
 
-    public Page<CourseDTO> filterAndSortCourses( SearchCourseRequest request) {
+    @Override
+    @Transactional
+    public void deleteCourse(Long id) {
+        Course course = courseRepository.findById(id).orElseThrow(() -> new AppException(ErrorCode.COURSE_NOT_FOUND));
+        if (course.getEnrollments() != null && course.getEnrollments().size() > 0) {
+            throw new AppException(ErrorCode.COURSE_HAS_ENROLLMENTS);
+        } else {
+            courseRepository.delete(course);
+        }
+    }
+
+    @Override
+    public CourseDTO getCourseWithProgress(Long courseId, Long userId) {
+        Course course = courseRepository.findById(courseId)
+                .orElseThrow(() -> new AppException(ErrorCode.COURSE_NOT_FOUND));
+
+        // Lấy danh sách bài học
+        List<Lesson> lessons = lessonRepository.findByChapter_Course_CourseIdAndStatusTrue(courseId);
+        List<Long> lessonIds = lessons.stream().map(Lesson::getLessonId).toList();
+
+        if (lessonIds.isEmpty()) {
+            return courseDTOConverter.toCourseDTO(course, 0f); // Không có bài học => progress = 0
+        }
+
+        // Lấy các bài học đã hoàn thành
+        List<LessonProgress> completed = lessonProgressRepository.findCompletedByUserAndLessonIds(userId, lessonIds);
+
+        int total = lessonIds.size();
+        int done = completed.size();
+        float progress = ((float) done / total) * 100f;
+
+        // Cập nhật progress vào Enrollment nếu tồn tại
+        enrollmentRepository.findByUser_UserIdAndCourse_CourseId(userId, courseId)
+                .ifPresent(enrollment -> {
+                    enrollment.setProgress(progress);
+                    enrollmentRepository.save(enrollment); // lưu lại
+                });
+
+        CourseDTO courseDTO = courseDTOConverter.toCourseDTO(course, progress);
+        courseDTO.setRating(getAverageRating(course));
+        return courseDTO;
+    }
+
+
+    public Page<CourseDTO> filterAndSortCourses(SearchCourseRequest request) {
         Pageable pageable = PageRequest.of(
                 request.page(),
                 request.size(),
@@ -186,19 +247,36 @@ public class CourseServiceImpl implements CourseService {
                         Optional.ofNullable(request.field()).orElse("id"))
         );
 
-        Page<CourseEntity> courses = courseRepository.findByFilter(
+        Page<Course> courses = courseRepository.findByFilter(
                 request.topicId() != 0 ? request.topicId() : null,
                 request.search(),
                 request.status(),
                 pageable
         );
 
-        return courses.map(courseDTOConverter::toCourseDTO);
+        return courses.map(course -> {
+            CourseDTO dto = courseDTOConverter.toCourseDTO(course);
+            dto.setRating(getAverageRating(course));
+            return dto;
+        });
     }
 
     @Override
     public Page<CourseDTO> filterAndSort(List<CourseDTO> courses, SearchRequest request) {
+        for (CourseDTO dto : courses) {
+            if (dto.getRating() == null && dto.getCourseId() != null) {
+                Course course = courseRepository.findById(dto.getCourseId())
+                        .orElse(null);
+                if (course != null) {
+                    dto.setRating(getAverageRating(course));
+                } else {
+                    dto.setRating(0.0); // fallback nếu không tìm thấy
+                }
+            }
+        }
+
         Stream<CourseDTO> stream = courses.stream();
+
         if (request.status() != null && !request.status().isEmpty()) {
             stream = stream.filter(course ->
                     request.status().equalsIgnoreCase(course.getStatus())
@@ -225,6 +303,11 @@ public class CourseServiceImpl implements CourseService {
             case "updateAt":
                 comparator = Comparator.comparing(CourseDTO::getUpdateAt, Comparator.nullsLast(LocalDateTime::compareTo));
                 break;
+            case "popular":
+                comparator = Comparator.comparing(course ->
+                        course.getAttachmentIds() != null ? course.getAttachmentIds().size() : 0
+                );
+                break;
             default:
                 comparator = Comparator.comparing(CourseDTO::getTitle, Comparator.nullsLast(String::compareToIgnoreCase));
                 break;
@@ -241,6 +324,6 @@ public class CourseServiceImpl implements CourseService {
         return new PageImpl<>(pagedList, PageRequest.of(request.page(), request.size()), sortedList.size());
     }
 
-
-
 }
+
+

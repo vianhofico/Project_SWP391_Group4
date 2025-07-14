@@ -32,6 +32,7 @@ const EditTopic = () => {
     try {
       const res = await apiClient.post("/file/signed-url/view", {
         objectName,
+        type:"image",
         folder: "img",
       });
       return res.data.signedUrl;
