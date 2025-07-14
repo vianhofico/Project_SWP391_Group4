@@ -33,7 +33,8 @@ export const Course = () => {
         try {
             const token = localStorage.getItem("token");
             const res = await axios.get(`http://localhost:8080/api/home`);
-            const data = Array.isArray(res.data) ? res.data : [];
+            const data = Array.isArray(res.data) ? res.data.slice(0, 3) : [];
+            // const data = Array.isArray(res.data) ? res.data : [];
             setCourseList(data);
 
             const discountResponses = await Promise.all(
@@ -218,8 +219,12 @@ export const Course = () => {
                 })}
             </div>
 
+
+
             <div className="text-center mt-4">
-                <button className="btn btn-outline-secondary">Xem Tất Cả</button>
+                <button className="btn btn-outline-secondary" onClick ={() => navigate("/courses")}>
+                    Xem Tất Cả
+                </button>
             </div>
         </div>
     );

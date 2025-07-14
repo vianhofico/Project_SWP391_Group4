@@ -38,7 +38,12 @@ export const OrderHistory = () => {
                 }
             });
             const orderItemsData = response.data; // giả sử backend trả về danh sách CartItem
-            navigate("/order-items", {state: {orderItemsData}})
+            navigate("/order-items", {
+                state: {
+                    orderItemsData,
+                    orderId: id
+                },
+            });
         } catch (error) {
         }
     };

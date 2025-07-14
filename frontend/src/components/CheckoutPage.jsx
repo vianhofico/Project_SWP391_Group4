@@ -29,7 +29,11 @@ const CheckoutPage = () => {
     useEffect(() => {
         const initRowCount = async () => {
             try {
-                const response = await fetch("https://script.google.com/macros/s/AKfycbwqdfAnrurKdOwl8IOOGfbeIbVKkn22xk0jFQF0WH5dsBAXRbsJHHzeSUPH-7knLqX37w/exec");
+                // const response = await fetch("https://script.google.com/macros/s/AKfycbwqdfAnrurKdOwl8IOOGfbeIbVKkn22xk0jFQF0WH5dsBAXRbsJHHzeSUPH-7knLqX37w/exec");
+                // const response = await fetch("https://script.google.com/macros/s/" +
+                //     "AKfycbwDDJS3Nu5S8NgloZ9gOk1v-qeZWVFYdh3jXgR14ZIeWT6FtmQOsACk7dENZI__4bGFnA/exec");
+                const response = await fetch("https://script.google.com/macros/s/" +
+                    "AKfycbwiQLj6dfgA-n5d4tvaaL2PH1y3PzmKFkceJnjvCLZMTqgxcKOc5Hx7idR-C4YsjzxI/exec");
                 const data = await response.json();
                 lastRowCountRef.current = data.data.length;
             } catch (error) {
@@ -124,8 +128,14 @@ const CheckoutPage = () => {
 
     async function checkPaid() {
         try {
+            // const response = await fetch("https://script.google.com/macros/s/" +
+            //     "AKfycbwqdfAnrurKdOwl8IOOGfbeIbVKkn22xk0jFQF0WH5dsBAXRbsJHHzeSUPH-7knLqX37w/exec");
+            // const response = await fetch("https://script.google.com/macros/s/" +
+            //     "AKfycbyANXU125xRQSXMNjcXiRgk_3jLfHjRCzhqCD_zrZpWy2b-2_b0oTOIJTqo52EmG2khkA/exec");
+            // const response = await fetch("https://script.google.com/macros/s/" +
+            //     "AKfycbxt-gpf37dD3qp9rBvef3D3wLhC-Eqg2nXOBzmYiOnUwMopEEuXuvQV-uqoxmqGxFHudQ/exec");
             const response = await fetch("https://script.google.com/macros/s/" +
-                "AKfycbwqdfAnrurKdOwl8IOOGfbeIbVKkn22xk0jFQF0WH5dsBAXRbsJHHzeSUPH-7knLqX37w/exec");
+                "AKfycbwiQLj6dfgA-n5d4tvaaL2PH1y3PzmKFkceJnjvCLZMTqgxcKOc5Hx7idR-C4YsjzxI/exec");
             const data = await response.json();
             const lastPaid = data.data[data.data.length - 1];
 

@@ -13,7 +13,7 @@ const Home = ({ landingPageData }) => {
             <Header data={landingPageData.Header} />
             <Course data={landingPageData.Course} />
             {/*<Features data={landingPageData.Features} />*/}
-            <About data={landingPageData.About} />
+            {/*<About data={landingPageData.About} />*/}
             <Testimonials data={landingPageData.Testimonials} />
             <Contact data={landingPageData.Contact} />
         </>
