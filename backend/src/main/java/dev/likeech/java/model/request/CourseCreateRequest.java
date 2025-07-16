@@ -9,6 +9,6 @@ public record CourseCreateRequest(
         @NotBlank(message = "Description cannot be blank") String description,
         @NotNull(message = "Price cannot be null") Long price,
         @NotBlank(message = "Image URL cannot be blank") String imageUrl,
-        @NotBlank(message = "Video Trial URL cannot be blank") String videoTrialUrl,
-        @Positive(message = "Topic Id can't positive")Long topicId
+@NotBlank(message = "Video Trial URL cannot be blank") String videoTrialUrl,
+@Positive(message = "Topic Id can't positive")Long topicId
         ) {}

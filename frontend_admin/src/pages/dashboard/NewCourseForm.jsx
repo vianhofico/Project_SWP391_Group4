@@ -9,7 +9,6 @@ export default function NewCourseForm() {
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState("");
   const [topicId, setTopicId] = useState("");
-
   const [topics, setTopics] = useState([]);
 
   const [imageFile, setImageFile] = useState(null);
@@ -18,14 +17,15 @@ export default function NewCourseForm() {
 
   const [loading, setLoading] = useState(false);
 
-  // 🔁 Load topic list on mount
+  // 🔁 Load topics từ API khi load trang
   useEffect(() => {
     const fetchTopics = async () => {
       try {
         const res = await apiClient.get("/admin/topics");
         setTopics(res.data);
+        console.log("📥 Danh sách chủ đề đã tải:", res.data);
       } catch (error) {
-        console.error("Lỗi khi tải danh sách topics:", error);
+        console.error("❌ Lỗi khi tải danh sách topics:", error);
         alert("Không thể tải danh sách chủ đề.");
       }
     };
@@ -45,6 +45,12 @@ export default function NewCourseForm() {
     if (file) {
       setVideoFile(file);
     }
+  };
+
+  const handleTopicChange = (e) => {
+    const value = e.target.value;
+    setTopicId(value);
+    console.log("🎯 Topic được chọn:", value);
   };
 
   const uploadToGCS = async (file, type = "image") => {
@@ -73,6 +79,18 @@ export default function NewCourseForm() {
     e.preventDefault();
     setLoading(true);
 
+    if (!topicId || Number(topicId) <= 0) {
+      alert("⚠️ Vui lòng chọn một chủ đề hợp lệ.");
+      setLoading(false);
+      return;
+    }
+
+    if (!price || Number(price) <= 0) {
+      alert("⚠️ Vui lòng nhập giá hợp lệ.");
+      setLoading(false);
+      return;
+    }
+
     try {
       let imageUrl = "";
       let videoTrialUrl = "";
@@ -88,6 +106,8 @@ export default function NewCourseForm() {
         videoTrialUrl,
         topicId: Number(topicId),
       };
+
+      console.log("📤 Dữ liệu gửi lên server:", courseData);
 
       await apiClient.post("/admin/courses", courseData);
 
@@ -133,6 +153,7 @@ export default function NewCourseForm() {
             type="number"
             value={price}
             onChange={(e) => setPrice(e.target.value)}
+            required
             className="w-full mt-2 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>
@@ -141,13 +162,13 @@ export default function NewCourseForm() {
           <label className="block font-semibold text-gray-700">Chủ đề khóa học</label>
           <select
             value={topicId}
-            onChange={(e) => setTopicId(e.target.value)}
+            onChange={handleTopicChange}
             required
             className="w-full mt-2 p-3 border border-gray-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
             <option value="">-- Chọn chủ đề --</option>
             {topics.map((topic) => (
-              <option key={topic.id} value={topic.id}>
+              <option key={topic.topicid} value={topic.topicid}>
                 {topic.name}
               </option>
             ))}
