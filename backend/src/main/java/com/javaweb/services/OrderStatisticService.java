@@ -1,6 +1,6 @@
 package com.javaweb.services;
 
-import com.javaweb.dtos.response.admin.CourseRevenueDTO;
+import com.javaweb.dtos.response.CourseRevenueDTO;
 
 import java.time.LocalDateTime;
 import java.util.List;

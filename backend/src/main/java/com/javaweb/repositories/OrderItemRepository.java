@@ -1,6 +1,6 @@
 package com.javaweb.repositories;
 
-import com.javaweb.dtos.response.admin.CourseRevenueDTO;
+import com.javaweb.dtos.response.CourseRevenueDTO;
 import com.javaweb.entities.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     @Query(value = """
-                SELECT new com.javaweb.dtos.response.admin.CourseRevenueDTO(
+                SELECT new com.javaweb.dtos.response.CourseRevenueDTO(
                     oi.course.courseId,
                     oi.course.title,
                     SUM(oi.price),
@@ -24,7 +24,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     List<CourseRevenueDTO> getCourseRevenueStats();
 
     @Query("""
-        SELECT new com.javaweb.dtos.response.admin.CourseRevenueDTO(
+        SELECT new com.javaweb.dtos.response.CourseRevenueDTO(
             oi.course.courseId,
             oi.course.title,
             SUM(oi.price),

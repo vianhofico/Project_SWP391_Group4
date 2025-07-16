@@ -1,5 +1,6 @@
 package com.javaweb.entities;
 
+import com.javaweb.enums.ReportType;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -11,36 +12,40 @@ import java.time.LocalDateTime;
 @Setter
 @Builder
 @Entity
-@Table(name = "Reports")
+@Table(name = "reports")  
 public class Report {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "reportId")
+    @Column(name = "report_id")  
     private Long reportId;
 
-    @Column(name = "content")
+    @Column(name = "content") // sẽ không null nếu reportType = OTHER
     private String content;
 
-    @Column(name = "createdAt")
+    @Enumerated(EnumType.STRING)
+    @Column(name = "report_type")
+    private ReportType reportType;
+
+    @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
     @Column(name = "status", length = 20)
     private String status;
 
     @ManyToOne
-    @JoinColumn(name = "reporterId")
+    @JoinColumn(name = "reporter_id")  
     private User reporter;
 
     @ManyToOne
-    @JoinColumn(name = "targetId")
+    @JoinColumn(name = "target_id")  
     private User target;
 
     @ManyToOne
-    @JoinColumn(name = "postId")
+    @JoinColumn(name = "post_id")  
     private Post post;
 
     @ManyToOne
-    @JoinColumn(name = "commentId")
+    @JoinColumn(name = "comment_id")  
     private Comment comment;
 }

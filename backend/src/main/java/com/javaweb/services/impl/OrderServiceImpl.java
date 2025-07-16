@@ -2,7 +2,7 @@ package com.javaweb.services.impl;
 
 import com.javaweb.converter.DTOConverter;
 import com.javaweb.dtos.request.OrderSearchRequest;
-import com.javaweb.dtos.response.admin.OrderDTO;
+import com.javaweb.dtos.response.OrderDTO;
 import com.javaweb.entities.Order;
 import com.javaweb.repositories.OrderRepository;
 import com.javaweb.services.OrderService;
@@ -100,12 +100,22 @@ public class OrderServiceImpl implements OrderService {
         return dtoConverter.toOrderDTO(order.get());
     }
 
+    @Override
     public Long getIdOfLastOrder(){
         List<Order> orders = this.orderRepository.findAll();
         if(orders.size()==0){
             return 1l*(-1);
         }
-        return 1l*(orders.size() - 1) ;
+        long id = 0;
+        for(Order o : orders){
+            id = Math.max(id, o.getOrderId());
+        }
+        return id - 1;
+    }
+
+    @Override
+    public List<Long> findPurchasedCourseIdsByUser(Long userId) {
+        return orderRepository.findPurchasedCourseIdsByUser(userId);
     }
 
 }

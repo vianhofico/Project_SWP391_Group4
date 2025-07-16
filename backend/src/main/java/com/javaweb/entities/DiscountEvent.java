@@ -31,6 +31,7 @@ public class DiscountEvent {
     @Column(name = "discount_type")
     private DiscountType discountType;
 
+    @Column(name = "discount_value")
     private double discountValue;
 
     @Enumerated(EnumType.STRING)

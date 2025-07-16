@@ -1,6 +1,6 @@
 package com.javaweb.services.impl;
 
-import com.javaweb.dtos.response.admin.CourseRevenueDTO;
+import com.javaweb.dtos.response.CourseRevenueDTO;
 import com.javaweb.repositories.OrderItemRepository;
 import com.javaweb.services.OrderStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;

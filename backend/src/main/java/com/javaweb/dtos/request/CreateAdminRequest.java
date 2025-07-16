@@ -1,12 +1,12 @@
 package com.javaweb.dtos.request;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotBlank;
 
 public record CreateAdminRequest(
-        @NotNull(message = "email cannot null")
+        @NotBlank(message = "email cannot empty")
         @Email(message = "Incorrect email format")
         String email,
-        @NotNull(message = "password cannot null")
+        @NotBlank(message = "password cannot empty")
         String password) {
 }

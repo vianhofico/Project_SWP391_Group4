@@ -28,6 +28,7 @@ public class CourseServiceImpl implements CourseService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
     private final DiscountEventRepository discountEventRepository;
+    private final EnrollmentRepository enrollmentRepository;
 
     public CourseServiceImpl(
             CartItemRepository cartItemRepository,
@@ -36,7 +37,7 @@ public class CourseServiceImpl implements CourseService {
             CourseRepository courseRepository,
             OrderRepository orderRepository,
             OrderItemRepository orderItemRepository,
-            DiscountEventRepository discountEventRepository) {
+            DiscountEventRepository discountEventRepository, EnrollmentRepository enrollmentRepository) {
         this.cartItemRepository = cartItemRepository;
         this.userServiceImpl = userServiceImpl;
         this.cartRepository = cartRepository;
@@ -44,6 +45,7 @@ public class CourseServiceImpl implements CourseService {
         this.orderRepository = orderRepository;
         this.orderItemRepository = orderItemRepository;
         this.discountEventRepository = discountEventRepository;
+        this.enrollmentRepository = enrollmentRepository;
     }
 
     public List<Course> getAllCourses() {
@@ -68,7 +70,7 @@ public class CourseServiceImpl implements CourseService {
             }
 
             if (email != null) {
-                return userServiceImpl.getUserByEmail(email);
+                return userServiceImpl.getUserByEmail(email).get();
             }
         }
         return null;
@@ -221,6 +223,15 @@ public class CourseServiceImpl implements CourseService {
 
         order.setTotalPrice(totalPrice);
         orderRepository.save(order);
+//        List<Enrollment> enrollments = new ArrayList<>();
+        for(OrderItem o : order.getOrderItems()){
+            Enrollment e = new Enrollment();
+            e.setCourse(o.getCourse());
+            e.setUser(o.getOrder().getUser());
+            e.setProgress((float)0);
+            e.setEnrolledAt(order.getCreatedAt());
+            enrollmentRepository.save(e);
+        }
 
         // Xoá các CartItem sau khi đặt hàng
         for (CartItem cartItem : cartItems) {

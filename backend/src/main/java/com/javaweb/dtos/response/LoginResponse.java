@@ -1,6 +1,5 @@
 package com.javaweb.dtos.response;
 
-import com.javaweb.dtos.response.admin.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

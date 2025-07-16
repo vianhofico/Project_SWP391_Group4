@@ -8,4 +8,7 @@ public record ResetPasswordRequest(
         @Email(message = "Wrong email format")
         String to
 ) {
+    public ResetPasswordRequest of(String emailTo) {
+        return new ResetPasswordRequest(emailTo);
+    }
 }
