@@ -69,3 +69,10 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+/backend/.idea
+/backend/.mvn
+/backend/target
+/backend/.env
+/backend/src/main/resources/application.properties
+/backend/src/main/resources/swp391-group4-project-401579e1eaee.json
+/backend/src/main/resources/mr_met_service_account.json
