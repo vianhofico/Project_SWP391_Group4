@@ -21,15 +21,11 @@ public class Order {
     @Column(name = "order_id")  
     private Long orderId;
 
-    @Column(name = "amount")
-    private Long amount;
+    @Column(name = "total_price")
+    private Double totalPrice;
 
     @Column(name = "created_at")  
     private LocalDateTime createdAt;
-
-    // đang thừa
-    @Column(name = "status")
-    private String status;
 
     @ManyToOne
     @JoinColumn(name = "user_id")  
@@ -38,6 +34,9 @@ public class Order {
     @OneToMany(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    @OneToOne(mappedBy = "order", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
-    private Transaction transaction;
+    @PrePersist
+    protected void onCreate() {
+        createdAt = LocalDateTime.now();
+    }
+
 }

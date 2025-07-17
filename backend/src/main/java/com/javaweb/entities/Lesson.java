@@ -28,16 +28,16 @@ public class Lesson {
 
     @Column(name = "content")
     private String content;
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
-    @Column(name = "updatedAt")
+    @Column(name = "updated_at")
     private LocalDateTime updateAt;
-    @Column(name = "lessonOrder")
+    @Column(name = "lesson_order")
     private Integer lessonOrder;
 
     @Column(name = "status")
     private Boolean status;
-    @Column(name = "mainVideoUrl")
+    @Column(name = "main_video_url")
     private String mainVideoUrl;
     @OneToMany(mappedBy = "lesson")
     private List<LessonMainVideo> mainVideos;

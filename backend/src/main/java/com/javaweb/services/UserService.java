@@ -4,8 +4,11 @@ import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
 import com.javaweb.dtos.response.UserDTO;
+import com.javaweb.entities.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Optional;
 
 public interface UserService {
 
@@ -17,7 +20,9 @@ public interface UserService {
 
     UserDTO getUser(Long userId);
 
-    void createAdmin(CreateAdminRequest createAdminRequest);
+    void createAdmin(String email);
 
     String saveNewPassword(ResetPasswordRequest resetPasswordRequest);
+
+    Optional<User> getUserByEmail(String email);
 }

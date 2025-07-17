@@ -2,6 +2,7 @@ package com.javaweb.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.javaweb.entities.Course;
 import lombok.*;
 
 @Getter
@@ -16,4 +17,6 @@ public class CourseDTO {
     private String title;
     private Long price;
 
+    public CourseDTO(Course course) {
+    }
 }

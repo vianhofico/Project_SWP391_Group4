@@ -7,6 +7,7 @@ import com.javaweb.repositories.NotificationRepository;
 import com.javaweb.services.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -19,7 +20,7 @@ public class NotificationServiceImpl implements NotificationService {
 
     public Page<NotificationDTO> getAllNotifications(Long userId, Pageable pageable) {
         Page<Notification> pageNotifications = notificationRepository.findByUsersUserId(userId, pageable);
-        return pageNotifications.map(dtoConverter::toNotificationDTO);
+        return null;
     }
 
 }

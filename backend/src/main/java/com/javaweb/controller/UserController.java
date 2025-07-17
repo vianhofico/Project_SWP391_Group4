@@ -3,6 +3,7 @@ package com.javaweb.controller;
 import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
 import com.javaweb.dtos.response.*;
+import com.javaweb.entities.User;
 import com.javaweb.services.*;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -10,8 +11,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.nio.file.attribute.UserPrincipal;
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -115,9 +123,38 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping()
-    public ResponseEntity<Void> createAdmin(@RequestBody @Valid CreateAdminRequest createAdminRequest) {
-        userService.createAdmin(createAdminRequest);
+    public ResponseEntity<Void> createAdmin(@RequestBody String email) {
+        userService.createAdmin(email);
         return ResponseEntity.noContent().build();
     }
+
+    private User getCurrentAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+            String email = principal instanceof UserDetails
+                    ? ((UserDetails) principal).getUsername()
+                    : (String) principal;
+
+            if (email != null && !email.equals("anonymousUser")) {
+                return userService.getUserByEmail(email).get();
+            }
+        }
+        return null;
+    }
+
+    @GetMapping("/account/profile")
+    public ResponseEntity<UserDTO> getUserProfile() {
+        User user = getCurrentAuthenticatedUser(); // từ SecurityContextHolder
+        UserDTO dto = new UserDTO();
+        dto.setEmail(user.getEmail());
+        dto.setFullName(user.getFullName());
+        dto.setBirthDate(String.valueOf(user.getBirthDate()));
+        dto.setImageUrl(user.getImageUrl());
+        return ResponseEntity.ok(dto);
+    }
+
+
+
 
 }

@@ -32,7 +32,7 @@ public class Attachment {
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
 
-    @Column(name = "isDeleted")
+    @Column(name = "is_deleted")
     private Boolean isDeleted;
 
     @Column(name = "createdAt")

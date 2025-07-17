@@ -1,6 +1,9 @@
 package com.javaweb.services.impl;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.converter.DTOConverter;
+import com.javaweb.dtos.events.EmailEvent;
 import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
@@ -15,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +36,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
 
     private final String USER_NOTFOUND = "Cannot find user with id: ";
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final ObjectMapper objectMapper;
 
     @Transactional(readOnly = true)
     @Override
@@ -90,21 +96,30 @@ public class UserServiceImpl implements UserService {
         return dtoConverter.toUserDTO(user);
     }
 
+    @Transactional
     @Override
-    public void createAdmin(CreateAdminRequest createAdminRequest) {
-        String email = createAdminRequest.email();
+    public void createAdmin(String email) {
         Optional<User> opUser = userRepository.findByEmail(email);
         if (opUser.isPresent()) {
-            throw new ResourceAlreadyExistsException("Email: " + createAdminRequest.email() + " already exist");
+            throw new ResourceAlreadyExistsException("Email: " + email + " already exist");
         }
-        User user = User.builder().email(email)
-                .password(createAdminRequest.password())
+        String randomPassword = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+        String encodedPassword = passwordEncoder.encode(randomPassword);
+        User user = User.builder()
+                .email(email)
+                .password(encodedPassword)
                 .createdAt(LocalDateTime.now())
-                .role("ADMIN")
+                .isVerified(true)
                 .isActive(true)
-                .reportCount(0)
+                .role("ADMIN")
                 .build();
         userRepository.save(user);
+
+        EmailEvent event = new EmailEvent("ADD_ADMIN", new CreateAdminRequest(email, randomPassword));
+        try {
+            kafkaTemplate.send("topic", objectMapper.writeValueAsString(event));
+        } catch (JsonProcessingException e) {
+        }
     }
 
     private String randomPassword() {
@@ -122,6 +137,10 @@ public class UserServiceImpl implements UserService {
         userTo.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(userTo);
         return newPassword;
+    }
+
+    public Optional<User> getUserByEmail(String email) {
+        return this.userRepository.findByEmail(email);
     }
 
 }

@@ -3,6 +3,12 @@ package com.javaweb.converter;
 import com.javaweb.dtos.response.*;
 import com.javaweb.entities.*;
 import lombok.RequiredArgsConstructor;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.management.Notification;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Component;
 
@@ -64,7 +70,7 @@ public class DTOConverter {
     public NotificationDTO toNotificationDTO(Notification notification) {
         if (notification == null) return null;
         NotificationDTO notificationDTO = modelMapper.map(notification, NotificationDTO.class);
-        notificationDTO.setCreatedAt(dateTimeConverter.toString(notification.getCreatedAt()));
+//        notificationDTO.setCreatedAt(dateTimeConverter.toString(notification.get()));
         return notificationDTO;
     }
 
@@ -114,4 +120,61 @@ public class DTOConverter {
         return modelMapper.map(postFile, PostFileDTO.class);
     }
 
+    public OrderDTO toOrderDTO(Order order) {
+        if (order == null) return null;
+
+        OrderDTO dto = new OrderDTO();
+        dto.setOrderId(order.getOrderId());
+        dto.setAmount(order.getTotalPrice());
+        dto.setCreatedAt(dateTimeConverter.toString(order.getCreatedAt()));
+        dto.setUser(toUserDTO(order.getUser()));
+
+        List<OrderItemDTO> itemDTOs = new ArrayList<>();
+        for (OrderItem item : order.getOrderItems()) {
+            OrderItemDTO itemDTO = new OrderItemDTO();
+            itemDTO.setOrderItemId(item.getOrderItemId());
+            itemDTO.setPrice(item.getPrice().longValue());
+
+            Course course = item.getCourse();
+            com.javaweb.dtos.response.CourseSummaryDTO courseDTO = new com.javaweb.dtos.response.CourseSummaryDTO();
+            courseDTO.setCourseId(course.getCourseId());
+            courseDTO.setTitle(course.getTitle());
+            courseDTO.setPrice(course.getPrice());
+            courseDTO.setImageUrl(course.getImageUrl());
+
+            itemDTO.setCourse(courseDTO);
+            itemDTOs.add(itemDTO);
+        }
+
+        dto.setOrderItems(itemDTOs);
+        return dto;
+    }
+
+public DiscountEventDTO toDiscountEventDTO(DiscountEvent event) {
+        if (event == null) return null;
+        DiscountEventDTO discountEventDTO = modelMapper.map(event, DiscountEventDTO.class);
+        DiscountEventDTO dto = new DiscountEventDTO();
+        dto.setId(event.getId());
+        dto.setName(event.getName());
+        dto.setDiscountValue(event.getDiscountValue());
+        dto.setDiscountType(event.getDiscountType());
+        if(event.getCourse() != null) {
+            dto.setCourseId(event.getCourse().getCourseId());
+            dto.setCourseName(event.getCourse().getTitle());
+        }
+        dto.setStartDate(event.getStartDate());
+        dto.setEndDate(event.getEndDate());
+
+        return dto;
+    }
+
+    public com.javaweb.dtos.response.CourseSummaryDTO toCourseSummaryDTO(Course course) {
+        com.javaweb.dtos.response.CourseSummaryDTO dto = new com.javaweb.dtos.response.CourseSummaryDTO();
+        dto.setCourseId(course.getCourseId());
+        dto.setTitle(course.getTitle());
+        dto.setTitle(course.getTitle());
+        dto.setPrice(course.getPrice());
+        dto.setImageUrl(course.getImageUrl());
+        return dto;
+    }
 }

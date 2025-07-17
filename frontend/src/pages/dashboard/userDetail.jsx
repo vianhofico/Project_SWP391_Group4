@@ -11,9 +11,7 @@ const tabs = [
     {label: "Enrollments", key: "enrollments"},
     {label: "Scores", key: "scores"},
     {label: "Cart", key: "cart"},
-    {label: "Notifications", key: "notifications"},
     {label: "Ratings", key: "ratings"},
-    {label: "Transactions", key: "transactions"},
 ];
 
 function formatKey(key) {

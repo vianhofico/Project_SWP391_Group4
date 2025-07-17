@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    @Transactional
+    @Transactional(readOnly = true)
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
         try {
@@ -107,18 +107,18 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         tokenRepository.save(vt);
 
-        EmailEvent event = new EmailEvent(
-                "VERIFY_EMAIL",
-                new VerifyEmailRequest(
-                        email,
-                        token
-                )
-        );
-        try {
-            kafkaTemplate.send("email", objectMapper.writeValueAsString(event));
-        } catch (JsonProcessingException e) {
-            log.error("Error while sending email event", e);
-        }
+//        EmailEvent event = new EmailEvent(
+//                "VERIFY_EMAIL",
+//                new VerifyEmailRequest(
+//                        email,
+//                        token
+//                )
+//        );
+//        try {
+//            kafkaTemplate.send("email", objectMapper.writeValueAsString(event));
+//        } catch (JsonProcessingException e) {
+//            log.error("Error while sending email event", e);
+//        }
     }
 
     @Override
