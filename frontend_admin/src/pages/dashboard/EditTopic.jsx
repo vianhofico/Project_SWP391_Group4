@@ -32,7 +32,7 @@ const EditTopic = () => {
     try {
       const res = await apiClient.post("/file/signed-url/view", {
         objectName,
-        type:"image",
+        type: "image",
         folder: "img",
       });
       return res.data.signedUrl;
@@ -162,7 +162,7 @@ const EditTopic = () => {
   };
 
   const renderPagination = (page, totalPages, setPage) => (
-    <div className="flex justify-end items-center space-x-2 mt-2">
+    <div className="flex justify-end items-center gap-2 mt-2">
       <button
         onClick={() => setPage(page - 1)}
         disabled={page === 0}
@@ -170,7 +170,7 @@ const EditTopic = () => {
       >
         Prev
       </button>
-      <span>
+      <span className="text-sm">
         Page {page + 1} of {totalPages}
       </span>
       <button
@@ -185,7 +185,7 @@ const EditTopic = () => {
 
   const renderCourseTable = (courses, selectedSet, toggleFn) => (
     <div className="overflow-x-auto border rounded">
-      <table className="min-w-full table-auto text-sm text-left">
+      <table className="min-w-full text-sm table-auto">
         <thead className="bg-gray-100">
           <tr>
             <th className="p-2"></th>
@@ -196,7 +196,7 @@ const EditTopic = () => {
             <th className="p-2">Price</th>
             <th className="p-2">Rating</th>
             <th className="p-2">Status</th>
-            <th className="p-2">Last Updated</th>
+            <th className="p-2">Updated</th>
             <th className="p-2">Actions</th>
           </tr>
         </thead>
@@ -254,50 +254,50 @@ const EditTopic = () => {
   );
 
   return (
-    <div className="p-4 space-y-10">
+    <div className="p-6 space-y-12">
       <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Edit Topic</h1>
+        <h1 className="text-2xl font-bold text-gray-800">Edit Topic</h1>
         <button
           onClick={() => navigate("/dashboard/courses/new")}
-          className="bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded"
+          className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
         >
           + Create Course
         </button>
       </div>
 
-      <UpdateTopic topicId={topicId} onUpdateSuccess={fetchCourses} />
+      {/* Collapse update form */}
+      <details className="border rounded p-4 bg-gray-50">
+        <summary className="cursor-pointer font-medium text-gray-700">
+          Update Topic Info
+        </summary>
+        <div className="mt-4">
+          <UpdateTopic topicId={topicId} onUpdateSuccess={fetchCourses} />
+        </div>
+      </details>
 
-      <section className="mb-6 flex flex-wrap items-center gap-4">
+      {/* Filters */}
+      <section className="flex flex-wrap gap-4 items-center">
         <input
           type="text"
-          placeholder="Search courses..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className="border rounded p-1"
+          placeholder="Search courses..."
+          className="border rounded px-3 py-2 w-60"
         />
-        <select
-          value={sortField}
-          onChange={(e) => setSortField(e.target.value)}
-          className="border rounded p-1"
-        >
+        <select value={sortField} onChange={(e) => setSortField(e.target.value)} className="border rounded px-3 py-2">
           <option value="title">Title</option>
           <option value="price">Price</option>
           <option value="rating">Rating</option>
           <option value="updateAt">Last Updated</option>
         </select>
-        <select
-          value={sortOrder}
-          onChange={(e) => setSortOrder(e.target.value)}
-          className="border rounded p-1"
-        >
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
+        <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)} className="border rounded px-3 py-2">
+          <option value="asc">Asc</option>
+          <option value="desc">Desc</option>
         </select>
-
-        <div className="flex space-x-2">
+        <div className="flex gap-2">
           <button
             onClick={() => setStatus("ACTIVE")}
-            className={`px-3 py-1 rounded border ${
+            className={`px-4 py-2 rounded border ${
               status === "ACTIVE" ? "bg-green-600 text-white" : "bg-white text-gray-800"
             }`}
           >
@@ -305,7 +305,7 @@ const EditTopic = () => {
           </button>
           <button
             onClick={() => setStatus("INACTIVE")}
-            className={`px-3 py-1 rounded border ${
+            className={`px-4 py-2 rounded border ${
               status === "INACTIVE" ? "bg-red-600 text-white" : "bg-white text-gray-800"
             }`}
           >
@@ -314,12 +314,13 @@ const EditTopic = () => {
         </div>
       </section>
 
+      {/* Available Courses */}
       <section>
         <h2 className="text-xl font-semibold mb-4">Add Courses to Topic</h2>
         <button
           onClick={handleAdd}
           disabled={loadingAdd}
-          className="bg-green-600 hover:bg-green-700 text-white py-2 px-6 rounded disabled:opacity-50 mb-4"
+          className="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded mb-4 disabled:opacity-50"
         >
           {loadingAdd ? "Processing..." : "Add Selected Courses"}
         </button>
@@ -329,12 +330,13 @@ const EditTopic = () => {
         {renderPagination(availablePage, availableTotalPages, setAvailablePage)}
       </section>
 
+      {/* Topic Courses */}
       <section>
         <h2 className="text-xl font-semibold mb-4">Remove Courses from Topic</h2>
         <button
           onClick={handleDelete}
           disabled={loadingDelete}
-          className="bg-red-600 hover:bg-red-700 text-white py-2 px-6 rounded disabled:opacity-50 mb-4"
+          className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded mb-4 disabled:opacity-50"
         >
           {loadingDelete ? "Processing..." : "Remove Selected Courses"}
         </button>

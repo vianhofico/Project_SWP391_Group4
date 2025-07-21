@@ -9,6 +9,7 @@ import dev.likeech.java.repository.ChapterRepository;
 import dev.likeech.java.repository.CourseRepository;
 import dev.likeech.java.entity.Chapter;
 import dev.likeech.java.entity.Course;
+import dev.likeech.java.repository.EnrollmentRepository;
 import dev.likeech.java.service.ChapterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -30,6 +31,7 @@ public class ChapterServiceImpl implements ChapterService {
     private final ChapterRepository chapterRepository;
     private final CourseRepository courseRepository;
     private final ChapterDTOConverter chapterDTOConverter;
+    private final EnrollmentRepository enrollmentRepository;
     @Override
     public List<ChapterDTO> createChapters(List<String> titles, Long courseId){
         List<Chapter> entities = new ArrayList<>();
@@ -75,7 +77,9 @@ public class ChapterServiceImpl implements ChapterService {
     public List<ChapterDTO> reorderChapters(Long courseId, List<ChapterReorderRequest> request) {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(() -> new AppException(ErrorCode.COURSE_NOT_FOUND));
-
+        if (enrollmentRepository.existsByCourse_CourseId(course.getCourseId())) {
+            throw new AppException(ErrorCode.COURSE_HAS_ENROLLMENTS);
+        }
         List<Long> chapterIds = request.stream()
                 .map(ChapterReorderRequest::chapterId)
                 .toList();

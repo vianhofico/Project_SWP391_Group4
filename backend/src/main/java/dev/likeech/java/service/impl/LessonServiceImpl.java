@@ -34,6 +34,7 @@ public class LessonServiceImpl implements LessonService {
     private final UserRepository userRepository;
     private final EnrollmentRepository enrollmentRepository;
     private final LessonProgressRepository lessonProgressRepository;
+    private final CourseRepository courseRepository;
 
 
     @Override
@@ -87,6 +88,11 @@ public class LessonServiceImpl implements LessonService {
     public List<LessonDTO> reorderLessons(Long chapterId, List<LessonReorderRequest> request) {
         Chapter chapter = chapterRepository.findById(chapterId)
                 .orElseThrow(() -> new AppException(ErrorCode.CHAPTER_NOT_FOUND));
+        Course course = courseRepository.findByChapterId(chapterId).
+                orElseThrow(() -> new AppException(ErrorCode.COURSE_NOT_FOUND));
+        if (enrollmentRepository.existsByCourse_CourseId(course.getCourseId())) {
+            throw new AppException(ErrorCode.COURSE_HAS_ENROLLMENTS);
+        }
 
         List<Long> lessonIds = request.stream()
                 .map(LessonReorderRequest::lessonId)

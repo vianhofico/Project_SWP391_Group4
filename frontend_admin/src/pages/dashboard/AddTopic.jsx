@@ -114,7 +114,7 @@ export default function AddTopic({ onTopicAdded }) {
                   : "bg-yellow-500 text-white hover:bg-yellow-600"
               }`}
             >
-              {topic.status === "active" ? "Active (Click to Inactivate)" : "Inactive (Click to Activate)"}
+              {topic.status === "ACTIVE" ? "ACTIVE (Click to INACTIVE)" : "INACTIVE (Click to ACTIVE)"}
             </button>
           </div>
 

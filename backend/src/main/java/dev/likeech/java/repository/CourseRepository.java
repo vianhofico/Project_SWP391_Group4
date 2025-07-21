@@ -2,6 +2,7 @@ package dev.likeech.java.repository;
 
 import dev.likeech.java.entity.Course;
 import dev.likeech.java.entity.Topic;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CourseRepository extends JpaRepository<Course, Long> {
     List<Course> findByTopicsNotContaining(Topic topic);
@@ -29,4 +31,6 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
             @Param("status") String status,
             Pageable pageable
     );
+    @Query("SELECT c FROM Course c JOIN c.chapters ch WHERE ch.chapterId = :chapterId")
+    Optional<Course> findByChapterId(@Param("chapterId") Long chapterId);
 }

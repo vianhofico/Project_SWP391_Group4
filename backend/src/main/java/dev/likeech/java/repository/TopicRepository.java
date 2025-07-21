@@ -19,4 +19,5 @@ public interface TopicRepository extends JpaRepository<Topic, Long> {
                             @Param("status") Boolean status,
                             Pageable pageable);
    List<Topic> findByStatus(Boolean status);
+
 }
