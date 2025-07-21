@@ -18,6 +18,7 @@ import PostTopics from "@/pages/dashboard/postTopics.jsx";
 import PostDetail from "@/pages/dashboard/postDetail.jsx";
 import CreatePost from "@/pages/user/CreatePost.jsx";
 import ReportDetails from "@/pages/dashboard/reportDetails.jsx";
+import UpdateProfile from "@/pages/dashboard/updateProfile.jsx";
 
 const icon = {
     className: "w-5 h-5 text-inherit",
@@ -84,6 +85,11 @@ export const routes = [
             {
                 path: "/reports/:reportId/check",
                 element: <ReportDetails/>,
+                hidden: true,
+            },
+            {
+                path: "/update-profile",
+                element: <UpdateProfile/>,
                 hidden: true,
             },
         ],

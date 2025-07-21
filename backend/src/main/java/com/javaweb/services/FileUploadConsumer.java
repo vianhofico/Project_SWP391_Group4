@@ -11,6 +11,7 @@ import com.javaweb.utils.ByteArrayMultipartFile;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 //import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,7 +26,7 @@ public class FileUploadConsumer {
 
     private final CloudinaryService cloudinaryService;
 
-//    @KafkaListener(topics = "file", groupId = "file-upload-group")
+    @KafkaListener(topics = "file", groupId = "file-upload-group")
     public void handleFileUpload(String message) {
         try {
             UploadFileRequest request = objectMapper.readValue(message, UploadFileRequest.class);

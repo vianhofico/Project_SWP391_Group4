@@ -4,11 +4,13 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.converter.DTOConverter;
 import com.javaweb.dtos.events.EmailEvent;
+import com.javaweb.dtos.request.ChangePasswordRequest;
 import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
 import com.javaweb.dtos.response.UserDTO;
 import com.javaweb.entities.User;
+import com.javaweb.exceptions.BusinessException;
 import com.javaweb.exceptions.ResourceAlreadyExistsException;
 import com.javaweb.exceptions.ResourceNotFoundException;
 import com.javaweb.repositories.UserRepository;
@@ -76,6 +78,11 @@ public class UserServiceImpl implements UserService {
             User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(USER_NOTFOUND + userId));
             if (user != null) {
                 user.setReportCount(reportCount);
+                if (user.getReportCount() >= 3) {
+                    user.setIsActive(false);
+                } else {
+                    user.setIsActive(true);
+                }
                 userRepository.save(user);
             }
         }
@@ -117,7 +124,7 @@ public class UserServiceImpl implements UserService {
 
         EmailEvent event = new EmailEvent("ADD_ADMIN", new CreateAdminRequest(email, randomPassword));
         try {
-            kafkaTemplate.send("topic", objectMapper.writeValueAsString(event));
+            kafkaTemplate.send("email", objectMapper.writeValueAsString(event));
         } catch (JsonProcessingException e) {
         }
     }
@@ -141,6 +148,25 @@ public class UserServiceImpl implements UserService {
 
     public Optional<User> getUserByEmail(String email) {
         return this.userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void changePassword(ChangePasswordRequest changePasswordRequest) {
+        String email = changePasswordRequest.email();
+        User user = userRepository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFoundException("User with email: " + email + " not found")
+        );
+        String oldPassword = changePasswordRequest.oldPassword();
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
+            throw new BusinessException("Wrong Old password");
+        }
+        String newPassword = changePasswordRequest.newPassword();
+        String confirmPassword = changePasswordRequest.confirmPassword();
+        if (!newPassword.equals(confirmPassword)) {
+            throw new BusinessException("Wrong Confirm Password");
+        }
+        user.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(user);
     }
 
 }

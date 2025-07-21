@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
 
     private final AuthService authService;
-    private final KafkaTemplate<String, String> kafkaTemplate;
-    private final ObjectMapper objectMapper;
-
 
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
@@ -46,18 +43,6 @@ public class AuthController {
     public ResponseEntity<Void> resendVerification(@RequestBody @Valid ResendEmailRequest request) {
         authService.resendVerificationEmail(request.email());
         return ResponseEntity.ok().build();
-    }
-
-    @PostMapping("/reset-password")
-    public ResponseEntity<Void> sendEmail(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest)
-            throws JsonProcessingException {
-        EmailEvent event = new EmailEvent(
-                "RESET_PASSWORD",
-                resetPasswordRequest
-        );
-        String json = objectMapper.writeValueAsString(event);
-        kafkaTemplate.send("email", json);
-        return ResponseEntity.noContent().build();
     }
 
 }

@@ -15,3 +15,7 @@ export const deleteComment = (commentId) => {
 export const activateComment = (commentId) => {
     return axiosInstance.put(`/comments/${commentId}/activate`);
 }
+
+export const getCommentsByParentCommentId = (parenCommentId) => {
+    return axiosInstance.get(`/comments/${parenCommentId}/replies`);
+}

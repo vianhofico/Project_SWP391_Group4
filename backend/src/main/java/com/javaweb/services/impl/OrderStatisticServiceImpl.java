@@ -16,7 +16,7 @@ public class OrderStatisticServiceImpl implements OrderStatisticService {
     private OrderItemRepository orderItemRepository;
 
     public List<CourseRevenueDTO> getAllStats() {
-        return orderItemRepository.getCourseRevenueStats();
+        return orderItemRepository.getCourseRevenueStatus();
     }
 
     public List<CourseRevenueDTO> getStatsBetween(LocalDateTime start, LocalDateTime end) {

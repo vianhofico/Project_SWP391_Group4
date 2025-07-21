@@ -12,10 +12,14 @@ export const getAllUsers = (params) => {//learner or admin
     return axiosInstance.get(`/users/${params.role}s`, {params});
 };
 
-export const resetPassword = (userId) => {
-    return axiosInstance.put(`users/${userId}/reset-password`)
+export const resetPassword = (to) => {
+    return axiosInstance.put(`/users/reset-password`, {to})
 }
 
 export const getTabFromUser = (userId, tab) => {
     return axiosInstance.get(`/users/${userId}/${tab}`);
+}
+
+export const addAdmin = (email) => {
+    return axiosInstance.post(`/users/add-admin`, {email});
 }

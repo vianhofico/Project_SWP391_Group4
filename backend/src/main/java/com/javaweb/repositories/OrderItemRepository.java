@@ -21,7 +21,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
                 JOIN oi.order o
                 GROUP BY oi.course.courseId, oi.course.title
             """)
-    List<CourseRevenueDTO> getCourseRevenueStats();
+    List<CourseRevenueDTO> getCourseRevenueStatus();
 
     @Query("""
         SELECT new com.javaweb.dtos.response.CourseRevenueDTO(

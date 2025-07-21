@@ -35,3 +35,7 @@ export const editPost = (postId, postData) => {
 export const getFilesByPostId = (postId) => {
     return axiosInstance.get(`/posts/${postId}/files`);
 }
+
+export const getTopLevelCommentsByPostId = (postId, params) => {
+    return axiosInstance.get(`/posts/${postId}/comments/top-level`, {params});
+}

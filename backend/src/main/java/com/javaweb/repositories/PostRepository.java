@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query("SELECT p FROM Post p WHERE p.title LIKE %:title% " +
             "AND (p.postTopic.postTopicId = :postTopicId OR :postTopicId IS NULL) " +
             "AND (p.status = :status) ")
-    Page<Post> findAllPosts(@Param("title") String title, Long postTopicId, String status, Pageable pageable);
+    Page<Post> findAllPosts(@Param("title") String title,@Param("postTopicId") Long postTopicId,@Param("status") String status, Pageable pageable);
 
     @Query("SELECT p FROM Post p WHERE p.title LIKE %:title% AND p.postTopic.postTopicId = :postTopicId AND p.status = :status")
     Page<Post> findAllPostByPostTopicId(@Param("title") String title, @Param("postTopicId") Long postTopicId, @Param("status") String status, Pageable pageable);

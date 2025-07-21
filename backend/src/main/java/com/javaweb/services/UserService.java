@@ -1,5 +1,6 @@
 package com.javaweb.services;
 
+import com.javaweb.dtos.request.ChangePasswordRequest;
 import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
@@ -25,4 +26,6 @@ public interface UserService {
     String saveNewPassword(ResetPasswordRequest resetPasswordRequest);
 
     Optional<User> getUserByEmail(String email);
+
+    void changePassword(ChangePasswordRequest changePasswordRequest);
 }

@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.management.Notification;
 
@@ -24,6 +25,14 @@ public class DTOConverter {
         CommentDTO commentDTO = modelMapper.map(comment, CommentDTO.class);
         commentDTO.setCreatedAt(dateTimeConverter.toString(comment.getCreatedAt()));
         commentDTO.setUser(toUserDTO(comment.getUser()));
+        if (comment.getChildComments() != null && !comment.getChildComments().isEmpty()) {
+            List<CommentDTO> replyDTOs = comment.getChildComments().stream()
+                    .map(this::toCommentDTO)
+                    .toList();
+            commentDTO.setReplies(replyDTOs);
+        } else {
+            commentDTO.setReplies(new ArrayList<>());
+        }
         return commentDTO;
     }
 
@@ -150,7 +159,7 @@ public class DTOConverter {
         return dto;
     }
 
-public DiscountEventDTO toDiscountEventDTO(DiscountEvent event) {
+    public DiscountEventDTO toDiscountEventDTO(DiscountEvent event) {
         if (event == null) return null;
         DiscountEventDTO discountEventDTO = modelMapper.map(event, DiscountEventDTO.class);
         DiscountEventDTO dto = new DiscountEventDTO();
@@ -158,7 +167,7 @@ public DiscountEventDTO toDiscountEventDTO(DiscountEvent event) {
         dto.setName(event.getName());
         dto.setDiscountValue(event.getDiscountValue());
         dto.setDiscountType(event.getDiscountType());
-        if(event.getCourse() != null) {
+        if (event.getCourse() != null) {
             dto.setCourseId(event.getCourse().getCourseId());
             dto.setCourseName(event.getCourse().getTitle());
         }

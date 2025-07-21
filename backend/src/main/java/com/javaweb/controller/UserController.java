@@ -1,6 +1,11 @@
 package com.javaweb.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.javaweb.dtos.events.EmailEvent;
+import com.javaweb.dtos.request.ChangePasswordRequest;
 import com.javaweb.dtos.request.CreateAdminRequest;
+import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
 import com.javaweb.dtos.response.*;
 import com.javaweb.entities.User;
@@ -10,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -37,6 +43,8 @@ public class UserController {
     private final RatingService ratingService;
     private final TransactionService transactionService;
     private final CartService cartService;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final ObjectMapper objectMapper;
 
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/learners")
@@ -122,9 +130,9 @@ public class UserController {
     }
 
     @PreAuthorize("hasRole('ADMIN')")
-    @PostMapping()
-    public ResponseEntity<Void> createAdmin(@RequestBody String email) {
-        userService.createAdmin(email);
+    @PostMapping("/add-admin")
+    public ResponseEntity<Void> createAdmin(@RequestBody CreateAdminRequest createAdminRequest) {
+        userService.createAdmin(createAdminRequest.email());
         return ResponseEntity.noContent().build();
     }
 
@@ -154,7 +162,22 @@ public class UserController {
         return ResponseEntity.ok(dto);
     }
 
+    @PutMapping("/reset-password")
+    public ResponseEntity<Void> resetPassword(@RequestBody @Valid ResetPasswordRequest resetPasswordRequest)
+            throws JsonProcessingException {
+        EmailEvent event = new EmailEvent(
+                "RESET_PASSWORD",
+                resetPasswordRequest
+        );
+        String json = objectMapper.writeValueAsString(event);
+        kafkaTemplate.send("email", json);
+        return ResponseEntity.noContent().build();
+    }
 
-
+    @PutMapping("/change-password")
+    public ResponseEntity<Void> changePassword(@RequestBody @Valid ChangePasswordRequest changePasswordRequest) {
+        userService.changePassword(changePasswordRequest);
+        return ResponseEntity.noContent().build();
+    }
 
 }

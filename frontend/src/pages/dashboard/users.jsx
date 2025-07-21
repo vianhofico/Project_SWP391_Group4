@@ -4,12 +4,12 @@ import {
     Typography,
     Avatar,
     Chip,
-    CardHeader,
+    CardHeader, Alert,
 
 } from "@material-tailwind/react";
 import {useEffect, useState} from "react";
 import {useParams, useNavigate, Link} from "react-router-dom";
-import {getAllUsers} from "@/api/userApi.js";
+import {addAdmin, getAllUsers, resetPassword} from "@/api/userApi.js";
 
 export function Users() {
 
@@ -22,13 +22,15 @@ export function Users() {
     const [page, setPage] = useState(0);
     const [size, setSize] = useState(10);
     const [totalPages, setTotalPages] = useState(0);
-
     const {userRole} = useParams();
     const navigate = useNavigate();
+    const [showModal, setShowModal] = useState(false);
+    const [addAdminEmail, setAddAdminEmail] = useState("");
+
 
     useEffect(() => {
         if (!["learner", "admin"].includes(userRole)) {
-            navigate("/dashboard/users/learner", { replace: true });
+            navigate("/dashboard/users/learner", {replace: true});
         }
     }, [userRole]);
 
@@ -61,18 +63,30 @@ export function Users() {
         console.log("TotalPages: ", totalPages);
     }, [userList]);
 
-    const resetPassword = async (userId) => {
+    const handleResetPassword = async (email) => {
         const confirmText = "Do you confirm to reset password?";
 
         if (!window.confirm(confirmText)) return;
 
         try {
-            await resetPassword(userId)
+            await resetPassword(email);
             setCheckChange(!checkChange);
             alert("Reset successfully!");
         } catch (error) {
             console.error(error);
             alert("Error when reset password!");
+        }
+    };
+
+    const handleAddAdmin = async (email) => {
+        try {
+            await addAdmin(email);
+            setShowModal(false);
+            setCheckChange(!checkChange);
+            alert("Add successfully!");
+        } catch (error) {
+            console.error(error);
+            alert("Error when adding admin");
         }
     };
 
@@ -98,8 +112,7 @@ export function Users() {
                 ))}
             </div>
 
-            <div className="flex flex-wrap items-center gap-4 px-4">
-
+            <div className="flex flex-wrap items-end gap-4 px-4">
                 {/* Input Search */}
                 <div className="flex flex-col">
                     <label className="text-xs text-gray-600 mb-1">Search</label>
@@ -118,13 +131,13 @@ export function Users() {
                     <select
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
-                        className="border border-gray-300 rounded-md px-2 py-1 text-sm">
+                        className="border border-gray-300 rounded-md px-2 py-1 text-sm"
+                    >
                         <option value="">All</option>
                         <option value="Active">Active</option>
                         <option value="Inactive">Inactive</option>
                     </select>
                 </div>
-
 
                 {/* Sort Field */}
                 <div className="flex flex-col">
@@ -154,7 +167,20 @@ export function Users() {
                         <option value="desc">Descending</option>
                     </select>
                 </div>
+
+                {/* Add Admin button aligned to right */}
+                {userRole === "admin" && (
+                    <div className="ml-auto">
+                        <button
+                            onClick={() => setShowModal(true)}
+                            className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition"
+                        >
+                            Add Admin
+                        </button>
+                    </div>
+                )}
             </div>
+
             <Card>
                 <CardHeader variant="gradient" className="mb-8 p-6 bg-[#4e73df]">
                     <Typography variant="h6" color="white">{userRole.toUpperCase()} Table</Typography>
@@ -226,7 +252,7 @@ export function Users() {
                                     <td className={className}>
                                         <div className="flex space-x-2">
                                             <button
-                                                onClick={() => resetPassword(user.userId)}
+                                                onClick={() => handleResetPassword(user.email)}
                                                 className="text-xs font-semibold text-blue-600 border border-blue-600 px-2 py-1 rounded hover:bg-blue-50"
                                             >
                                                 Reset password
@@ -260,7 +286,38 @@ export function Users() {
                             Next
                         </button>
                     </div>
-
+                    {showModal && (
+                        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+                            <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-md">
+                                <h2 className="text-xl font-semibold mb-4">Add Admin</h2>
+                                <input
+                                    type="email"
+                                    placeholder="Enter email"
+                                    value={addAdminEmail}
+                                    onChange={(e) => setAddAdminEmail(e.target.value)}
+                                    className="w-full border border-gray-300 rounded px-3 py-2 mb-4"
+                                />
+                                <div className="flex justify-end gap-2">
+                                    <button
+                                        onClick={() => setShowModal(false)}
+                                        className="px-4 py-2 text-gray-700 hover:text-black"
+                                    >
+                                        Cancel
+                                    </button>
+                                    <button
+                                        onClick={() => {
+                                            handleAddAdmin(addAdminEmail);
+                                            setShowModal(false);
+                                            setAddAdminEmail("");
+                                        }}
+                                        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700"
+                                    >
+                                        Add
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </CardBody>
             </Card>
         </div>

@@ -10,6 +10,7 @@ import com.javaweb.dtos.request.ResetPasswordRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 //import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -21,7 +22,7 @@ public class EmailConsumer {
     private final AuthService authService;
     private final MailService mailService;
 
-    //    @KafkaListener(topics = "email", groupId = "email-group")
+        @KafkaListener(topics = "email", groupId = "email-group")
     public void sendEmail(String json)
             throws JsonProcessingException {
         EmailEvent event = objectMapper.readValue(json, EmailEvent.class);
@@ -46,7 +47,7 @@ public class EmailConsumer {
         }
     }
 
-    //    @KafkaListener(topics = "email.DLT", groupId = "email-dlt-group")
+        @KafkaListener(topics = "email.DLT", groupId = "email-dlt-group")
     public void handleEmailDLT(String json) {
         log.warn("Get message from topic DLT (email.DLT): {}", json);
         try {

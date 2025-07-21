@@ -1,5 +1,4 @@
 import {useEffect, useState} from "react";
-import axios from "axios";
 import {getTabFromUser} from "@/api/userApi.js";
 
 function formatKey(key) {
@@ -74,7 +73,6 @@ export default function UserTabs({userId, tab}) {
                                     {formatKey(key)}
                                 </th>
                             ))}
-                            <th className="px-4 py-2 border text-blue-800 text-center">Action</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -85,15 +83,6 @@ export default function UserTabs({userId, tab}) {
                                         {renderValue(val)}
                                     </td>
                                 ))}
-                                <td className="px-4 py-2 border text-center space-y-2 whitespace-nowrap">
-                                    <button
-                                        className="block w-full border border-blue-600 rounded-md px-3 py-1 text-blue-600 font-semibold hover:bg-blue-100"
-                                        aria-label="Edit"
-                                    >
-                                        View
-                                    </button>
-                                </td>
-
                             </tr>
                         ))}
                         </tbody>

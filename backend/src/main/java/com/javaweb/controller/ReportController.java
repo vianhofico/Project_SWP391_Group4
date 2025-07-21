@@ -47,6 +47,4 @@ public class ReportController {
     public ResponseEntity<ReportDTO> getReportById(@PathVariable("reportId") Long reportId) {
         return ResponseEntity.ok(reportService.getReport(reportId));
     }
-
-
 }
