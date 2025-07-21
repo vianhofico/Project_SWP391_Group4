@@ -1,7 +1,6 @@
 package dev.likeech.java.service;
 
 import dev.likeech.java.entity.Lesson;
-import dev.likeech.java.entity.LessonProgress;
 import dev.likeech.java.entity.User;
 import dev.likeech.java.model.dto.LessonProgressDTO;
 

@@ -1,11 +1,14 @@
 package dev.likeech.java.service;
 
+import dev.likeech.java.entity.User;
 import dev.likeech.java.model.dto.UserDTO;
 import dev.likeech.java.model.request.CreateAdminRequest;
 import dev.likeech.java.model.request.ResetPasswordRequest;
 import dev.likeech.java.model.request.SearchUserRequest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.Optional;
 
 public interface UserService {
 
@@ -20,4 +23,6 @@ public interface UserService {
     void createAdmin(CreateAdminRequest createAdminRequest);
 
     String saveNewPassword(ResetPasswordRequest resetPasswordRequest);
+
+    Optional<User> getUserByEmail(String email);
 }

@@ -1,6 +1,6 @@
 package dev.likeech.java.model.request;
 
-import dev.likeech.java.entity.ResourceType;
+import dev.likeech.java.enums.ResourceType;
 import jakarta.validation.constraints.NotBlank;
 
 public record ResourceCreateRequest(

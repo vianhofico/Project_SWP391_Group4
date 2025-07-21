@@ -1,8 +1,8 @@
 package dev.likeech.java.security.oauth2;
 
+import dev.likeech.java.entity.User;
 import dev.likeech.java.security.jwt.JwtUtils;
 import dev.likeech.java.security.user.CustomOAuth2User;
-import dev.likeech.java.entity.User;
 import dev.likeech.java.exp.ResourceNotFoundException;
 import dev.likeech.java.repository.UserRepository;
 import jakarta.servlet.ServletException;

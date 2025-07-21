@@ -1,5 +1,7 @@
 package dev.likeech.java.service;
 
+import dev.likeech.java.entity.Cart;
+import dev.likeech.java.entity.User;
 import dev.likeech.java.model.request.CourseCreateRequest;
 import dev.likeech.java.model.request.CourseUpdateRequest;
 import dev.likeech.java.model.dto.CourseDTO;
@@ -22,4 +24,13 @@ public interface CourseService {
     List<CourseDTO> getCoursesInTopic(Long topicId);
     void deleteCourse(Long id);
     CourseDTO getCourseWithProgress(Long courseId, Long userId);
+    List<Course> getAllCourses();
+
+    Cart fetchByUser(User user);
+
+    void handleAddCourseToCart(long courseId);
+
+    void handleRemoveCartItem(long id);
+
+    void handlePlaceOrder(List<Long> cartItemIds);
 }

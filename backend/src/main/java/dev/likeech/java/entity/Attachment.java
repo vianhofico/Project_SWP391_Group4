@@ -1,5 +1,6 @@
 package dev.likeech.java.entity;
 
+import dev.likeech.java.enums.ResourceType;
 import jakarta.persistence.*;
 import lombok.*;
 

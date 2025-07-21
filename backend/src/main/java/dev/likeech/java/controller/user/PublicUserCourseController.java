@@ -1,6 +1,6 @@
 package dev.likeech.java.controller.user;
 
-import dev.likeech.java.entity.ResourceType;
+import dev.likeech.java.enums.ResourceType;
 import dev.likeech.java.model.dto.AttachmentDTO;
 import dev.likeech.java.model.dto.CourseDTO;
 import dev.likeech.java.model.request.SearchRequest;

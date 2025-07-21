@@ -1,5 +1,5 @@
 package dev.likeech.java.model.dto;
-import dev.likeech.java.entity.ResourceType;
+import dev.likeech.java.enums.ResourceType;
 import lombok.*;
 
 import java.time.LocalDateTime;

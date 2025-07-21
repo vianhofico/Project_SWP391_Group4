@@ -3,7 +3,7 @@ package dev.likeech.java.service.impl;
 import dev.likeech.java.repository.GcsRepository;
 import dev.likeech.java.repository.LessonMainVideoRepository;
 import dev.likeech.java.entity.LessonMainVideo;
-import dev.likeech.java.entity.ResourceType;
+import dev.likeech.java.enums.ResourceType;
 import dev.likeech.java.service.LessonMainVideoService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

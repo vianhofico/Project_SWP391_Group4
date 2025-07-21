@@ -20,7 +20,8 @@ public class UserDTO {
     private String birthDate;
     private String role;
     private String createdAt;
-    private String status; 
+    private String status;
     private Integer reportCount;
     private String imageUrl;
+
 }

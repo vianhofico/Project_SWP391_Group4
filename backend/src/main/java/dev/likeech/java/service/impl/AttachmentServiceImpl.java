@@ -5,7 +5,7 @@ import dev.likeech.java.model.dto.AttachmentDTO;
 import dev.likeech.java.repository.AttachmentRepository;
 import dev.likeech.java.repository.GcsRepository;
 import dev.likeech.java.entity.Attachment;
-import dev.likeech.java.entity.ResourceType;
+import dev.likeech.java.enums.ResourceType;
 import dev.likeech.java.service.AttachmentService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;

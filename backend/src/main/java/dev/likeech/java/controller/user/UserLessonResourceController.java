@@ -1,6 +1,6 @@
 package dev.likeech.java.controller.user;
 
-import dev.likeech.java.entity.ResourceType;
+import dev.likeech.java.enums.ResourceType;
 import dev.likeech.java.model.dto.LessonResourceDTO;
 import dev.likeech.java.model.request.ResourceFilterRequest;
 import dev.likeech.java.service.LessonResourceService;

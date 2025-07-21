@@ -15,6 +15,8 @@ import dev.likeech.java.repository.RatingRepository;
 import dev.likeech.java.repository.UserRepository;
 import dev.likeech.java.service.RatingService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -61,5 +63,10 @@ public class RatingServiceImpl implements RatingService {
 
         Rating savedRating = ratingRepository.save(rating);
         return ratingDTOConverter.toDTO(savedRating);
+    }
+    @Override
+    public Page<RatingDTO> getAllRatings(Long userId, Pageable pageable) {
+        Page<Rating> pageRatings = ratingRepository.findByUserUserId(userId, pageable);
+        return pageRatings.map(ratingDTOConverter::toDTO);
     }
 }

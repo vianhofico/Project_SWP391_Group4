@@ -3,8 +3,8 @@ package dev.likeech.java.service.impl;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.likeech.java.security.jwt.JwtUtils;
 import dev.likeech.java.entity.User;
+import dev.likeech.java.security.jwt.JwtUtils;
 import dev.likeech.java.entity.VerificationToken;
 import dev.likeech.java.exp.BusinessException;
 import dev.likeech.java.exp.ResourceAlreadyExistsException;

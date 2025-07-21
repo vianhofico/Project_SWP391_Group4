@@ -3,7 +3,7 @@ package dev.likeech.java.service.impl;
 import dev.likeech.java.entity.User;
 import dev.likeech.java.exp.ResourceAlreadyExistsException;
 import dev.likeech.java.exp.ResourceNotFoundException;
-import dev.likeech.java.mapper.UserDTOConverter;
+import dev.likeech.java.mapper.DTOConverter;
 import dev.likeech.java.model.dto.UserDTO;
 import dev.likeech.java.model.request.CreateAdminRequest;
 import dev.likeech.java.model.request.ResetPasswordRequest;
@@ -28,7 +28,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserDTOConverter dtoConverter;
+    private final DTOConverter dtoConverter;
     private final PasswordEncoder passwordEncoder;
 
     private final String USER_NOTFOUND = "Cannot find user with id: ";
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
                 Sort.by(direction, sortField)
         );
         Page<User> pageUsers = userRepository.findAllUsers(fullName, searchUserRequest.role().toUpperCase(), isActive, pageable);
-        return pageUsers.map(dtoConverter::toDTO);
+        return pageUsers.map(dtoConverter::toUserDTO);
     }
 
     @Transactional
@@ -87,7 +87,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserDTO getUser(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> new ResourceNotFoundException(USER_NOTFOUND + userId));
-        return dtoConverter.toDTO(user);
+        return dtoConverter.toUserDTO(user);
     }
 
     @Override
@@ -122,6 +122,10 @@ public class UserServiceImpl implements UserService {
         userTo.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(userTo);
         return newPassword;
+    }
+
+    public Optional<User> getUserByEmail(String email){
+        return this.userRepository.findByEmail(email);
     }
 
 }

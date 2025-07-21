@@ -1,7 +1,7 @@
 package dev.likeech.java.repository;
 
 import dev.likeech.java.entity.Attachment;
-import dev.likeech.java.entity.ResourceType;
+import dev.likeech.java.enums.ResourceType;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.time.LocalDateTime;

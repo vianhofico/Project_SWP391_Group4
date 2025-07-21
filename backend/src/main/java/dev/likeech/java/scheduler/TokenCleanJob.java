@@ -1,5 +1,6 @@
 package dev.likeech.java.scheduler;
 
+
 import dev.likeech.java.repository.TokenRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,3 +26,4 @@ public class TokenCleanJob {
         log.info("Dọn xong token hết hạn.");
     }
 }
+
