@@ -1,0 +1,27 @@
+package com.javaweb.java.dtos.response;
+
+import lombok.*;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class LessonDTO {
+    private Long lessonId;
+    private String title;
+    private Integer lessonOrder;
+    private String status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
+    private Long chapterId;
+    private String content;
+    private String mainVideoUrl;
+    private List<Long> mainVideoIds;
+    private List<Long> resourceIds;
+    private Boolean isCompleted;
+    private Boolean isLocked;
+}

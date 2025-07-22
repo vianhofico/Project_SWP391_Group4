@@ -1,0 +1,35 @@
+package com.javaweb.java.services.impl;
+
+
+import com.javaweb.java.entities.Post;
+import com.javaweb.java.entities.PostFile;
+import com.javaweb.java.exceptions.ResourceNotFoundException;
+import com.javaweb.java.converter.DTOConverter;
+import com.javaweb.java.dtos.response.PostFileDTO;
+import com.javaweb.java.repositories.PostFileRepository;
+import com.javaweb.java.repositories.PostRepository;
+import com.javaweb.java.services.PostFileService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+@RequiredArgsConstructor
+public class PostFileServiceImpl implements PostFileService {
+
+    private final PostFileRepository postFileRepository;
+    private final PostRepository postRepository;
+    private final DTOConverter dtoConverter;
+
+    @Override
+    public List<PostFileDTO> getPostFilesByPostId(Long postId) {
+        Post thisPost = postRepository.findById(postId).orElseThrow(
+                () -> new ResourceNotFoundException("Not found post with id: " + postId)
+        );
+
+        List<PostFile> postFiles = postFileRepository.findByPostPostId(postId);
+
+        return postFiles.stream().map(dtoConverter::toPostFileDTO).toList();
+    }
+}
