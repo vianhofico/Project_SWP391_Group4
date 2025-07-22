@@ -1,14 +1,15 @@
-package com.javaweb.controller;
+package com.javaweb.controller.admin;
 
-import com.javaweb.converter.DTOConverter;
-import com.javaweb.dtos.response.DiscountEventDTO;
-import com.javaweb.entities.Course;
-import com.javaweb.entities.DiscountEvent;
-import com.javaweb.enums.DiscountType;
-import com.javaweb.enums.TargetType;
-import com.javaweb.repositories.CourseRepository;
-import com.javaweb.repositories.DiscountEventRepository;
-import com.javaweb.services.DiscountEventService;
+
+import dev.likeech.java.entity.Course;
+import dev.likeech.java.entity.DiscountEvent;
+import dev.likeech.java.enums.DiscountType;
+import dev.likeech.java.enums.TargetType;
+import dev.likeech.java.mapper.DTOConverter;
+import dev.likeech.java.model.dto.DiscountEventDTO;
+import dev.likeech.java.repository.CourseRepository;
+import dev.likeech.java.repository.DiscountEventRepository;
+import dev.likeech.java.service.DiscountEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,18 +22,18 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/admin/discount-events")
+@RequestMapping("/admin/discount-events")
 @CrossOrigin
 public class AdminDiscountEventController {
 
     @Autowired
     private DiscountEventRepository discountEventRepository;
 
-    private DiscountEventService discountEventService;
+    private final DiscountEventService discountEventService;
 
-    private CourseRepository courseRepository;
+    private final CourseRepository courseRepository;
 
-    private DTOConverter dtoConverter;
+    private final DTOConverter dtoConverter;
 
     public AdminDiscountEventController(DiscountEventService discountEventService, CourseRepository courseRepository, DTOConverter dtoConverter) {
         this.discountEventService = discountEventService;
@@ -73,12 +74,10 @@ public class AdminDiscountEventController {
         event.setDiscountValue(Double.valueOf(payload.get("discountValue").toString()));
         event.setNote((String) payload.get("note"));
 
-// Thêm dòng này để set targetType
         event.setTargetType(payload.get("targetType") != null
                 ? TargetType.valueOf(payload.get("targetType").toString())
                 : TargetType.ALL); // default fallback
 
-// Xử lý course nếu có
         if (payload.get("courseId") != null) {
             Long courseId = Long.valueOf(payload.get("courseId").toString());
             Course course = courseRepository.findById(courseId)
@@ -108,7 +107,6 @@ public class AdminDiscountEventController {
                 ? TargetType.valueOf(payload.get("targetType").toString())
                 : TargetType.ALL);
 
-// Cập nhật course
         Object courseIdObj = payload.get("courseId");
         if (courseIdObj != null) {
             Long courseId = Long.parseLong(courseIdObj.toString());
@@ -116,7 +114,7 @@ public class AdminDiscountEventController {
                     .orElseThrow(() -> new RuntimeException("Course not found"));
             existing.setCourse(course);
         } else {
-            existing.setCourse(null); // Clear nếu không có
+            existing.setCourse(null);
         }
 
         return discountEventRepository.save(existing);

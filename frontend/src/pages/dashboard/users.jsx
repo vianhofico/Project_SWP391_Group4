@@ -189,7 +189,7 @@ export function Users() {
                     <table className="w-full min-w-[640px] table-auto">
                         <thead>
                         <tr>
-                            {["FULLNAME", "ROLE", "STATUS", "BIRTHDATE", "ACTION"].map((el) => (
+                            {["FULLNAME", userRole === "admin" ? "CREATED AT" : "REPORT COUNT", "BIRTHDATE", "STATUS", "ACTION"].map((el) => (
                                 <th key={el} className="border-b border-blue-gray-50 py-3 px-5 text-left">
                                     <Typography
                                         variant="small"
@@ -230,10 +230,14 @@ export function Users() {
                                     </td>
                                     <td className={className}>
                                         <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {user.role}
+                                            {userRole === "admin"
+                                                ? `${user.createdAt}`
+                                                : `Total: ${user.reportCount}`}
                                         </Typography>
-                                        <Typography className="text-xs font-normal text-blue-gray-500">
-                                            Reports: {user.reportCount}
+                                    </td>
+                                    <td className={className}>
+                                        <Typography className="text-xs font-semibold text-blue-gray-600">
+                                            {user.birthDate || '<empty>'}
                                         </Typography>
                                     </td>
                                     <td className={className}>
@@ -243,11 +247,6 @@ export function Users() {
                                             value={user.status === "Active" ? "ACTIVE" : "INACTIVE"}
                                             className="py-0.5 px-2 text-[11px] font-medium w-fit"
                                         />
-                                    </td>
-                                    <td className={className}>
-                                        <Typography className="text-xs font-semibold text-blue-gray-600">
-                                            {user.birthDate || '<empty>'}
-                                        </Typography>
                                     </td>
                                     <td className={className}>
                                         <div className="flex space-x-2">

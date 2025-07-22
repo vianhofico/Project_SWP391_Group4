@@ -11,6 +11,67 @@ import {useNavigate, useParams} from "react-router-dom";
 import {activatePost, deletePost, getFilesByPostId, getPostById, getPostComments} from "@/api/postApi.js";
 import {activateComment, deleteComment} from "@/api/commentApi.js";
 
+// Component Notification
+const Notification = ({ message, type, show, onClose }) => {
+    useEffect(() => {
+        if (show) {
+            const timer = setTimeout(() => {
+                onClose();
+            }, 5000); // Auto hide after 5 seconds
+            return () => clearTimeout(timer);
+        }
+    }, [show, onClose]);
+
+    if (!show) return null;
+
+    const getNotificationStyles = () => {
+        switch (type) {
+            case 'success':
+                return 'bg-green-100 border-green-500 text-green-700';
+            case 'error':
+                return 'bg-red-100 border-red-500 text-red-700';
+            case 'warning':
+                return 'bg-yellow-100 border-yellow-500 text-yellow-700';
+            case 'info':
+                return 'bg-blue-100 border-blue-500 text-blue-700';
+            default:
+                return 'bg-gray-100 border-gray-500 text-gray-700';
+        }
+    };
+
+    const getIcon = () => {
+        switch (type) {
+            case 'success':
+                return '✓';
+            case 'error':
+                return '✕';
+            case 'warning':
+                return '⚠';
+            case 'info':
+                return 'ℹ';
+            default:
+                return '•';
+        }
+    };
+
+    return (
+        <div className={`fixed top-4 right-4 p-4 border-l-4 rounded-md shadow-lg z-50 max-w-md ${getNotificationStyles()}`}>
+            <div className="flex items-center justify-between">
+                <div className="flex items-center">
+                    <span className="mr-2 font-bold text-lg">{getIcon()}</span>
+                    <span className="font-medium">{message}</span>
+                </div>
+                <button
+                    onClick={onClose}
+                    className="ml-4 text-xl font-bold hover:opacity-70 transition-opacity"
+                >
+                    ×
+                </button>
+            </div>
+        </div>
+    );
+};
+
 export function PostDetail() {
     const navigate = useNavigate();
     const [showComments, setShowComments] = useState(false);
@@ -27,6 +88,30 @@ export function PostDetail() {
     const [commentStatus, setCommentStatus] = useState("");
     const [postFiles, setPostFiles] = useState([]);
 
+    // State cho notification
+    const [notification, setNotification] = useState({
+        show: false,
+        message: '',
+        type: 'info' // success, error, warning, info
+    });
+
+    // Hàm hiển thị notification
+    const showNotification = (message, type = 'info') => {
+        setNotification({
+            show: true,
+            message,
+            type
+        });
+    };
+
+    // Hàm ẩn notification
+    const hideNotification = () => {
+        setNotification(prev => ({
+            ...prev,
+            show: false
+        }));
+    };
+
     useEffect(() => {
         const fetchPostById = async () => {
             try {
@@ -34,6 +119,10 @@ export function PostDetail() {
                 setPost(res.data);
             } catch (err) {
                 console.error("Failed to load post:", err);
+                showNotification(
+                    err.response?.data?.message || "Failed to load post. Please try again.",
+                    'error'
+                );
             }
         }
         fetchPostById();
@@ -55,6 +144,10 @@ export function PostDetail() {
                 setTotalPages(res.data.totalPages);
             } catch (err) {
                 console.error("Failed to load comment:", err);
+                showNotification(
+                    err.response?.data?.message || "Failed to load comments. Please try again.",
+                    'error'
+                );
             }
         }
         fetchCommentsByPostId();
@@ -62,27 +155,38 @@ export function PostDetail() {
 
     const changeStatus = async (postId, status) => {
         let confirmText;
-        let notification;
+        let successMessage;
         let isActive = true;
+
         if (status === "ACTIVE") {
             confirmText = "Are you sure to delete this post?";
-            notification = "Delete sucessfully!"
+            successMessage = "Post deleted successfully!"
         } else if (status === "DELETED") {
             confirmText = "Are you sure to activate this post?";
-            notification = "Activate successfully!"
+            successMessage = "Post activated successfully!"
             isActive = false;
         }
+
         if (!window.confirm(confirmText)) return;
+
         try {
+            let response;
             if (isActive) {
-                await deletePost(postId);
+                response = await deletePost(postId);
             } else {
-                await activatePost(postId);
+                response = await activatePost(postId);
             }
+
             setCheckChanges(!checkChanges);
-            alert(notification);
+
+            // Hiển thị thông báo từ backend hoặc thông báo mặc định
+            const message = response.data?.message || successMessage;
+            showNotification(message, 'success');
+
         } catch (err) {
             console.log("Error when change status of post:", err);
+            const errorMessage = err.response?.data?.message || "An error occurred while changing post status";
+            showNotification(errorMessage, 'error');
         }
     }
 
@@ -93,40 +197,62 @@ export function PostDetail() {
                 setPostFiles(res.data);
             } catch (err) {
                 console.error("Failed to load post files:", err);
+                showNotification(
+                    err.response?.data?.message || "Failed to load post files",
+                    'error'
+                );
             }
         };
         fetchPostFiles();
     }, [postId]);
 
-
-    const handleActionOfComment  = async (commentId, status) => {
+    const handleActionOfComment = async (commentId, status) => {
         let confirmText;
-        let notification;
+        let successMessage;
         let isActive = true;
+
         if (status === "ACTIVE") {
             confirmText = "Are you sure to delete this comment?";
-            notification = "Delete sucessfully!"
+            successMessage = "Comment deleted successfully!"
         } else if (status === "DELETED") {
             confirmText = "Are you sure to activate this comment?";
-            notification = "Activate successfully!"
+            successMessage = "Comment activated successfully!"
             isActive = false;
         }
+
         if (!window.confirm(confirmText)) return;
+
         try {
+            let response;
             if (isActive) {
-                await deleteComment(commentId);
+                response = await deleteComment(commentId);
             } else {
-                await activateComment(commentId);
+                response = await activateComment(commentId);
             }
+
             setCheckChanges(!checkChanges);
-            alert(notification);
+
+            // Hiển thị thông báo từ backend hoặc thông báo mặc định
+            const message = response.data?.message || successMessage;
+            showNotification(message, 'success');
+
         } catch (err) {
             console.log("Error when change status of comment:", err);
+            const errorMessage = err.response?.data?.message || "An error occurred while changing comment status";
+            showNotification(errorMessage, 'error');
         }
     }
 
     return (
         <div className="mt-12 mb-8 p-4">
+            {/* Notification Component */}
+            <Notification
+                message={notification.message}
+                type={notification.type}
+                show={notification.show}
+                onClose={hideNotification}
+            />
+
             <Card>
                 <CardHeader variant="gradient" className="mb-8 p-6 bg-[#4e73df]">
                     <Typography variant="h6" color="white">
@@ -205,7 +331,6 @@ export function PostDetail() {
                                 </ul>
                             </div>
                         )}
-
                     </div>
 
                     {/* Nút và danh sách comment */}

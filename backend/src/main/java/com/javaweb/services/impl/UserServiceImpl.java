@@ -3,17 +3,21 @@ package com.javaweb.services.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.javaweb.converter.DTOConverter;
+import com.javaweb.converter.DateTimeConverter;
 import com.javaweb.dtos.events.EmailEvent;
 import com.javaweb.dtos.request.ChangePasswordRequest;
 import com.javaweb.dtos.request.CreateAdminRequest;
 import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.request.SearchUserRequest;
+import com.javaweb.dtos.response.UploadFileDTO;
 import com.javaweb.dtos.response.UserDTO;
 import com.javaweb.entities.User;
 import com.javaweb.exceptions.BusinessException;
 import com.javaweb.exceptions.ResourceAlreadyExistsException;
 import com.javaweb.exceptions.ResourceNotFoundException;
 import com.javaweb.repositories.UserRepository;
+import com.javaweb.security.utils.SecurityUtils;
+import com.javaweb.services.CloudinaryService;
 import com.javaweb.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +28,10 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,6 +43,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final DTOConverter dtoConverter;
     private final PasswordEncoder passwordEncoder;
+    private final CloudinaryService cloudinaryService;
+    private final DateTimeConverter dateTimeConverter;
 
     private final String USER_NOTFOUND = "Cannot find user with id: ";
     private final KafkaTemplate<String, String> kafkaTemplate;
@@ -167,6 +176,25 @@ public class UserServiceImpl implements UserService {
         }
         user.setPassword(passwordEncoder.encode(newPassword));
         userRepository.save(user);
+    }
+
+    @Override
+    public UserDTO updateAdminProfile(String fullName, LocalDate birthDate, MultipartFile image) throws IOException {
+        String currentUserEmail = SecurityUtils.getCurrentUserEmail();
+        User currentUser = userRepository.findByEmail(currentUserEmail).orElseThrow(
+                () -> new ResourceNotFoundException("Cannot find User with email: " + currentUserEmail));
+        if (!currentUser.getRole().equals("ADMIN")) {
+            throw new BusinessException("Cannot update admin profile");
+        }
+        currentUser.setFullName(fullName);
+        if (birthDate != null)
+            currentUser.setBirthDate(birthDate);
+        if (image != null) {
+            UploadFileDTO uploadFileDTO = cloudinaryService.uploadFile(image);
+            currentUser.setImageUrl(uploadFileDTO.getFileUrl());
+        }
+        userRepository.save(currentUser);
+        return dtoConverter.toUserDTO(currentUser);
     }
 
 }

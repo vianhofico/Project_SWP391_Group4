@@ -1,7 +1,7 @@
 import {useParams, useNavigate} from "react-router-dom";
 import {useState, useEffect} from "react";
-import UserTabs from "/src/pages/dashboard/userTab.jsx";
 import {getUserById} from "@/api/userApi.js";
+import UserTabs from "@/pages/dashboard/userTab.jsx";
 
 const tabs = [
     {label: "Posts", key: "posts"},
@@ -78,7 +78,8 @@ export default function UserDetail() {
                         {loadingUser ? (
                             <div className="flex items-center justify-center py-12">
                                 <div className="flex items-center space-x-3">
-                                    <div className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
+                                    <div
+                                        className="animate-spin rounded-full h-6 w-6 border-2 border-blue-500 border-t-transparent"></div>
                                     <span className="text-blue-600 font-medium">Loading user information...</span>
                                 </div>
                             </div>
@@ -88,14 +89,16 @@ export default function UserDetail() {
                                 {Object.entries(userInfo).some(([key]) => key.toLowerCase().includes("image")) && (
                                     <div className="flex justify-center mb-8">
                                         <div className="relative">
-                                            <div className="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-200 shadow-lg bg-gray-100">
+                                            <div
+                                                className="w-32 h-32 rounded-full overflow-hidden border-4 border-blue-200 shadow-lg bg-gray-100">
                                                 <img
                                                     src="https://cdnphoto.dantri.com.vn/Au8icunjIdjAao2SrF0OZWJkRO8=/thumb_w/1360/2025/05/26/jack1-1748272770861.jpg"
                                                     alt="User Avatar"
                                                     className="w-full h-full object-cover"
                                                 />
                                             </div>
-                                            <div className="absolute -bottom-2 -right-2 bg-green-500 w-8 h-8 rounded-full border-4 border-white flex items-center justify-center">
+                                            <div
+                                                className="absolute -bottom-2 -right-2 bg-green-500 w-8 h-8 rounded-full border-4 border-white flex items-center justify-center">
                                                 <div className="w-3 h-3 bg-white rounded-full"></div>
                                             </div>
                                         </div>
@@ -105,28 +108,32 @@ export default function UserDetail() {
                                 {/* User Details Grid */}
                                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                                     {Object.entries(userInfo).map(([key, value]) =>
-                                        !key.toLowerCase().includes("image") ? (
-                                            <div key={key} className="bg-blue-50 rounded-lg p-4 border border-blue-100 hover:shadow-md transition-shadow duration-200">
-                                                <div className="flex flex-col">
-                                                    <span className="text-sm font-medium text-blue-800 mb-1">
-                                                        {formatKey(key)}
-                                                    </span>
-                                                    <span className="text-gray-700 font-medium break-words">
-                                                        {typeof value === "object" && value !== null
-                                                            ? JSON.stringify(value, null, 2)
-                                                            : value || "N/A"
-                                                        }
-                                                    </span>
+                                            !key.toLowerCase().includes("image") &&
+                                            !(key === "reportCount" && userRole === "admin") ? (
+                                                <div key={key}
+                                                     className="bg-blue-50 rounded-lg p-4 border border-blue-100 hover:shadow-md transition-shadow duration-200">
+                                                    <div className="flex flex-col">
+                <span className="text-sm font-medium text-blue-800 mb-1">
+                    {formatKey(key)}
+                </span>
+                                                        <span className="text-gray-700 font-medium break-words">
+                    {typeof value === "object" && value !== null
+                        ? JSON.stringify(value, null, 2)
+                        : value || "N/A"
+                    }
+                </span>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ) : null
+                                            ) : null
                                     )}
+
                                 </div>
                             </div>
                         ) : (
                             <div className="flex items-center justify-center py-12">
                                 <div className="text-center">
-                                    <svg className="w-16 h-16 text-red-300 mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <svg className="w-16 h-16 text-red-300 mx-auto mb-4" fill="none"
+                                         stroke="currentColor" viewBox="0 0 24 24">
                                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
                                               d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-2.5L13.732 4c-.77-.833-1.732-.833-2.5 0L4.348 16.5c-.77.833.192 2.5 1.732 2.5z"/>
                                     </svg>

@@ -9,63 +9,28 @@ import {
     Switch,
 } from "@material-tailwind/react";
 
-import { useEffect, useState } from "react";
-import { getUserById } from "@/api/userApi.js";
+import {useEffect, useState} from "react";
+import {updateAdminProfile} from "@/api/userApi.js";
 
 export function UpdateProfile() {
-    const [admin, setAdmin] = useState(null);
+
+    const admin = JSON.parse(localStorage.getItem("user"));
+    const [fullName, setFullName] = useState(admin.fullName);
+    const [email, setEmail] = useState(admin.email);
+    const [birthDate, setBirthDate] = useState(admin.birthDate);
+    const [imageUrl, setImageUrl] = useState(admin.imageUrl);
     const [loading, setLoading] = useState(false);
-    const [message, setMessage] = useState("");
-    const [formData, setFormData] = useState({
-        fullName: "",
-        email: "",
-        birthDate: "",
-        bio: "",
-        isActive: true,
-        isVerified: false,
-        imageUrl: ""
-    });
-
-    useEffect(() => {
-        const adminData = JSON.parse(localStorage.getItem('user'));
-        if (adminData) {
-            setAdmin(adminData);
-            setFormData({
-                fullName: adminData.fullName || "",
-                email: adminData.email || "",
-                birthDate: adminData.birthDate || "",
-                bio: adminData.bio || "",
-                isActive: adminData.isActive || true,
-                isVerified: adminData.isVerified || false,
-                imageUrl: adminData.imageUrl || ""
-            });
-        }
-    }, []);
-
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
-
-    const handleSwitchChange = (name, value) => {
-        setFormData(prev => ({
-            ...prev,
-            [name]: value
-        }));
-    };
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [updatedAdmin, setUpdateAdmin] = useState({});
 
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (file) {
+            setSelectedFile(file); // Lưu file để gửi lên backend
+
             const reader = new FileReader();
             reader.onloadend = () => {
-                setFormData(prev => ({
-                    ...prev,
-                    imageUrl: reader.result
-                }));
+                setImageUrl(reader.result); // Hiển thị ảnh trước khi upload
             };
             reader.readAsDataURL(file);
         }
@@ -74,32 +39,36 @@ export function UpdateProfile() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
-        setMessage("");
+
+        const formData = new FormData();
+        formData.append("fullName", fullName);
+        formData.append("birthDate", birthDate);
+        if (selectedFile) {
+            formData.append("image", selectedFile);
+        }
 
         try {
-            // const updatedUser = await updateUser(admin.id, formData);
-
-            // localStorage.setItem('user', JSON.stringify(updatedUser));
-
-            setMessage("Profile updated successfully!");
-            setTimeout(() => {
-                window.location.href = "/admin/profile";
-            }, 2000);
-
-        } catch (error) {
-            console.error('Error updating profile:', error);
-            setMessage("Error updating profile. Please try again.");
-        } finally {
+            const res = await updateAdminProfile(formData);
+            setUpdateAdmin(res);
             setLoading(false);
+            localStorage.setItem("user", JSON.stringify(updatedAdmin));
+            alert("Cập nhật thành công!");
+        } catch (error) {
+            console.error("Error updating profile", error);
+            setLoading(false);
+            alert("Cập nhật thất bại!");
         }
     };
-
-    if (!admin) return <div className="p-6">Loading...</div>;
+    function convertToISODate(dateStr) {
+        const [day, month, year] = dateStr.split('/');
+        return `${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`;
+    }
 
     return (
         <>
-            <div className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover bg-center">
-                <div className="absolute inset-0 h-full w-full bg-gray-900/75" />
+            <div
+                className="relative mt-8 h-72 w-full overflow-hidden rounded-xl bg-[url('/img/background-image.png')] bg-cover bg-center">
+                <div className="absolute inset-0 h-full w-full bg-gray-900/75"/>
             </div>
 
             <Card className="mx-3 -mt-16 mb-6 lg:mx-4 border border-blue-gray-100">
@@ -113,24 +82,14 @@ export function UpdateProfile() {
                         </Typography>
                     </div>
 
-                    {message && (
-                        <div className={`p-4 rounded-lg mb-6 ${
-                            message.includes('Error')
-                                ? 'bg-red-50 text-red-700 border border-red-200'
-                                : 'bg-green-50 text-green-700 border border-green-200'
-                        }`}>
-                            {message}
-                        </div>
-                    )}
-
                     <form onSubmit={handleSubmit}>
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                             {/* Profile Image Section */}
                             <div className="lg:col-span-1">
                                 <div className="text-center">
                                     <Avatar
-                                        src={formData.imageUrl || "/img/default-avatar.png"}
-                                        alt={formData.fullName}
+                                        src={imageUrl || "/img/default-avatar.png"}
+                                        alt={fullName}
                                         size="xxl"
                                         variant="rounded"
                                         className="rounded-lg shadow-lg shadow-blue-gray-500/40 mx-auto"
@@ -139,7 +98,7 @@ export function UpdateProfile() {
                                         <input
                                             type="file"
                                             accept="image/*"
-                                            onChange={handleImageUpload}
+                                            onChange={(e) => handleImageUpload(e)}
                                             className="hidden"
                                             id="image-upload"
                                         />
@@ -162,8 +121,8 @@ export function UpdateProfile() {
                                         </Typography>
                                         <Input
                                             name="fullName"
-                                            value={formData.fullName}
-                                            onChange={handleInputChange}
+                                            value={fullName}
+                                            onChange={(e) => setFullName(e.target.value)}
                                             required
                                             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
                                             labelProps={{
@@ -179,8 +138,8 @@ export function UpdateProfile() {
                                         <Input
                                             type="email"
                                             name="email"
-                                            value={formData.email}
-                                            onChange={handleInputChange}
+                                            readOnly={true}
+                                            value={email}
                                             required
                                             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
                                             labelProps={{
@@ -196,8 +155,8 @@ export function UpdateProfile() {
                                         <Input
                                             type="date"
                                             name="birthDate"
-                                            value={formData.birthDate}
-                                            onChange={handleInputChange}
+                                            value={convertToISODate(birthDate)}
+                                            onChange={(e) => setBirthDate(e.target.value)}
                                             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
                                             labelProps={{
                                                 className: "before:content-none after:content-none",
@@ -211,51 +170,14 @@ export function UpdateProfile() {
                                         </Typography>
                                         <Input
                                             name="imageUrl"
-                                            value={formData.imageUrl}
-                                            onChange={handleInputChange}
+                                            value={imageUrl}
+                                            onChange={(e) => handleImageUpload(e)}
+                                            readOnly={true}
                                             placeholder="Enter image URL"
                                             className="!border-t-blue-gray-200 focus:!border-t-gray-900"
                                             labelProps={{
                                                 className: "before:content-none after:content-none",
                                             }}
-                                        />
-                                    </div>
-
-                                    <div className="md:col-span-2">
-                                        <Typography variant="small" color="blue-gray" className="mb-2 font-medium">
-                                            Bio
-                                        </Typography>
-                                        <Textarea
-                                            name="bio"
-                                            value={formData.bio}
-                                            onChange={handleInputChange}
-                                            rows={4}
-                                            className="!border-t-blue-gray-200 focus:!border-t-gray-900"
-                                            labelProps={{
-                                                className: "before:content-none after:content-none",
-                                            }}
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center gap-4">
-                                        <Typography variant="small" color="blue-gray" className="font-medium">
-                                            Active Status
-                                        </Typography>
-                                        <Switch
-                                            checked={formData.isActive}
-                                            onChange={(e) => handleSwitchChange('isActive', e.target.checked)}
-                                            color="green"
-                                        />
-                                    </div>
-
-                                    <div className="flex items-center gap-4">
-                                        <Typography variant="small" color="blue-gray" className="font-medium">
-                                            Verified
-                                        </Typography>
-                                        <Switch
-                                            checked={formData.isVerified}
-                                            onChange={(e) => handleSwitchChange('isVerified', e.target.checked)}
-                                            color="blue"
                                         />
                                     </div>
                                 </div>
@@ -264,7 +186,7 @@ export function UpdateProfile() {
 
                         {/* Action Buttons */}
                         <div className="mt-8 flex justify-between items-center">
-                            <a href="/admin/profile">
+                            <a href="/dashboard/profile">
                                 <Button variant="outlined" color="gray">
                                     Cancel
                                 </Button>

@@ -19,4 +19,11 @@ public class DateTimeConverter {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return date.format(formatter);
     }
+
+    public LocalDate convertToLocalDate(String dateStr) {
+        DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        DateTimeFormatter outputFormatter = DateTimeFormatter.ISO_LOCAL_DATE; // yyyy-MM-dd
+        return LocalDate.parse(dateStr, inputFormatter);
+    }
+
 }

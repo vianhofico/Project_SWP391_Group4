@@ -23,3 +23,7 @@ export const getTabFromUser = (userId, tab) => {
 export const addAdmin = (email) => {
     return axiosInstance.post(`/users/add-admin`, {email});
 }
+
+export const updateAdminProfile = (data) => {
+    return axiosInstance.put(`/users/admin/profile`, data);
+}

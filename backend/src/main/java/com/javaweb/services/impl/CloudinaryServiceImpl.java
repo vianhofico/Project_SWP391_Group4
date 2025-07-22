@@ -25,7 +25,6 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
     private final Cloudinary cloudinary;
     private final ObjectMapper objectMapper;
-//    private final KafkaTemplate<String, String> kafkaTemplate;
 
     public UploadFileDTO uploadFile(MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) return null;

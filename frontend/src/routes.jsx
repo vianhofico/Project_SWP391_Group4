@@ -73,7 +73,7 @@ export const routes = [
                 hidden: true,
             },
             {
-                path: "/users/:userId/:tab",
+                path: "/:role/:userId/:tab",
                 element: <UserTabs/>,
                 hidden: true,
             },

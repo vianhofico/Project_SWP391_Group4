@@ -57,16 +57,6 @@ export function Profile() {
                             <Typography className="text-sm text-gray-500">Joined</Typography>
                             <Typography className="font-medium text-gray-800">{admin.createdAt}</Typography>
                         </div>
-                        <div>
-                            <Typography className="text-sm text-gray-500">Active</Typography>
-                            <Typography
-                                className="font-medium text-gray-800">{admin.isActive ? "Yes" : "No"}</Typography>
-                        </div>
-                        <div>
-                            <Typography className="text-sm text-gray-500">Verified</Typography>
-                            <Typography
-                                className="font-medium text-gray-800">{admin.isVerified ? "Yes" : "No"}</Typography>
-                        </div>
                     </div>
                     <div className="mt-10 flex justify-end">
                         <a href="/dashboard/update-profile">

@@ -1,9 +1,4639 @@
-2025-07-22T01:33:06.961+07:00  INFO 19448 --- [Project_SWP391_Group4] [restartedMain] com.javaweb.Application                  : Starting Application using Java 21.0.6 with PID 19448 (D:\KY5\Project_SWP391_Group4\backend\target\classes started by ASUS in D:\KY5\Project_SWP391_Group4\backend)
-2025-07-22T01:33:06.991+07:00 DEBUG 19448 --- [Project_SWP391_Group4] [restartedMain] com.javaweb.Application                  : Running with Spring Boot v3.2.5, Spring v6.1.6
-2025-07-22T01:33:06.991+07:00  INFO 19448 --- [Project_SWP391_Group4] [restartedMain] com.javaweb.Application                  : No active profile set, falling back to 1 default profile: "default"
-2025-07-22T01:33:24.978+07:00 DEBUG 19448 --- [Project_SWP391_Group4] [restartedMain] c.j.s.jwt.JwtAuthenticationFilter        : Filter 'jwtAuthenticationFilter' configured for use
-2025-07-22T01:33:26.608+07:00 DEBUG 19448 --- [Project_SWP391_Group4] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 74 mappings in 'requestMappingHandlerMapping'
-2025-07-22T01:33:26.678+07:00 DEBUG 19448 --- [Project_SWP391_Group4] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
-2025-07-22T01:33:26.757+07:00  INFO 19448 --- [Project_SWP391_Group4] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@397696e2, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@61166ed2, org.springframework.security.web.context.SecurityContextHolderFilter@6adc384e, org.springframework.security.web.header.HeaderWriterFilter@20b3841d, org.springframework.web.filter.CorsFilter@1d249bf8, org.springframework.security.web.authentication.logout.LogoutFilter@409603e5, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@61cd7658, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@4cc28f59, com.javaweb.security.jwt.JwtAuthenticationFilter@3812c168, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@2f6d7cb1, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1c1c35a1, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@740d4225, org.springframework.security.web.session.SessionManagementFilter@5e5d731e, org.springframework.security.web.access.ExceptionTranslationFilter@790f04d2, org.springframework.security.web.access.intercept.AuthorizationFilter@212b5c5b]
-2025-07-22T01:33:26.863+07:00 DEBUG 19448 --- [Project_SWP391_Group4] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
-2025-07-22T01:33:26.926+07:00 DEBUG 19448 --- [Project_SWP391_Group4] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-07-23T01:04:25.124+07:00  INFO 1376 --- [Project_SWP391_Group4] [restartedMain] com.javaweb.Application                  : Starting Application using Java 21.0.6 with PID 1376 (D:\KY5\Project_SWP391_Group4\backend\target\classes started by ASUS in D:\KY5\Project_SWP391_Group4\backend)
+2025-07-23T01:04:25.129+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [restartedMain] com.javaweb.Application                  : Running with Spring Boot v3.2.5, Spring v6.1.6
+2025-07-23T01:04:25.130+07:00  INFO 1376 --- [Project_SWP391_Group4] [restartedMain] com.javaweb.Application                  : No active profile set, falling back to 1 default profile: "default"
+2025-07-23T01:04:28.748+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [restartedMain] c.j.s.jwt.JwtAuthenticationFilter        : Filter 'jwtAuthenticationFilter' configured for use
+2025-07-23T01:04:29.675+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerMapping : 75 mappings in 'requestMappingHandlerMapping'
+2025-07-23T01:04:29.711+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [restartedMain] o.s.w.s.handler.SimpleUrlHandlerMapping  : Patterns [/webjars/**, /**] in 'resourceHandlerMapping'
+2025-07-23T01:04:29.763+07:00  INFO 1376 --- [Project_SWP391_Group4] [restartedMain] o.s.s.web.DefaultSecurityFilterChain     : Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@90737a8, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@2d95e79a, org.springframework.security.web.context.SecurityContextHolderFilter@6cec6237, org.springframework.security.web.header.HeaderWriterFilter@31f600fb, org.springframework.web.filter.CorsFilter@7b3c2e3d, org.springframework.security.web.authentication.logout.LogoutFilter@32969184, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@4150258, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@4e4d5f65, com.javaweb.security.jwt.JwtAuthenticationFilter@163a741f, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@d96dafa, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@3f482f87, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@2b9ca8a1, org.springframework.security.web.session.SessionManagementFilter@1c89f4bc, org.springframework.security.web.access.ExceptionTranslationFilter@18166070, org.springframework.security.web.access.intercept.AuthorizationFilter@e5aef47]
+2025-07-23T01:04:29.808+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [restartedMain] s.w.s.m.m.a.RequestMappingHandlerAdapter : ControllerAdvice beans: 0 @ModelAttribute, 0 @InitBinder, 1 RequestBodyAdvice, 1 ResponseBodyAdvice
+2025-07-23T01:04:29.836+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [restartedMain] .m.m.a.ExceptionHandlerExceptionResolver : ControllerAdvice beans: 1 @ExceptionHandler, 1 ResponseBodyAdvice
+2025-07-23T01:05:10.209+07:00  INFO 1376 --- [Project_SWP391_Group4] [restartedMain] com.javaweb.Application                  : Started Application in 45.385 seconds (process running for 45.96)
+2025-07-23T01:07:11.515+07:00  INFO 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-07-23T01:07:11.515+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Detected StandardServletMultipartResolver
+2025-07-23T01:07:11.515+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Detected AcceptHeaderLocaleResolver
+2025-07-23T01:07:11.515+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Detected FixedThemeResolver
+2025-07-23T01:07:11.517+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.view.DefaultRequestToViewNameTranslator@3f787ad3
+2025-07-23T01:07:11.518+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Detected org.springframework.web.servlet.support.SessionFlashMapManager@f0e764c
+2025-07-23T01:07:11.518+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : enableLoggingRequestDetails='false': request parameters and headers will be masked to prevent unsafe logging of potentially sensitive data
+2025-07-23T01:07:11.518+07:00  INFO 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed initialization in 3 ms
+2025-07-23T01:07:11.532+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts?title=&postTopicId=&sortOrder=desc&status=ACTIVE&page=0&size=10
+2025-07-23T01:07:11.532+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posttopics
+2025-07-23T01:07:11.532+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts?title=&postTopicId=&sortOrder=desc&status=ACTIVE&page=0&size=10
+2025-07-23T01:07:11.532+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posttopics
+2025-07-23T01:07:11.548+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/posttopics
+2025-07-23T01:07:11.548+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/posts?title=&postTopicId=&sortOrder=desc&status=ACTIVE&page=0&size=10
+2025-07-23T01:07:11.604+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:11.604+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:11.605+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/posttopics
+2025-07-23T01:07:11.605+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/posts?title=&postTopicId=&sortOrder=desc&status=ACTIVE&page=0&size=10
+2025-07-23T01:07:11.607+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/posttopics", parameters={}
+2025-07-23T01:07:11.607+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/posts?title=&postTopicId=&sortOrder=desc&status=ACTIVE&page=0&size=10", parameters={masked}
+2025-07-23T01:07:11.610+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getAllPosts(SearchPostRequest, Pageable)
+2025-07-23T01:07:11.610+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostTopicController#getAllPostTopics(SearchPostTopicRequest)
+2025-07-23T01:07:11.729+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        p1_0.post_topic_id,
+        p1_0.status,
+        p1_0.title,
+        p1_0.user_id 
+    from
+        posts p1_0 
+    where
+        p1_0.title like ? 
+        and (
+            p1_0.post_topic_id=? 
+            or ? is null
+        ) 
+        and (
+            p1_0.status=?
+        ) 
+    order by
+        p1_0.created_at desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-07-23T01:07:11.729+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.name like ?
+2025-07-23T01:07:11.803+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.post_topic_id=?
+2025-07-23T01:07:11.809+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.user_id=?
+2025-07-23T01:07:11.819+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:11.831+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.post_topic_id=?
+2025-07-23T01:07:11.833+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.user_id=?
+2025-07-23T01:07:11.834+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:11.837+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.post_topic_id=?
+2025-07-23T01:07:11.839+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.post_topic_id=?
+2025-07-23T01:07:11.840+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:11.842+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.javaweb.dtos.response.PostTopicDTO@281a1c29, com.javaweb.dtos.response.PostTopicDTO@6cbf8511, c (truncated)...]
+2025-07-23T01:07:11.846+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        count_big(p1_0.post_id) 
+    from
+        posts p1_0 
+    where
+        p1_0.title like ? 
+        and (
+            p1_0.post_topic_id=? 
+            or ? is null
+        ) 
+        and (
+            p1_0.status=?
+        )
+2025-07-23T01:07:11.871+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:11.871+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [Page 1 of 6 containing com.javaweb.dtos.response.PostDTO instances]
+2025-07-23T01:07:11.873+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/posttopics
+2025-07-23T01:07:11.873+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:11.876+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:11.876+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/posttopics
+2025-07-23T01:07:11.876+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/posttopics", parameters={}
+2025-07-23T01:07:11.877+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostTopicController#getAllPostTopics(SearchPostTopicRequest)
+2025-07-23T01:07:11.879+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.name like ?
+2025-07-23T01:07:11.882+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:11.883+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:11.883+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.javaweb.dtos.response.PostTopicDTO@4161753b, com.javaweb.dtos.response.PostTopicDTO@4ccee26f, c (truncated)...]
+2025-07-23T01:07:11.883+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/posts?title=&postTopicId=&sortOrder=desc&status=ACTIVE&page=0&size=10
+2025-07-23T01:07:11.884+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:11.886+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:11.887+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/posts?title=&postTopicId=&sortOrder=desc&status=ACTIVE&page=0&size=10
+2025-07-23T01:07:11.887+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/posts?title=&postTopicId=&sortOrder=desc&status=ACTIVE&page=0&size=10", parameters={masked}
+2025-07-23T01:07:11.887+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getAllPosts(SearchPostRequest, Pageable)
+2025-07-23T01:07:11.890+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        p1_0.post_topic_id,
+        p1_0.status,
+        p1_0.title,
+        p1_0.user_id 
+    from
+        posts p1_0 
+    where
+        p1_0.title like ? 
+        and (
+            p1_0.post_topic_id=? 
+            or ? is null
+        ) 
+        and (
+            p1_0.status=?
+        ) 
+    order by
+        p1_0.created_at desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-07-23T01:07:11.892+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.post_topic_id=?
+2025-07-23T01:07:11.893+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.user_id=?
+2025-07-23T01:07:11.894+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:11.897+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.post_topic_id=?
+2025-07-23T01:07:11.899+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        users u1_0 
+    where
+        u1_0.user_id=?
+2025-07-23T01:07:11.901+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:11.903+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.post_topic_id=?
+2025-07-23T01:07:11.904+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name 
+    from
+        post_topics pt1_0 
+    where
+        pt1_0.post_topic_id=?
+2025-07-23T01:07:11.906+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        count_big(p1_0.post_id) 
+    from
+        posts p1_0 
+    where
+        p1_0.title like ? 
+        and (
+            p1_0.post_topic_id=? 
+            or ? is null
+        ) 
+        and (
+            p1_0.status=?
+        )
+2025-07-23T01:07:11.910+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:11.910+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [Page 1 of 6 containing com.javaweb.dtos.response.PostDTO instances]
+2025-07-23T01:07:11.912+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:13.171+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:07:13.171+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74
+2025-07-23T01:07:13.172+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74
+2025-07-23T01:07:13.173+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74/files
+2025-07-23T01:07:13.174+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:07:13.174+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74/files
+2025-07-23T01:07:13.178+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:07:13.178+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/files
+2025-07-23T01:07:13.178+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/files
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/files", parameters={}
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=", parameters={masked}
+2025-07-23T01:07:13.181+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74", parameters={}
+2025-07-23T01:07:13.182+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostFilesByPostId(Long)
+2025-07-23T01:07:13.182+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getAllCommentsByPostId(Long, SearchCommentRequest, Pageable)
+2025-07-23T01:07:13.182+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostById(Long)
+2025-07-23T01:07:13.189+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        c1_0.parent_comment_id,
+        c1_0.post_id,
+        c1_0.status,
+        c1_0.user_id 
+    from
+        comments c1_0 
+    join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        (
+            ? is null 
+            or c1_0.content like ?
+        ) 
+        and (
+            ? is null 
+            or u1_0.full_name like ?
+        ) 
+        and c1_0.post_id=? 
+        and (
+            c1_0.status=? 
+            or ? is null
+        ) 
+    order by
+        c1_0.created_at desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-07-23T01:07:13.197+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:07:13.197+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:07:13.202+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:13.207+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:13.211+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:13.211+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.javaweb.dtos.response.PostDTO@12a6138d]
+2025-07-23T01:07:13.212+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:13.213+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74
+2025-07-23T01:07:13.215+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:13.216+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74
+2025-07-23T01:07:13.216+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74", parameters={}
+2025-07-23T01:07:13.216+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostById(Long)
+2025-07-23T01:07:13.218+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T01:07:13.218+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:07:13.220+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:13.223+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:13.224+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.javaweb.dtos.response.PostDTO@cc698c2]
+2025-07-23T01:07:13.225+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:13.226+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        pf1_0.post_file_id,
+        pf1_0.file_name,
+        pf1_0.file_type,
+        pf1_0.file_url,
+        pf1_0.post_id,
+        pf1_0.public_file_id 
+    from
+        post_files pf1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pf1_0.post_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:07:13.227+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:13.234+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T01:07:13.235+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:13.235+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.javaweb.dtos.response.PostFileDTO@792334da, com.javaweb.dtos.response.PostFileDTO@62856c95, com (truncated)...]
+2025-07-23T01:07:13.236+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:13.238+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/files
+2025-07-23T01:07:13.240+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:13.240+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/files
+2025-07-23T01:07:13.240+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/files", parameters={}
+2025-07-23T01:07:13.241+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostFilesByPostId(Long)
+2025-07-23T01:07:13.242+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:07:13.243+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.244+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:13.249+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.250+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        pf1_0.post_file_id,
+        pf1_0.file_name,
+        pf1_0.file_type,
+        pf1_0.file_url,
+        pf1_0.post_id,
+        pf1_0.public_file_id 
+    from
+        post_files pf1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pf1_0.post_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:07:13.251+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:13.252+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.252+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.javaweb.dtos.response.PostFileDTO@47e6b092, com.javaweb.dtos.response.PostFileDTO@721f3d, com.j (truncated)...]
+2025-07-23T01:07:13.253+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:13.255+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.259+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.262+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:13.262+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [Page 1 of 1 containing com.javaweb.dtos.response.CommentDTO instances]
+2025-07-23T01:07:13.266+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:13.267+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:07:13.269+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:13.270+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:07:13.270+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=", parameters={masked}
+2025-07-23T01:07:13.270+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getAllCommentsByPostId(Long, SearchCommentRequest, Pageable)
+2025-07-23T01:07:13.272+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        c1_0.parent_comment_id,
+        c1_0.post_id,
+        c1_0.status,
+        c1_0.user_id 
+    from
+        comments c1_0 
+    join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        (
+            ? is null 
+            or c1_0.content like ?
+        ) 
+        and (
+            ? is null 
+            or u1_0.full_name like ?
+        ) 
+        and c1_0.post_id=? 
+        and (
+            c1_0.status=? 
+            or ? is null
+        ) 
+    order by
+        c1_0.created_at desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-07-23T01:07:13.276+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T01:07:13.278+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:07:13.281+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T01:07:13.284+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.286+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.288+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.289+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.291+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:07:13.293+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:07:13.293+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [Page 1 of 1 containing com.javaweb.dtos.response.CommentDTO instances]
+2025-07-23T01:07:13.294+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:07:21.648+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/comments/104
+2025-07-23T01:07:21.651+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing DELETE /api/comments/104
+2025-07-23T01:07:21.651+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:21.651+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured DELETE /api/comments/104
+2025-07-23T01:07:21.651+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : DELETE "/api/comments/104", parameters={}
+2025-07-23T01:07:21.651+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.CommentController#deleteComment(Long)
+2025-07-23T01:07:21.655+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController]
+2025-07-23T01:07:21.678+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@58aa5ad9 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAnyRole('ADMIN','LEARNER')]
+2025-07-23T01:07:21.682+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.security.access.AccessDeniedException: Access Denied
+2025-07-23T01:07:30.464+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Securing DELETE /api/comments/104
+2025-07-23T01:07:30.467+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:30.467+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] o.s.security.web.FilterChainProxy        : Secured DELETE /api/comments/104
+2025-07-23T01:07:30.467+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : DELETE "/api/comments/104", parameters={}
+2025-07-23T01:07:30.467+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.CommentController#deleteComment(Long)
+2025-07-23T01:07:30.467+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController]
+2025-07-23T01:07:30.467+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@58aa5ad9 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAnyRole('ADMIN','LEARNER')]
+2025-07-23T01:07:30.467+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-3] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.security.access.AccessDeniedException: Access Denied
+2025-07-23T01:07:33.224+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing DELETE /api/comments/104
+2025-07-23T01:07:33.227+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:33.227+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured DELETE /api/comments/104
+2025-07-23T01:07:33.227+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : DELETE "/api/comments/104", parameters={}
+2025-07-23T01:07:33.227+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.CommentController#deleteComment(Long)
+2025-07-23T01:07:33.228+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController]
+2025-07-23T01:07:33.228+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@58aa5ad9 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAnyRole('ADMIN','LEARNER')]
+2025-07-23T01:07:33.228+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.security.access.AccessDeniedException: Access Denied
+2025-07-23T01:07:51.424+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/comments/95
+2025-07-23T01:07:51.427+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing DELETE /api/comments/95
+2025-07-23T01:07:51.429+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:51.429+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured DELETE /api/comments/95
+2025-07-23T01:07:51.429+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : DELETE "/api/comments/95", parameters={}
+2025-07-23T01:07:51.430+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.CommentController#deleteComment(Long)
+2025-07-23T01:07:51.430+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController]
+2025-07-23T01:07:51.430+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@58aa5ad9 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAnyRole('ADMIN','LEARNER')]
+2025-07-23T01:07:51.431+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.security.access.AccessDeniedException: Access Denied
+2025-07-23T01:07:54.137+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/comments/96/activate
+2025-07-23T01:07:54.139+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing PUT /api/comments/96/activate
+2025-07-23T01:07:54.140+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:07:54.141+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured PUT /api/comments/96/activate
+2025-07-23T01:07:54.141+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : PUT "/api/comments/96/activate", parameters={}
+2025-07-23T01:07:54.141+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.CommentController#activateComment(Long)
+2025-07-23T01:07:54.142+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.activateComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController]
+2025-07-23T01:07:54.142+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.activateComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@58aa5ad9 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasRole('ADMIN')]
+2025-07-23T01:07:54.142+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.security.access.AccessDeniedException: Access Denied
+2025-07-23T01:08:17.645+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74
+2025-07-23T01:08:17.645+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:08:17.645+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/files
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/files
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/files", parameters={}
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74", parameters={}
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=", parameters={masked}
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getAllCommentsByPostId(Long, SearchCommentRequest, Pageable)
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostFilesByPostId(Long)
+2025-07-23T01:08:17.656+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostById(Long)
+2025-07-23T01:08:17.660+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        c1_0.parent_comment_id,
+        c1_0.post_id,
+        c1_0.status,
+        c1_0.user_id 
+    from
+        comments c1_0 
+    join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        (
+            ? is null 
+            or c1_0.content like ?
+        ) 
+        and (
+            ? is null 
+            or u1_0.full_name like ?
+        ) 
+        and c1_0.post_id=? 
+        and (
+            c1_0.status=? 
+            or ? is null
+        ) 
+    order by
+        c1_0.created_at desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-07-23T01:08:17.672+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:08:17.672+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] org.hibernate.SQL                        : 
+    select
+        pf1_0.post_file_id,
+        pf1_0.file_name,
+        pf1_0.file_type,
+        pf1_0.file_url,
+        pf1_0.post_id,
+        pf1_0.public_file_id 
+    from
+        post_files pf1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pf1_0.post_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.javaweb.dtos.response.PostDTO@5c871dba]
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.javaweb.dtos.response.PostFileDTO@e4bb6a8, com.javaweb.dtos.response.PostFileDTO@d35e73, com.ja (truncated)...]
+2025-07-23T01:08:17.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:08:17.702+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74
+2025-07-23T01:08:17.702+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/files
+2025-07-23T01:08:17.704+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/files
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/files", parameters={}
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74", parameters={}
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostById(Long)
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostFilesByPostId(Long)
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:08:17.705+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:08:17.710+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:08:17.712+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:08:17.712+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.javaweb.dtos.response.PostDTO@298d1f99]
+2025-07-23T01:08:17.712+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:08:17.712+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.714+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] org.hibernate.SQL                        : 
+    select
+        pf1_0.post_file_id,
+        pf1_0.file_name,
+        pf1_0.file_type,
+        pf1_0.file_url,
+        pf1_0.post_id,
+        pf1_0.public_file_id 
+    from
+        post_files pf1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pf1_0.post_id 
+    where
+        p1_0.post_id=?
+2025-07-23T01:08:17.714+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.714+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:08:17.714+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.javaweb.dtos.response.PostFileDTO@213d2b52, com.javaweb.dtos.response.PostFileDTO@3de0452b, com (truncated)...]
+2025-07-23T01:08:17.714+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:08:17.714+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [Page 1 of 1 containing com.javaweb.dtos.response.CommentDTO instances]
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=", parameters={masked}
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getAllCommentsByPostId(Long, SearchCommentRequest, Pageable)
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        c1_0.parent_comment_id,
+        c1_0.post_id,
+        c1_0.status,
+        c1_0.user_id 
+    from
+        comments c1_0 
+    join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        (
+            ? is null 
+            or c1_0.content like ?
+        ) 
+        and (
+            ? is null 
+            or u1_0.full_name like ?
+        ) 
+        and c1_0.post_id=? 
+        and (
+            c1_0.status=? 
+            or ? is null
+        ) 
+    order by
+        c1_0.created_at desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T01:08:17.721+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T01:08:17.737+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.737+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.737+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.737+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.737+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T01:08:17.737+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T01:08:17.737+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] m.m.a.RequestResponseBodyMethodProcessor : Writing [Page 1 of 1 containing com.javaweb.dtos.response.CommentDTO instances]
+2025-07-23T01:08:17.737+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T02:00:00.070+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [scheduling-1] org.hibernate.SQL                        : 
+    select
+        pf1_0.post_file_id,
+        pf1_0.file_name,
+        pf1_0.file_type,
+        pf1_0.file_url,
+        pf1_0.post_id,
+        pf1_0.public_file_id 
+    from
+        post_files pf1_0 
+    where
+        pf1_0.post_id is null
+2025-07-23T02:00:00.100+07:00  INFO 1376 --- [Project_SWP391_Group4] [scheduling-1] com.javaweb.scheduler.TokenCleanJob      : Đang dọn các token hết hạn...
+2025-07-23T02:00:00.131+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [scheduling-1] org.hibernate.SQL                        : 
+    delete 
+    from
+        verification_tokens 
+    where
+        expiry_time<?
+2025-07-23T02:00:00.140+07:00  INFO 1376 --- [Project_SWP391_Group4] [scheduling-1] com.javaweb.scheduler.TokenCleanJob      : Dọn xong token hết hạn.
+2025-07-23T02:05:45.662+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74
+2025-07-23T02:05:45.662+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T02:05:45.662+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74
+2025-07-23T02:05:45.662+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74/files
+2025-07-23T02:05:45.662+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T02:05:45.664+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/posts/74/files
+2025-07-23T02:05:45.674+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T02:05:45.674+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74
+2025-07-23T02:05:45.674+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/files
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/files
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/files", parameters={}
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74", parameters={}
+2025-07-23T02:05:45.683+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=", parameters={masked}
+2025-07-23T02:05:45.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getAllCommentsByPostId(Long, SearchCommentRequest, Pageable)
+2025-07-23T02:05:45.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostById(Long)
+2025-07-23T02:05:45.688+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostFilesByPostId(Long)
+2025-07-23T02:05:45.713+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T02:05:45.713+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T02:05:45.719+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        c1_0.parent_comment_id,
+        c1_0.post_id,
+        c1_0.status,
+        c1_0.user_id 
+    from
+        comments c1_0 
+    join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        (
+            ? is null 
+            or c1_0.content like ?
+        ) 
+        and (
+            ? is null 
+            or u1_0.full_name like ?
+        ) 
+        and c1_0.post_id=? 
+        and (
+            c1_0.status=? 
+            or ? is null
+        ) 
+    order by
+        c1_0.created_at desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-07-23T02:05:45.735+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T02:05:45.739+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T02:05:45.741+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T02:05:45.745+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T02:05:45.747+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] org.hibernate.SQL                        : 
+    select
+        pf1_0.post_file_id,
+        pf1_0.file_name,
+        pf1_0.file_type,
+        pf1_0.file_url,
+        pf1_0.post_id,
+        pf1_0.public_file_id 
+    from
+        post_files pf1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pf1_0.post_id 
+    where
+        p1_0.post_id=?
+2025-07-23T02:05:45.747+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.javaweb.dtos.response.PostDTO@67bb8452]
+2025-07-23T02:05:45.749+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T02:05:45.751+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74
+2025-07-23T02:05:45.751+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T02:05:45.753+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T02:05:45.753+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.javaweb.dtos.response.PostFileDTO@338adfa7, com.javaweb.dtos.response.PostFileDTO@7c9472ff, com (truncated)...]
+2025-07-23T02:05:45.755+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T02:05:45.755+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-5] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T02:05:45.755+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74
+2025-07-23T02:05:45.755+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74", parameters={}
+2025-07-23T02:05:45.758+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostById(Long)
+2025-07-23T02:05:45.758+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/files
+2025-07-23T02:05:45.761+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T02:05:45.758+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T02:05:45.763+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T02:05:45.763+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/files
+2025-07-23T02:05:45.763+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/files", parameters={}
+2025-07-23T02:05:45.763+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getPostFilesByPostId(Long)
+2025-07-23T02:05:45.763+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T02:05:45.765+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        posts p1_0 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    where
+        p1_0.post_id=?
+2025-07-23T02:05:45.765+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T02:05:45.765+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T02:05:45.765+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.w.s.m.m.a.HttpEntityMethodProcessor  : Writing [com.javaweb.dtos.response.PostDTO@4d14687e]
+2025-07-23T02:05:45.765+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.765+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-9] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T02:05:45.772+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] org.hibernate.SQL                        : 
+    select
+        pf1_0.post_file_id,
+        pf1_0.file_name,
+        pf1_0.file_type,
+        pf1_0.file_url,
+        pf1_0.post_id,
+        pf1_0.public_file_id 
+    from
+        post_files pf1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pf1_0.post_id 
+    where
+        p1_0.post_id=?
+2025-07-23T02:05:45.772+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T02:05:45.772+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] m.m.a.RequestResponseBodyMethodProcessor : Writing [[com.javaweb.dtos.response.PostFileDTO@27cbaa3, com.javaweb.dtos.response.PostFileDTO@14fd2542, com. (truncated)...]
+2025-07-23T02:05:45.777+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.777+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T02:05:45.780+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.780+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.780+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.780+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T02:05:45.780+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] m.m.a.RequestResponseBodyMethodProcessor : Writing [Page 1 of 1 containing com.javaweb.dtos.response.CommentDTO instances]
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-4] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Securing GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.security.web.FilterChainProxy        : Secured GET /api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : GET "/api/posts/74/comments?page=0&size=10&content=&sortOrder=DESC&userFullName=&status=", parameters={masked}
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.PostController#getAllCommentsByPostId(Long, SearchCommentRequest, Pageable)
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        c1_0.parent_comment_id,
+        c1_0.post_id,
+        c1_0.status,
+        c1_0.user_id 
+    from
+        comments c1_0 
+    join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        (
+            ? is null 
+            or c1_0.content like ?
+        ) 
+        and (
+            ? is null 
+            or u1_0.full_name like ?
+        ) 
+        and c1_0.post_id=? 
+        and (
+            c1_0.status=? 
+            or ? is null
+        ) 
+    order by
+        c1_0.created_at desc 
+    offset
+        ? rows 
+    fetch
+        first ? rows only
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T02:05:45.792+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.cart_id,
+        c1_0.sum,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role 
+    from
+        carts c1_0 
+    left join
+        users u1_0 
+            on u1_0.user_id=c1_0.user_id 
+    where
+        c1_0.user_id=?
+2025-07-23T02:05:45.808+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        c1_0.comment_id,
+        c1_0.content,
+        c1_0.created_at,
+        pc1_0.comment_id,
+        pc1_0.content,
+        pc1_0.created_at,
+        pc1_0.parent_comment_id,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        pc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role,
+        p2_0.post_id,
+        p2_0.content,
+        p2_0.created_at,
+        pt2_0.post_topic_id,
+        pt2_0.created_at,
+        pt2_0.name,
+        p2_0.status,
+        p2_0.title,
+        u3_0.user_id,
+        u3_0.bio,
+        u3_0.birth_date,
+        u3_0.created_at,
+        u3_0.email,
+        u3_0.full_name,
+        u3_0.image_url,
+        u3_0.is_active,
+        u3_0.is_verified,
+        u3_0.password,
+        u3_0.report_count,
+        u3_0.role,
+        c1_0.status,
+        u4_0.user_id,
+        u4_0.bio,
+        u4_0.birth_date,
+        u4_0.created_at,
+        u4_0.email,
+        u4_0.full_name,
+        u4_0.image_url,
+        u4_0.is_active,
+        u4_0.is_verified,
+        u4_0.password,
+        u4_0.report_count,
+        u4_0.role 
+    from
+        comments c1_0 
+    left join
+        comments pc1_0 
+            on pc1_0.comment_id=c1_0.parent_comment_id 
+    left join
+        posts p1_0 
+            on p1_0.post_id=pc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=pc1_0.user_id 
+    left join
+        posts p2_0 
+            on p2_0.post_id=c1_0.post_id 
+    left join
+        post_topics pt2_0 
+            on pt2_0.post_topic_id=p2_0.post_topic_id 
+    left join
+        users u3_0 
+            on u3_0.user_id=p2_0.user_id 
+    left join
+        users u4_0 
+            on u4_0.user_id=c1_0.user_id 
+    where
+        c1_0.comment_id=?
+2025-07-23T02:05:45.815+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.817+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.819+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.819+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.821+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] org.hibernate.SQL                        : 
+    select
+        cc1_0.parent_comment_id,
+        cc1_0.comment_id,
+        cc1_0.content,
+        cc1_0.created_at,
+        p1_0.post_id,
+        p1_0.content,
+        p1_0.created_at,
+        pt1_0.post_topic_id,
+        pt1_0.created_at,
+        pt1_0.name,
+        p1_0.status,
+        p1_0.title,
+        u1_0.user_id,
+        u1_0.bio,
+        u1_0.birth_date,
+        u1_0.created_at,
+        u1_0.email,
+        u1_0.full_name,
+        u1_0.image_url,
+        u1_0.is_active,
+        u1_0.is_verified,
+        u1_0.password,
+        u1_0.report_count,
+        u1_0.role,
+        cc1_0.status,
+        u2_0.user_id,
+        u2_0.bio,
+        u2_0.birth_date,
+        u2_0.created_at,
+        u2_0.email,
+        u2_0.full_name,
+        u2_0.image_url,
+        u2_0.is_active,
+        u2_0.is_verified,
+        u2_0.password,
+        u2_0.report_count,
+        u2_0.role 
+    from
+        comments cc1_0 
+    left join
+        posts p1_0 
+            on p1_0.post_id=cc1_0.post_id 
+    left join
+        post_topics pt1_0 
+            on pt1_0.post_topic_id=p1_0.post_topic_id 
+    left join
+        users u1_0 
+            on u1_0.user_id=p1_0.user_id 
+    left join
+        users u2_0 
+            on u2_0.user_id=cc1_0.user_id 
+    where
+        cc1_0.parent_comment_id=?
+2025-07-23T02:05:45.824+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Using 'application/json', given [application/json, text/plain, */*] and supported [application/json, application/*+json]
+2025-07-23T02:05:45.824+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] m.m.a.RequestResponseBodyMethodProcessor : Writing [Page 1 of 1 containing com.javaweb.dtos.response.CommentDTO instances]
+2025-07-23T02:05:45.824+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-2] o.s.web.servlet.DispatcherServlet        : Completed 200 OK
+2025-07-23T02:05:52.252+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-6] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/comments/104
+2025-07-23T02:05:52.254+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Securing DELETE /api/comments/104
+2025-07-23T02:05:52.257+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T02:05:52.258+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.security.web.FilterChainProxy        : Secured DELETE /api/comments/104
+2025-07-23T02:05:52.258+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : DELETE "/api/comments/104", parameters={}
+2025-07-23T02:05:52.258+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.CommentController#deleteComment(Long)
+2025-07-23T02:05:52.260+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController]
+2025-07-23T02:05:52.260+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.deleteComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@58aa5ad9 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasAnyRole('ADMIN','LEARNER')]
+2025-07-23T02:05:52.260+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-8] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.security.access.AccessDeniedException: Access Denied
+2025-07-23T02:05:56.298+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-7] o.s.security.web.FilterChainProxy        : Securing OPTIONS /api/comments/103/activate
+2025-07-23T02:05:56.302+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Securing PUT /api/comments/103/activate
+2025-07-23T02:05:56.303+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.s.w.a.AnonymousAuthenticationFilter  : Set SecurityContextHolder to anonymous SecurityContext
+2025-07-23T02:05:56.303+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.security.web.FilterChainProxy        : Secured PUT /api/comments/103/activate
+2025-07-23T02:05:56.303+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : PUT "/api/comments/103/activate", parameters={}
+2025-07-23T02:05:56.303+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] s.w.s.m.m.a.RequestMappingHandlerMapping : Mapped to com.javaweb.controller.CommentController#activateComment(Long)
+2025-07-23T02:05:56.306+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] horizationManagerBeforeMethodInterceptor : Authorizing method invocation ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.activateComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController]
+2025-07-23T02:05:56.308+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] horizationManagerBeforeMethodInterceptor : Failed to authorize ReflectiveMethodInvocation: public org.springframework.http.ResponseEntity com.javaweb.controller.CommentController.activateComment(java.lang.Long); target is of class [com.javaweb.controller.CommentController] with authorization manager org.springframework.security.config.annotation.method.configuration.DeferringObservationAuthorizationManager@58aa5ad9 and decision ExpressionAuthorizationDecision [granted=false, expressionAttribute=hasRole('ADMIN')]
+2025-07-23T02:05:56.308+07:00 DEBUG 1376 --- [Project_SWP391_Group4] [http-nio-8080-exec-10] o.s.web.servlet.DispatcherServlet        : Failed to complete request: org.springframework.security.access.AccessDeniedException: Access Denied
