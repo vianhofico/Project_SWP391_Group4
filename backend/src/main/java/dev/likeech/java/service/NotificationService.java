@@ -1,4 +1,4 @@
-package dev.likeech.java.service.impl;
+package dev.likeech.java.service;
 
 
 import dev.likeech.java.model.dto.NotificationDTO;

@@ -40,8 +40,8 @@ public class User {
     @Column(name = "created_at")  
     private LocalDateTime createdAt;
 
-    @Column(name = "is_active")  
-    private Boolean isActive;
+    @Column(name = "isActive", nullable = false)
+    private Boolean isActive = true;
 
     @Column(name = "report_count")  
     private Integer reportCount;

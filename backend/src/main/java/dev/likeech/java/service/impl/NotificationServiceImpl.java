@@ -5,6 +5,7 @@ import dev.likeech.java.entity.Notification;
 import dev.likeech.java.mapper.DTOConverter;
 import dev.likeech.java.model.dto.NotificationDTO;
 import dev.likeech.java.repository.NotificationRepository;
+import dev.likeech.java.service.NotificationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

@@ -4,13 +4,13 @@ package dev.likeech.java.service.impl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.likeech.java.entity.User;
+import dev.likeech.java.mapper.DTOConverter;
 import dev.likeech.java.security.jwt.JwtUtils;
 import dev.likeech.java.entity.VerificationToken;
 import dev.likeech.java.exp.BusinessException;
 import dev.likeech.java.exp.ResourceAlreadyExistsException;
 import dev.likeech.java.exp.ResourceNotFoundException;
 import dev.likeech.java.exp.UnauthorizedException;
-import dev.likeech.java.mapper.UserDTOConverter;
 import dev.likeech.java.model.events.EmailEvent;
 import dev.likeech.java.model.events.VerifyEmailRequest;
 import dev.likeech.java.model.request.LoginRequest;
@@ -45,7 +45,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authManager;
-    private final UserDTOConverter dtoConverter;
+    private final DTOConverter dtoConverter;
     private final JwtUtils jwtUtils;
     private final UserRepository userRepository;
     private final TokenRepository tokenRepository;
@@ -66,7 +66,7 @@ public class AuthServiceImpl implements AuthService {
             );
             String token = jwtUtils.generateToken(loginRequest.email());
             User thisUser = userRepository.findByEmail(loginRequest.email()).get();
-            return new LoginResponse(token, dtoConverter.toDTO(thisUser));
+            return new LoginResponse(token, dtoConverter.toUserDTO(thisUser));
         } catch (BadCredentialsException e) {
             throw new UnauthorizedException("Email or password is incorrect");
         } catch (DisabledException e) {
@@ -108,18 +108,18 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         tokenRepository.save(vt);
 
-        EmailEvent event = new EmailEvent(
-                "VERIFY_EMAIL",
-                new VerifyEmailRequest(
-                        email,
-                        token
-                )
-        );
-        try {
-            kafkaTemplate.send("email", objectMapper.writeValueAsString(event));
-        } catch (JsonProcessingException e) {
-            log.error("Error while sending email event", e);
-        }
+//        EmailEvent event = new EmailEvent(
+//                "VERIFY_EMAIL",
+//                new VerifyEmailRequest(
+//                        email,
+//                        token
+//                )
+//        );
+//        try {
+//            kafkaTemplate.send("email", objectMapper.writeValueAsString(event));
+//        } catch (JsonProcessingException e) {
+//            log.error("Error while sending email event", e);
+//        }
     }
 
     @Override
@@ -136,8 +136,9 @@ public class AuthServiceImpl implements AuthService {
     public void sendEmailVerification(VerifyEmailRequest verifyEmailRequest) {
         String emailTo = verifyEmailRequest.email();
         String subject = "Verify Email";
-        String link = "http://localhost:8080/api/v1/auth/verify?token=" + verifyEmailRequest.token();
+        String link = "http://localhost:8080/api/auth/verify?token=" + verifyEmailRequest.token();
         String content = "Click the link to verify your email: " + link;
+
         mailService.sendEmail(emailTo, subject, content);
     }
 

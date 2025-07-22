@@ -6,7 +6,7 @@ import dev.likeech.java.model.dto.*;
 import dev.likeech.java.model.request.CreateAdminRequest;
 import dev.likeech.java.model.request.SearchUserRequest;
 import dev.likeech.java.service.*;
-import dev.likeech.java.service.impl.NotificationService;
+import dev.likeech.java.service.NotificationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

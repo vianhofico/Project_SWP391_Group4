@@ -23,5 +23,4 @@ public class UserDTO {
     private String status;
     private Integer reportCount;
     private String imageUrl;
-
 }

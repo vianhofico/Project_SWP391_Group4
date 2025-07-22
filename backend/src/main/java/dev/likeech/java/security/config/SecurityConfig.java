@@ -57,7 +57,7 @@ public class SecurityConfig {
                         })
                 )
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/**", "api/v1/oauth2/**", "api/v1/public/**","api/v1/file/public/**").permitAll()
+                        .requestMatchers("/api/auth/**", "api/oauth2/**", "api/public/**","api/file/public/**").permitAll()
                         .anyRequest().permitAll()
                 )
 
