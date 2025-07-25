@@ -1,5 +1,6 @@
 package com.javaweb.services.impl;
 
+
 import com.javaweb.dtos.response.CourseRevenueDTO;
 import com.javaweb.repositories.OrderItemRepository;
 import com.javaweb.services.OrderStatisticService;
@@ -20,6 +21,6 @@ public class OrderStatisticServiceImpl implements OrderStatisticService {
     }
 
     public List<CourseRevenueDTO> getStatsBetween(LocalDateTime start, LocalDateTime end) {
-        return orderItemRepository.getCourseRevenueStatsBetween(start, end);
+        return orderItemRepository.getCourseRevenueStatusBetween(start, end);
     }
 }

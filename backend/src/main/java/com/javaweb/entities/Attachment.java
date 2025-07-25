@@ -2,13 +2,9 @@ package com.javaweb.entities;
 
 import com.javaweb.enums.ResourceType;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @Table(name = "attachments")
@@ -21,28 +17,19 @@ public class Attachment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "attachment_id")
     private Long attachmentId;
-
     @Column(name = "url")
     private String url;
-
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private ResourceType type;
-
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
-
     @Column(name = "is_deleted")
     private Boolean isDeleted;
-
-    @Column(name = "createdAt")
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
-
-    @ManyToMany
-    @JoinTable(
-            name = "course_attachment",
-            joinColumns = @JoinColumn(name = "attachment_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
-    private List<Attachment> attachments;
+    @ManyToOne
+    @JoinColumn(name = "course_id")
+    private Course course;
 }
+

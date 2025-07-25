@@ -5,13 +5,13 @@ import lombok.*;
 
 import java.util.List;
 
-@NoArgsConstructor
-@AllArgsConstructor
+@Entity
+@Table(name = "topics")
 @Getter
 @Setter
 @Builder
-@Entity
-@Table(name = "topics")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Topic {
 
     @Id
@@ -19,7 +19,7 @@ public class Topic {
     @Column(name = "topic_id")
     private Long topicId;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
     @Column(name = "description")
@@ -28,12 +28,6 @@ public class Topic {
     @Column(name = "status", nullable = false)
     private Boolean status = true;
 
-    @ManyToMany
-    @JoinTable(
-            name = "course_topic",
-            joinColumns = @JoinColumn(name = "topic_id"),
-            inverseJoinColumns = @JoinColumn(name = "course_id")
-    )
+    @ManyToMany(mappedBy = "topics")
     private List<Course> courses;
-
 }

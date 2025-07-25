@@ -2,31 +2,29 @@ package com.javaweb.entities;
 
 import com.javaweb.enums.ResourceType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Table(name = "lesson_resources")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 public class LessonResource {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "resource_d")
+    @Column(name = "resource_id")
     private Long resourceId;
 
-    @ManyToMany
-    @JoinTable(
-            name = "lesson_resources_mapping",
-            joinColumns = @JoinColumn(name = "resource_id"),
-            inverseJoinColumns = @JoinColumn(name = "lesson_id")
-    )
-    private List<Lesson> lessons;
+    @ManyToMany(mappedBy = "resources")
+    private List<Lesson> lessons = new ArrayList<>();
 
     @Column(name = "title")
     private String title;
@@ -44,4 +42,7 @@ public class LessonResource {
     @Column(name = "created_at")
     private LocalDateTime createdAt;
 
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
 }
+

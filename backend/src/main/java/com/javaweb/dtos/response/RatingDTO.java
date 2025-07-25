@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -13,8 +15,9 @@ import lombok.*;
 public class RatingDTO {
 
     private Long ratingId;
-    private Integer rating;
-    private String feedback;
-    private String createdAt;
-    private CourseDTO course;
+    private Long userId;
+    private Long courseId;
+    private Integer score;
+    private String comment;
+    private LocalDateTime createdAt;
 }

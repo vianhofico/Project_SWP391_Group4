@@ -1,7 +1,7 @@
 package com.javaweb.controller.user;
 
-import dev.likeech.java.model.dto.TopicDTO;
-import dev.likeech.java.service.TopicService;
+import com.javaweb.dtos.response.TopicDTO;
+import com.javaweb.services.TopicService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/public/user/topics")
+@RequestMapping("/api/public/user/topics")
 @Validated
 public class PublicUserTopicController {
     private final TopicService topicService;

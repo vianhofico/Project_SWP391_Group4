@@ -1,12 +1,12 @@
 package com.javaweb.controller.user;
 
-import dev.likeech.java.enums.ResourceType;
-import dev.likeech.java.model.dto.AttachmentDTO;
-import dev.likeech.java.model.dto.CourseDTO;
-import dev.likeech.java.model.request.SearchRequest;
-import dev.likeech.java.service.AttachmentService;
-import dev.likeech.java.service.CourseService;
-import dev.likeech.java.service.TopicService;
+import com.javaweb.dtos.request.SearchRequest;
+import com.javaweb.dtos.response.AttachmentDTO;
+import com.javaweb.dtos.response.CourseDTO;
+import com.javaweb.enums.ResourceType;
+import com.javaweb.services.AttachmentService;
+import com.javaweb.services.CourseService;
+import com.javaweb.services.TopicService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/public/user/courses")
+@RequestMapping("/api/public/user/courses")
 @RequiredArgsConstructor
 @Validated
 public class PublicUserCourseController {
@@ -47,6 +47,7 @@ public class PublicUserCourseController {
         Page<CourseDTO> pagedCourses = courseService.filterAndSort(courses, request);
         return ResponseEntity.ok(pagedCourses);
     }
+
     @GetMapping("/topics/{topicId}/available-courses")
     public ResponseEntity<Page<CourseDTO>> getAvailableCoursesForTopic(
             @PathVariable @Positive(message = "Topic ID must be positive") Long topicId,
@@ -70,6 +71,7 @@ public class PublicUserCourseController {
     public ResponseEntity<CourseDTO> getCourse(@PathVariable @Positive(message = "Id can't not positive number") Long id) {
         return ResponseEntity.ok(courseService.getCourse(id));
     }
+
     @GetMapping("/{courseId}/attachments")
     public ResponseEntity<List<AttachmentDTO>> getAttachmentsByCourse(
             @PathVariable Long courseId,

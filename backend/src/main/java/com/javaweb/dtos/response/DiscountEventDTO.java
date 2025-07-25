@@ -24,7 +24,7 @@ public class DiscountEventDTO {
     private LocalDate endDate;
     private DiscountType discountType;
     private double discountValue;
-    private Long courseId; // ✅ Chỉ lấy id
+    private Long courseId;
     private String courseName;
     private String note;
 }

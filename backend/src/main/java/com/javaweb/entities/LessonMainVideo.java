@@ -1,14 +1,17 @@
 package com.javaweb.entities;
 
+import com.javaweb.enums.ResourceType;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "lesson_main_videos")
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -17,14 +20,13 @@ public class LessonMainVideo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "main_video_id")
     private Long mainVideoId;
-    @Column(name = "title")
-    private String title;
     @Column(name = "url")
     private String url;
-    @Column(name = "duration")
-    private Long duration;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    private ResourceType type;
     @Column(name = "is_deleted")
-    private Boolean isdeleted;
+    private Boolean isDelete;
     @Column(name = "created_at")
     private LocalDateTime createdAt;
     @Column(name = "deleted_at")

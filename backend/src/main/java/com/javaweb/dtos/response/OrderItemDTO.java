@@ -2,8 +2,6 @@ package com.javaweb.dtos.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.javaweb.dtos.response.CourseSummaryDTO;
-
 import lombok.*;
 
 @Getter

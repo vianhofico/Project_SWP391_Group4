@@ -1,8 +1,8 @@
 package com.javaweb.controller.admin;
 
-import dev.likeech.java.model.dto.ChapterDTO;
-import dev.likeech.java.model.request.ChapterReorderRequest;
-import dev.likeech.java.service.ChapterService;
+import com.javaweb.dtos.request.ChapterReorderRequest;
+import com.javaweb.dtos.response.ChapterDTO;
+import com.javaweb.services.ChapterService;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/course/{courseid}/chapters")
+@RequestMapping("/api/admin/course/{courseid}/chapters")
 @RequiredArgsConstructor
 @Validated
 public class AdminChapterController {

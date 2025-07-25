@@ -86,7 +86,6 @@ public class AuthServiceImpl implements AuthService {
         if (existingUser.isPresent()) {
             throw new ResourceAlreadyExistsException("Email already exists");
         }
-
         User user = User.builder()
                 .email(email)
                 .password(passwordEncoder.encode(password))
@@ -107,18 +106,18 @@ public class AuthServiceImpl implements AuthService {
                 .build();
         tokenRepository.save(vt);
 
-//        EmailEvent event = new EmailEvent(
-//                "VERIFY_EMAIL",
-//                new VerifyEmailRequest(
-//                        email,
-//                        token
-//                )
-//        );
-//        try {
-//            kafkaTemplate.send("email", objectMapper.writeValueAsString(event));
-//        } catch (JsonProcessingException e) {
-//            log.error("Error while sending email event", e);
-//        }
+        EmailEvent event = new EmailEvent(
+                "VERIFY_EMAIL",
+                new VerifyEmailRequest(
+                        email,
+                        token
+                )
+        );
+        try {
+            kafkaTemplate.send("email", objectMapper.writeValueAsString(event));
+        } catch (JsonProcessingException e) {
+            log.error("Error while sending email event", e);
+        }
     }
 
     @Override

@@ -1,13 +1,16 @@
 package com.javaweb.controller.admin;
 
-import dev.likeech.java.entity.Course;
-import dev.likeech.java.enums.ResourceType;
-import dev.likeech.java.model.dto.AttachmentDTO;
-import dev.likeech.java.model.dto.CourseDTO;
-import dev.likeech.java.model.request.*;
-import dev.likeech.java.service.AttachmentService;
-import dev.likeech.java.service.CourseService;
-import dev.likeech.java.service.TopicService;
+import com.javaweb.dtos.request.CourseCreateRequest;
+import com.javaweb.dtos.request.CourseUpdateRequest;
+import com.javaweb.dtos.request.SearchCourseRequest;
+import com.javaweb.dtos.request.SearchRequest;
+import com.javaweb.dtos.response.AttachmentDTO;
+import com.javaweb.dtos.response.CourseDTO;
+import com.javaweb.entities.Course;
+import com.javaweb.enums.ResourceType;
+import com.javaweb.services.AttachmentService;
+import com.javaweb.services.CourseService;
+import com.javaweb.services.TopicService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/courses")
+@RequestMapping("/api/admin/courses")
 @RequiredArgsConstructor
 @Validated
 public class AdminCourseController {

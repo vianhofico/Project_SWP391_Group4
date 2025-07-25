@@ -1,7 +1,7 @@
 package com.javaweb.controller.user;
 
-import dev.likeech.java.model.dto.LessonDTO;
-import dev.likeech.java.service.LessonService;
+import com.javaweb.dtos.response.LessonDTO;
+import com.javaweb.services.LessonService;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -11,7 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/public/user/chapter/{chapter_id}/lessons")
+@RequestMapping("/api/public/user/chapter/{chapter_id}/lessons")
 @RequiredArgsConstructor
 @Validated
 public class PublicUserLessonController {

@@ -1,10 +1,10 @@
 package com.javaweb.controller.admin;
 
-import dev.likeech.java.enums.ResourceType;
-import dev.likeech.java.model.dto.LessonResourceDTO;
-import dev.likeech.java.model.request.ResourceCreateRequest;
-import dev.likeech.java.model.request.ResourceFilterRequest;
-import dev.likeech.java.service.LessonResourceService;
+import com.javaweb.dtos.request.ResourceCreateRequest;
+import com.javaweb.dtos.request.ResourceFilterRequest;
+import com.javaweb.dtos.response.LessonResourceDTO;
+import com.javaweb.enums.ResourceType;
+import com.javaweb.services.LessonResourceService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/resources")
+@RequestMapping("/api/admin/resources")
 @RequiredArgsConstructor
 public class AdminLessonResourceController {
     private final LessonResourceService lessonResourceService;

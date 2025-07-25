@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -40,7 +41,7 @@ public class Lesson {
     @Column(name = "main_video_url")
     private String mainVideoUrl;
     @OneToMany(mappedBy = "lesson")
-    private List<LessonMainVideo> mainVideos;
+    private List<LessonMainVideo> mainVideos = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(
@@ -48,10 +49,13 @@ public class Lesson {
             joinColumns = @JoinColumn(name = "lesson_id"),
             inverseJoinColumns = @JoinColumn(name = "resource_id")
     )
-    private List<LessonResource> resources;
+    private List<LessonResource> resources = new ArrayList<>();
 
     @OneToMany(mappedBy = "lesson")
-    private List<Exam> exams;
+    private List<Exam> exams = new ArrayList<>();
+
+    @OneToMany(mappedBy = "lesson")
+    private List<LessonProgress> lessonProgress = new ArrayList<>();
 
     @PrePersist
     public void onCreate() {

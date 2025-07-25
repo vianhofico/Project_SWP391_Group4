@@ -1,8 +1,8 @@
 package com.javaweb.controller.admin;
 
 
-import dev.likeech.java.model.dto.CourseRevenueDTO;
-import dev.likeech.java.service.OrderStatisticService;
+import com.javaweb.dtos.response.CourseRevenueDTO;
+import com.javaweb.services.OrderStatisticService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @RestController
-@RequestMapping("/admin/statistics")
+@RequestMapping("/api/admin/statistics")
 @CrossOrigin("*")
 public class AdminStatisticController {
 

@@ -1,39 +1,40 @@
 package com.javaweb.entities;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Entity
+@Table(name = "ratings")
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
-@Setter
 @Builder
-@Entity
-@Table(name = "ratings")  
 public class Rating {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "rating_id")  
+    @Column(name = "rating_id")
     private Long ratingId;
 
-    @Column(name = "rating")
-    private Integer rating;
-
-    @Lob
-    @Column(name = "feedback")
-    private String feedback;
-
-    @Column(name = "created_at")  
-    private LocalDateTime createdAt;
-
     @ManyToOne
-    @JoinColumn(name = "user_id")  
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "course_id")  
+    @JoinColumn(name = "course_id")
     private Course course;
+
+    @Column(name = "score")
+    private Integer score;
+
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 }
+

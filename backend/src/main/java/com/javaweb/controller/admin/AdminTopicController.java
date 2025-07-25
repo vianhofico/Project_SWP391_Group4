@@ -1,13 +1,13 @@
 package com.javaweb.controller.admin;
 
-import dev.likeech.java.entity.Topic;
-import dev.likeech.java.mapper.TopicDTOConverter;
-import dev.likeech.java.model.dto.CourseDTO;
-import dev.likeech.java.model.dto.TopicDTO;
-import dev.likeech.java.model.request.CourseIdsRequest;
-import dev.likeech.java.model.request.SearchRequest;
-import dev.likeech.java.model.request.TopicRequest;
-import dev.likeech.java.service.TopicService;
+import com.javaweb.converter.TopicDTOConverter;
+import com.javaweb.dtos.request.CourseIdsRequest;
+import com.javaweb.dtos.request.SearchRequest;
+import com.javaweb.dtos.request.TopicRequest;
+import com.javaweb.dtos.response.CourseDTO;
+import com.javaweb.dtos.response.TopicDTO;
+import com.javaweb.entities.Topic;
+import com.javaweb.services.TopicService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 @RestController
-@RequestMapping("/admin/topics")
+@RequestMapping("/api/admin/topics")
 @Validated
 @RequiredArgsConstructor
 public class AdminTopicController {

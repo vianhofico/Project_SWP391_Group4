@@ -1,18 +1,13 @@
 package com.javaweb.controller;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.javaweb.dtos.events.EmailEvent;
 import com.javaweb.dtos.request.LoginRequest;
 import com.javaweb.dtos.request.RegisterRequest;
 import com.javaweb.dtos.request.ResendEmailRequest;
-import com.javaweb.dtos.request.ResetPasswordRequest;
 import com.javaweb.dtos.response.LoginResponse;
 import com.javaweb.services.AuthService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.web.bind.annotation.*;
 
 @RestController

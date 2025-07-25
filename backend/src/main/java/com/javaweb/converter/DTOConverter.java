@@ -76,20 +76,6 @@ public class DTOConverter {
         return scoreDTO;
     }
 
-    public NotificationDTO toNotificationDTO(Notification notification) {
-        if (notification == null) return null;
-        NotificationDTO notificationDTO = modelMapper.map(notification, NotificationDTO.class);
-//        notificationDTO.setCreatedAt(dateTimeConverter.toString(notification.get()));
-        return notificationDTO;
-    }
-
-    public RatingDTO toRatingDTO(Rating rating) {
-        if (rating == null) return null;
-        RatingDTO ratingDTO = modelMapper.map(rating, RatingDTO.class);
-        ratingDTO.setCreatedAt(dateTimeConverter.toString(rating.getCreatedAt()));
-        return ratingDTO;
-    }
-
     public TransactionDTO toTransactionDTO(Transaction transaction) {
         if (transaction == null) return null;
         TransactionDTO transactionDTO = modelMapper.map(transaction, TransactionDTO.class);

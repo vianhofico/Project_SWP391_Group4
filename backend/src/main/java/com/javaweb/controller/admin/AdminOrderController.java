@@ -1,11 +1,11 @@
 package com.javaweb.controller.admin;
 
 
-import dev.likeech.java.model.dto.OrderDTO;
-import dev.likeech.java.model.dto.OrderItemDTO;
-import dev.likeech.java.model.request.OrderSearchRequest;
-import dev.likeech.java.service.OrderService;
-import dev.likeech.java.service.impl.OrderServiceImpl;
+import com.javaweb.dtos.request.OrderSearchRequest;
+import com.javaweb.dtos.response.OrderDTO;
+import com.javaweb.dtos.response.OrderItemDTO;
+import com.javaweb.services.OrderService;
+import com.javaweb.services.impl.OrderServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,11 +16,10 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/admin")
+@RequestMapping("/api/admin")
 public class AdminOrderController {
 
     private final OrderService orderService;
-    private final OrderServiceImpl orderServiceImpl;
 
     @GetMapping("/orders")
     public Page<OrderDTO> getAllOrders(@ModelAttribute OrderSearchRequest orderSearchRequest, Pageable pageable) {
@@ -29,7 +28,7 @@ public class AdminOrderController {
 
     @GetMapping("/orders/{id}")
     public ResponseEntity<List<OrderItemDTO>> getOrderItems(@PathVariable long id){
-        OrderDTO order = orderServiceImpl.getOrderById(id);
+        OrderDTO order = orderService.getOrderById(id);
 
         List<OrderItemDTO> orderItems = order.getOrderItems();
         return ResponseEntity.ok(orderItems);

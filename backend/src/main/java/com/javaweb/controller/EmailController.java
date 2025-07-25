@@ -21,7 +21,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("")
 public class EmailController {
 
     private final OrderRepository orderRepository;
@@ -53,72 +53,7 @@ public class EmailController {
         return null;
     }
 
-    @GetMapping("/send-email")
-    public String sendEmail() {
-        try {
-            SimpleMailMessage message = new SimpleMailMessage();
 
-            message.setFrom("he182488toquoctung@gmail.com");
-//            message.setTo(user.getEmail());
-            message.setSubject("Simple test email from tungtq");
-            message.setText("This is a sample email body for my first email");
-
-            mailSender.send(message);
-            return "success";
-        } catch (Exception e) {
-            return e.getMessage();
-        }
-    }
-
-    @GetMapping("/send-email-with-attachment")
-    public String sendEmailWithAttachment() {
-        try {
-
-            MimeMessage message = mailSender.createMimeMessage();
-            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-
-            helper.setFrom("he182488toquoctung@gmail.com");
-            helper.setTo("toqupctung14102004@gmail.com");
-            helper.setSubject("Simple test email from tungtq");
-            helper.setText("Please find the attached documents below");
-
-            helper.addAttachment("logo.png", new File("C:\\Users\\toqup\\OneDrive\\Pictures\\Screenshots\\Screenshot 2025-06-12 211628.png"));
-//            helper.addAttachment("09-03.-Thuc-hanh-tao-users-ao-trong-bo-nho-1.pptx", new File("\"C:\\Users\\toqup\\Downloads\\09-03.-Thuc-hanh-tao-users-ao-trong-bo-nho-1.pptx"));
-
-            mailSender.send(message);
-            return "success";
-        } catch (Exception e) {
-            return e.getMessage();
-        }
-    }
-
-//    @GetMapping("/send-html-email")
-//    public String sendHtmlEmail() {
-//        try {
-//            User user = getCurrentAuthenticatedUser();
-//
-//            MimeMessage message = mailSender.createMimeMessage();
-//            MimeMessageHelper helper = new MimeMessageHelper(message, true);
-//
-////            helper.setFrom("vianhofico@gmail.com");
-//            helper.setFrom("he182488toquoctung@gmail.com");
-//
-//            helper.setTo(user.getEmail());
-//            helper.setSubject("Simple test email from tungtq");
-//            try (var inputStream = Objects.requireNonNull(EmailController.class.getResourceAsStream("/templates/email-content.html"))) {
-//                helper.setText(
-//                        new String(inputStream.readAllBytes(), StandardCharsets.UTF_8),
-//                        true
-//                );
-//            }
-//            helper.addInline("logo.png",  new File("C:\\Users\\toqup\\OneDrive\\Pictures\\Screenshots\\Screenshot 2025-06-12 211628.png"));
-//
-//            mailSender.send(message);
-//            return "success";
-//        } catch (Exception e) {
-//            return e.getMessage();
-//        }
-//    }
 
     @GetMapping("/send-html-email")
     public String sendHtmlEmail() {

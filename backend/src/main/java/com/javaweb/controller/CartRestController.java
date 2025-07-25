@@ -1,9 +1,9 @@
 package com.javaweb.controller;
 
+import com.javaweb.entities.*;
 import com.javaweb.converter.DTOConverter;
 import com.javaweb.dtos.response.CartItemDTO;
 import com.javaweb.dtos.response.CourseSummaryDTO;
-import com.javaweb.entities.*;
 import com.javaweb.repositories.CartItemRepository;
 import com.javaweb.repositories.CourseRepository;
 import com.javaweb.services.OrderService;
@@ -22,7 +22,6 @@ import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 @RestController
@@ -96,24 +95,24 @@ public class CartRestController {
         return ResponseEntity.ok(ids);
     }
 
-    @GetMapping("/courses")
-    public ResponseEntity<List<CourseSummaryDTO>> getCoursesByIds() {
-        List<Long> ids = getPurchasedCourses().getBody();
-        List<Course> courses = new ArrayList<>();
-        for(Long id : ids) {
-            courses.add(courseRepository.findById(id).get());
-        }
-        List<CourseSummaryDTO> dtos = courses.stream().map(course -> {
-            CourseSummaryDTO dto = new CourseSummaryDTO();
-            dto.setCourseId(course.getCourseId());
-            dto.setTitle(course.getTitle());
-            dto.setPrice(course.getPrice());
-            dto.setImageUrl("http://localhost:8080/images/" +
-                    URLEncoder.encode(course.getImageUrl(), StandardCharsets.UTF_8));
-            return dto;
-        }).toList();
-        return ResponseEntity.ok(dtos);
-    }
+//    @GetMapping("/courses")
+//    public ResponseEntity<List<CourseSummaryDTO>> getCoursesByIds() {
+//        List<Long> ids = getPurchasedCourses().getBody();
+//        List<Course> courses = new ArrayList<>();
+//        for(Long id : ids) {
+//            courses.add(courseRepository.findById(id).get());
+//        }
+//        List<CourseSummaryDTO> dtos = courses.stream().map(course -> {
+//            CourseSummaryDTO dto = new CourseSummaryDTO();
+//            dto.setCourseId(course.getCourseId());
+//            dto.setTitle(course.getTitle());
+//            dto.setPrice(course.getPrice());
+//            dto.setImageUrl("http://localhost:8080/images/" +
+//                    URLEncoder.encode(course.getImageUrl(), StandardCharsets.UTF_8));
+//            return dto;
+//        }).toList();
+//        return ResponseEntity.ok(dtos);
+//    }
 
     @GetMapping("/cart")
     public ResponseEntity<List<CartItemDTO>> getCart() {
@@ -146,7 +145,6 @@ public class CartRestController {
         }
         return ResponseEntity.ok(dtos);
     }
-
 
 
     @GetMapping("/cartPrice")

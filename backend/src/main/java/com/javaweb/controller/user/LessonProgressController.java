@@ -1,13 +1,13 @@
 package com.javaweb.controller.user;
 
-import dev.likeech.java.entity.Lesson;
-import dev.likeech.java.entity.User;
-import dev.likeech.java.exp.AppException;
-import dev.likeech.java.exp.ErrorCode;
-import dev.likeech.java.model.dto.LessonProgressDTO;
-import dev.likeech.java.repository.LessonRepository;
-import dev.likeech.java.security.user.CustomUserDetails;
-import dev.likeech.java.service.LessonProgressService;
+import com.javaweb.dtos.response.LessonProgressDTO;
+import com.javaweb.entities.Lesson;
+import com.javaweb.entities.User;
+import com.javaweb.exceptions.AppException;
+import com.javaweb.exceptions.ErrorCode;
+import com.javaweb.repositories.LessonRepository;
+import com.javaweb.security.user.CustomUserDetails;
+import com.javaweb.services.LessonProgressService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user/lesson-progress")
+@RequestMapping("/api/user/lesson-progress")
 @RequiredArgsConstructor
 public class LessonProgressController {
     private final LessonProgressService progressService;

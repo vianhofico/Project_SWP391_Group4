@@ -1,7 +1,7 @@
 package com.javaweb.controller.user;
 
-import dev.likeech.java.model.dto.LessonDTO;
-import dev.likeech.java.service.LessonService;
+import com.javaweb.dtos.response.LessonDTO;
+import com.javaweb.services.LessonService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user/lesson")
+@RequestMapping("/api/user/lesson")
 @RequiredArgsConstructor
 public class UserLessonController {
     private final LessonService lessonService;

@@ -10,6 +10,7 @@ import com.javaweb.services.CloudinaryService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 //import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -25,6 +26,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
     private final Cloudinary cloudinary;
     private final ObjectMapper objectMapper;
+    private final KafkaTemplate<String, String> kafkaTemplate;
 
     public UploadFileDTO uploadFile(MultipartFile file) throws IOException {
         if (file == null || file.isEmpty()) return null;
@@ -62,7 +64,7 @@ public class CloudinaryServiceImpl implements CloudinaryService {
 
         String json = objectMapper.writeValueAsString(uploadFileRequest);
         log.info("Sending to Kafka: {}", json);
-//        kafkaTemplate.send("file", objectMapper.writeValueAsString(uploadFileRequest));
+        kafkaTemplate.send("file", objectMapper.writeValueAsString(uploadFileRequest));
     }
 
     @Override

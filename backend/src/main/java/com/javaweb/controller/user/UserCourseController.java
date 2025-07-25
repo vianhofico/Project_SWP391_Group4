@@ -1,8 +1,8 @@
 package com.javaweb.controller.user;
 
-import dev.likeech.java.model.dto.CourseDTO;
-import dev.likeech.java.security.user.CustomUserDetails;
-import dev.likeech.java.service.CourseService;
+import com.javaweb.dtos.response.CourseDTO;
+import com.javaweb.security.user.CustomUserDetails;
+import com.javaweb.services.CourseService;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/user/courses")
+@RequestMapping("/api/user/courses")
 @RequiredArgsConstructor
 @Validated
 public class UserCourseController {

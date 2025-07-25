@@ -1,18 +1,20 @@
 package com.javaweb.controller.user;
 
-import dev.likeech.java.model.dto.RatingDTO;
-import dev.likeech.java.model.request.RatingRequest;
-import dev.likeech.java.security.user.CustomUserDetails;
-import dev.likeech.java.service.RatingService;
+import com.javaweb.dtos.request.RatingRequest;
+import com.javaweb.dtos.response.RatingDTO;
+import com.javaweb.security.user.CustomUserDetails;
+import com.javaweb.services.RatingService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequiredArgsConstructor
+@RequestMapping("/api")
 public class RatingController {
     private final RatingService ratingService;
     @PreAuthorize("hasAnyRole('LEARNER')")

@@ -37,7 +37,6 @@ public class DiscountEvent {
     @Column(name = "target_type")
     private TargetType targetType;
 
-
     @ManyToOne
     @JoinColumn(name = "course_id", nullable = true)
     private Course course;

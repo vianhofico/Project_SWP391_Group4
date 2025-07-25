@@ -1,9 +1,9 @@
 package com.javaweb.controller.admin;
 
-import dev.likeech.java.model.request.SignedUrlRequest;
-import dev.likeech.java.model.respone.UploadRespone;
-import dev.likeech.java.repository.GcsRepository;
-import dev.likeech.java.service.GcsService;
+import com.javaweb.dtos.request.SignedUrlRequest;
+import com.javaweb.dtos.response.UploadRespone;
+import com.javaweb.repositories.GcsRepository;
+import com.javaweb.services.GcsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -17,10 +17,9 @@ import java.util.Map;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/file")
+@RequestMapping("/api/file")
 public class AdminFileController {
     private final GcsService gcsService;
-    private final GcsRepository gcsRepository;
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/signed-url/upload")
     public ResponseEntity<UploadRespone> generateUploadSignedUrl(@Valid @RequestBody SignedUrlRequest request) {

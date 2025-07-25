@@ -1,9 +1,9 @@
 package com.javaweb.controller.user;
 
-import dev.likeech.java.enums.ResourceType;
-import dev.likeech.java.model.dto.LessonResourceDTO;
-import dev.likeech.java.model.request.ResourceFilterRequest;
-import dev.likeech.java.service.LessonResourceService;
+import com.javaweb.dtos.request.ResourceFilterRequest;
+import com.javaweb.dtos.response.LessonResourceDTO;
+import com.javaweb.enums.ResourceType;
+import com.javaweb.services.LessonResourceService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +11,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user/resources")
+@RequestMapping("/api/user/resources")
 @RequiredArgsConstructor
 public class UserLessonResourceController {
     private final LessonResourceService lessonResourceService;

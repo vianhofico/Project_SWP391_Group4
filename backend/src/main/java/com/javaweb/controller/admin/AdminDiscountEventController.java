@@ -1,15 +1,15 @@
 package com.javaweb.controller.admin;
 
 
-import dev.likeech.java.entity.Course;
-import dev.likeech.java.entity.DiscountEvent;
-import dev.likeech.java.enums.DiscountType;
-import dev.likeech.java.enums.TargetType;
-import dev.likeech.java.mapper.DTOConverter;
-import dev.likeech.java.model.dto.DiscountEventDTO;
-import dev.likeech.java.repository.CourseRepository;
-import dev.likeech.java.repository.DiscountEventRepository;
-import dev.likeech.java.service.DiscountEventService;
+import com.javaweb.converter.DTOConverter;
+import com.javaweb.dtos.response.DiscountEventDTO;
+import com.javaweb.entities.Course;
+import com.javaweb.entities.DiscountEvent;
+import com.javaweb.enums.DiscountType;
+import com.javaweb.enums.TargetType;
+import com.javaweb.repositories.CourseRepository;
+import com.javaweb.repositories.DiscountEventRepository;
+import com.javaweb.services.DiscountEventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +22,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/admin/discount-events")
+@RequestMapping("/api/admin/discount-events")
 @CrossOrigin
 public class AdminDiscountEventController {
 

@@ -1,19 +1,20 @@
 package com.javaweb.dtos.response;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.*;
 
+import java.time.LocalDateTime;
+
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
-@JsonInclude(JsonInclude.Include.NON_NULL)
-@JsonIgnoreProperties(ignoreUnknown = true)
 public class ChapterDTO {
-
     private Long chapterId;
     private String title;
-    private CourseDTO course;
-
+    private Integer chapterOrder;
+    private String status;
+    private LocalDateTime createdAt;
+    private LocalDateTime updateAt;
+    private Long courseId;
 }

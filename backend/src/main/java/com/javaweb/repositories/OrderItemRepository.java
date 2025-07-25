@@ -35,7 +35,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
         WHERE o.createdAt BETWEEN :start AND :end
         GROUP BY oi.course.courseId, oi.course.title
     """)
-    List<CourseRevenueDTO> getCourseRevenueStatsBetween(
+    List<CourseRevenueDTO> getCourseRevenueStatusBetween(
             @Param("start") LocalDateTime start,
             @Param("end") LocalDateTime end
     );

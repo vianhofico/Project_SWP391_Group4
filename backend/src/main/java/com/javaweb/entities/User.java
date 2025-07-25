@@ -56,9 +56,6 @@ public class User {
     @Column(name = "is_verified")
     private Boolean isVerified;
 
-//    @Column(name = "must_change_password")
-//    private Boolean mustChangePassword;
-
     @OneToMany(mappedBy = "reporter", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<Report> reportsMade = new ArrayList<>();
 
@@ -94,4 +91,7 @@ public class User {
 
     @OneToMany(mappedBy = "user", cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
     private List<ExamAttempt> attempts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<LessonProgress> lessonProgress = new ArrayList<>();
 }
