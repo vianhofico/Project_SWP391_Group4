@@ -56,7 +56,7 @@ export default function NewLessonForm() {
         mainVideoUrl, // ✅ tên đúng field backend
       };
 
-      await apiClient.post(`/admin/chapter/${chapterId}/lessons`, lessonData );
+      await apiClient.post(`/admin/chapter/${chapterId}/lessons`, lessonData);
 
       alert("✅ Tạo bài học thành công!");
       navigate(`/dashboard/admin/chapters/${chapterId}/lessons`);

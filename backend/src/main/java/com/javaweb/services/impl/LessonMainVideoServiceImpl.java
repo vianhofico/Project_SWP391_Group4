@@ -21,6 +21,7 @@ public class LessonMainVideoServiceImpl implements LessonMainVideoService {
     private final LessonMainVideoRepository lessonMainVideoRepository;
     private final GcsRepository gcsRepository;
     private static final Logger log = LoggerFactory.getLogger(LessonMainVideoServiceImpl.class);
+
     @Override
     @Transactional
     public LessonMainVideo createMainVideo(String url) {
@@ -29,10 +30,11 @@ public class LessonMainVideoServiceImpl implements LessonMainVideoService {
                         .createdAt(LocalDateTime.now())
                         .isDelete(false)
                         .type(ResourceType.video)
-                .build()
+                        .build()
         );
     }
-//    @Scheduled(cron = "0 * * * * *")
+
+    //    @Scheduled(cron = "0 * * * * *")
     @Override
     @Scheduled(cron = "0 0 3 * * *")
     public void cleanupOldDeletedMainVideos() {

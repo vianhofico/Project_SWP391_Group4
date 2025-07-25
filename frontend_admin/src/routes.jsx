@@ -172,6 +172,7 @@ export const routes = [
             {
                 path: "/admin/chapters/:chapterId/lessons/new",
                 element: <NewLessonForm/>,
+                hidden: true,
             },
             {
                 name: "edit topic",
