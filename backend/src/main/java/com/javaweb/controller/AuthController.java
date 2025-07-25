@@ -18,8 +18,13 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
-        return ResponseEntity.ok(authService.login(loginRequest));
+    public ResponseEntity<LoginResponse> loginForLearner(@RequestBody @Valid LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.loginForLearner(loginRequest));
+    }
+
+    @PostMapping("/login/admin")
+    public ResponseEntity<LoginResponse> loginForAdmin(@RequestBody @Valid LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.loginForAdmin(loginRequest));
     }
 
     @PostMapping("/register")

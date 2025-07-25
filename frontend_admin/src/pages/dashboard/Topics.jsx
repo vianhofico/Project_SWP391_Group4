@@ -13,7 +13,7 @@ export default function Topics() {
   const [refreshToggle, setRefreshToggle] = useState(false);
   const [tab, setTab] = useState("active");
   const [currentPage, setCurrentPage] = useState(0);
-  const pageSize = 10;
+  const pageSize = 5;
   const [totalPages, setTotalPages] = useState(0);
   const navigate = useNavigate();
 

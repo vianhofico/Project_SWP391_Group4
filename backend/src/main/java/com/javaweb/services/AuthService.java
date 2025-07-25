@@ -8,7 +8,9 @@ import com.javaweb.dtos.response.LoginResponse;
 
 public interface AuthService {
 
-    LoginResponse login(LoginRequest loginRequest);
+    LoginResponse loginForLearner(LoginRequest loginRequest);
+
+    LoginResponse loginForAdmin(LoginRequest loginRequest);
 
     void register(RegisterRequest registerRequest);
 

@@ -53,9 +53,8 @@ public class AuthServiceImpl implements AuthService {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    @Transactional(readOnly = true)
     @Override
-    public LoginResponse login(LoginRequest loginRequest) {
+    public LoginResponse loginForLearner(LoginRequest loginRequest) {
         try {
             Authentication authentication = authManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
@@ -65,6 +64,9 @@ public class AuthServiceImpl implements AuthService {
             );
             String token = jwtUtils.generateToken(loginRequest.email());
             User thisUser = userRepository.findByEmail(loginRequest.email()).get();
+            if (!thisUser.getRole().equals("LEARNER")) {
+                throw new UnauthorizedException("You do not have permission to login");
+            }
             return new LoginResponse(token, dtoConverter.toUserDTO(thisUser));
         } catch (BadCredentialsException e) {
             throw new UnauthorizedException("Email or password is incorrect");
@@ -72,6 +74,29 @@ public class AuthServiceImpl implements AuthService {
             throw new UnauthorizedException("User is disabled");
         }
     }
+
+    @Override
+    public LoginResponse loginForAdmin(LoginRequest loginRequest) {
+        try {
+            Authentication authentication = authManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            loginRequest.email(),
+                            loginRequest.password()
+                    )
+            );
+            String token = jwtUtils.generateToken(loginRequest.email());
+            User thisUser = userRepository.findByEmail(loginRequest.email()).get();
+            if (!thisUser.getRole().equals("ADMIN")) {
+                throw new UnauthorizedException("You do not have permission to login");
+            }
+            return new LoginResponse(token, dtoConverter.toUserDTO(thisUser));
+        } catch (BadCredentialsException e) {
+            throw new UnauthorizedException("Email or password is incorrect");
+        } catch (DisabledException e) {
+            throw new UnauthorizedException("User is disabled");
+        }
+    }
+
 
     @Transactional
     @Override

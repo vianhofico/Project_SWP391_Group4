@@ -36,7 +36,7 @@ private final TopicDTOConverter topicDTOConverter;
             @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "order", defaultValue = "asc", required = false) String order,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "10") int size
+            @RequestParam(name = "size", defaultValue = "5") int size
     ) {
         var request = new SearchRequest(sortField, search, order, "false", page, size);
         return ResponseEntity.ok(topicService.searchByNameAndSort(request));
@@ -48,7 +48,7 @@ private final TopicDTOConverter topicDTOConverter;
             @RequestParam(name = "search", required = false) String search,
             @RequestParam(name = "order", defaultValue = "asc", required = false) String order,
             @RequestParam(name = "page", defaultValue = "0") int page,
-            @RequestParam(name = "size", defaultValue = "1") int size
+            @RequestParam(name = "size", defaultValue = "5") int size
     ) {
         var request = new SearchRequest(sortField, search, order, "true", page, size);
         return ResponseEntity.ok(topicService.searchByNameAndSort(request));
