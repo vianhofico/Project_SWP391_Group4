@@ -77,9 +77,29 @@ public class ReportServiceImpl implements ReportService {
             throw new AccessDeniedException("No access");
         }
 
+        if (report.getStatus().equals(status)) {
+            return;
+        }
+
         report.setStatus(status);
         reportRepository.save(report);
         userService.updateReportCount(report.getTarget().getUserId());
+
+        Comment comment = report.getComment();
+        Post post = report.getPost();
+        if (status.equals("APPROVED")) {
+            if (comment != null) {
+                comment.setStatus("DELETED");
+            } else {
+                post.setStatus("DELETED");
+            }
+        } else {
+            if (comment != null) {
+                comment.setStatus("ACTIVE");
+            } else {
+                post.setStatus("ACTIVE");
+            }
+        }
     }
 
     @Override
